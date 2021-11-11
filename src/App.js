@@ -37,6 +37,8 @@ function App() {
     let p = document.createElement('p');
     p.innerHTML = JSON.stringify(convertInputData(inputList));
     document.body.appendChild(p);
+
+    // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
     return;
   };
 
@@ -91,7 +93,6 @@ function App() {
                 </td>
                 <td>
                   <input
-                    className="ml10"
                     name="gpaRangeUpper"
                     placeholder="0"
                     value={x.gpaRangeUpper}
@@ -108,7 +109,6 @@ function App() {
                 </td>
                 <td>
                   <input
-                    className="ml10"
                     name="satRangeUpper"
                     placeholder="0"
                     value={x.satRangeUpper}
@@ -125,7 +125,6 @@ function App() {
                 </td>
                 <td>
                   <input
-                    className="ml10"
                     name="actRangeUpper"
                     placeholder="0"
                     value={x.actRangeUpper}
@@ -134,7 +133,6 @@ function App() {
                 </td>
                 <td>
                   <input
-                    className="ml10"
                     name="awardAmount"
                     placeholder="0"
                     value={x.awardAmount}
