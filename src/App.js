@@ -1,17 +1,29 @@
 import React, { useState } from "react";
 import './App.css';
+import { data } from './data/merit.json';
+import { v4 } from 'uuid';
 
 function App() {
-  const [inputList, setInputList] = useState([{ 
-    gpaRangeLower: "", 
-    gpaRangeUpper: "", 
-    satRangeLower: "", 
-    satRangeUpper: "", 
-    actRangeLower: "", 
-    actRangeUpper: "", 
-    awardAmount: "" 
-  }]);
- 
+  // NOTE: transform the data into a "table" so we can use it properly
+  let matrix = [[{}]];
+
+  for(let r=0; r<data.length; r++) {
+    let row = {
+      gpaRangeLower: data[r][0],
+      gpaRangeUpper: data[r][1],
+      satRangeLower: data[r][2],
+      satRangeUpper: data[r][3],
+      actRangeLower: data[r][4],
+      actRangeUpper: data[r][5],
+      awardAmount: data[r][6]
+    }
+    matrix.push(row);
+  }
+
+  // NOTE: set state with the existing data already pre-populated
+  
+  const [inputList, setInputList] = useState(matrix);
+
   // handle input change
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -65,11 +77,13 @@ function App() {
     return output;
   }
 
+  console.log(inputList);
   return (
     <div className="App">
       <form onSubmit={handleSubmit}>
         <h3>Merit Based - Matrix With Test Scores</h3> 
         <table>
+          <thead>
           <tr>
             <th>GPA Range Lower Bound</th>
             <th>GPA Range Upper Bound</th>
@@ -80,78 +94,81 @@ function App() {
             <th>Award Amount</th>
             <th>&nbsp;</th>
           </tr>
-          {inputList.map((x, i) => {
-            return (
-              <tr>
+          </thead>
+          <tbody>
+            {inputList.map((x, i) => {
+              return (
+                <tr key={v4()}>
+                  <td>
+                    <input
+                      name="gpaRangeLower"
+                      placeholder="0"
+                      value={x.gpaRangeLower}
+                      onChange={e => handleInputChange(e, i)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      name="gpaRangeUpper"
+                      placeholder="0"
+                      value={x.gpaRangeUpper}
+                      onChange={e => handleInputChange(e, i)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      name="satRangeLower"
+                      placeholder="0"
+                      value={x.satRangeLower}
+                      onChange={e => handleInputChange(e, i)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      name="satRangeUpper"
+                      placeholder="0"
+                      value={x.satRangeUpper}
+                      onChange={e => handleInputChange(e, i)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      name="actRangeLower"
+                      placeholder="0"
+                      value={x.actRangeLower}
+                      onChange={e => handleInputChange(e, i)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      name="actRangeUpper"
+                      placeholder="0"
+                      value={x.actRangeUpper}
+                      onChange={e => handleInputChange(e, i)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      name="awardAmount"
+                      placeholder="0"
+                      value={x.awardAmount}
+                      onChange={e => handleInputChange(e, i)}
+                    />
+                  </td>
                 <td>
-                  <input
-                    name="gpaRangeLower"
-                    placeholder="0"
-                    value={x.gpaRangeLower}
-                    onChange={e => handleInputChange(e, i)}
-                  />
+                  <div className="btn-box">
+                    {inputList.length !== 1 && <button
+                      className="remove-button"
+                      onClick={() => handleRemoveClick(i)}>Remove Row</button>}
+                    {inputList.length - 1 === i && <button className="add-button" onClick={handleAddClick}>Add Row</button>}
+                  </div>
                 </td>
-                <td>
-                  <input
-                    name="gpaRangeUpper"
-                    placeholder="0"
-                    value={x.gpaRangeUpper}
-                    onChange={e => handleInputChange(e, i)}
-                  />
-                </td>
-                <td>
-                  <input
-                    name="satRangeLower"
-                    placeholder="0"
-                    value={x.satRangeLower}
-                    onChange={e => handleInputChange(e, i)}
-                  />
-                </td>
-                <td>
-                  <input
-                    name="satRangeUpper"
-                    placeholder="0"
-                    value={x.satRangeUpper}
-                    onChange={e => handleInputChange(e, i)}
-                  />
-                </td>
-                <td>
-                  <input
-                    name="actRangeLower"
-                    placeholder="0"
-                    value={x.actRangeLower}
-                    onChange={e => handleInputChange(e, i)}
-                  />
-                </td>
-                <td>
-                  <input
-                    name="actRangeUpper"
-                    placeholder="0"
-                    value={x.actRangeUpper}
-                    onChange={e => handleInputChange(e, i)}
-                  />
-                </td>
-                <td>
-                  <input
-                    name="awardAmount"
-                    placeholder="0"
-                    value={x.awardAmount}
-                    onChange={e => handleInputChange(e, i)}
-                  />
-                </td>
-              <td>
-                <div className="btn-box">
-                  {inputList.length !== 1 && <button
-                    className="remove-button"
-                    onClick={() => handleRemoveClick(i)}>Remove Row</button>}
-                  {inputList.length - 1 === i && <button className="add-button" onClick={handleAddClick}>Add Row</button>}
-                </div>
-              </td>
-            </tr>
-          );
-        })}
+              </tr>
+            );
+          })}
+          </tbody>
         </table>
-        <div class="submit-button-row">
+        <div className="submit-button-row">
           <input type="submit" value="Submit Matrix" />
         </div>
       </form>
