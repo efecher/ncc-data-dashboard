@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
+import { v4 as uuidv4 } from 'uuid';
 //import { data } from './data/merit.json';
 
 
@@ -178,20 +179,17 @@ function App() {
                     />
                   </td>
                 <td>
-                  <div className="btn-box">
-                    {inputList.length !== 1 && <button
-                      className="remove-button"
-                      onClick={() => handleRemoveClick(i)}>Remove Row</button>}
-                    
-                  </div>
+                  {inputList.length !== 1 && <button
+                    className="remove-button"
+                    onClick={() => handleRemoveClick(i)}>Remove Row</button>}
                 </td>
               </tr>
               <tr className="void-row">
-                <td colspan="8" style={{"text-align": "right"}}>{inputList.length - 1 === i && <button className="add-button" onClick={handleAddClick}>Add Row</button>}</td>
+                <td colSpan="8" style={{"textAlign": "right"}}>{inputList.length - 1 === i && <button className="add-button" onClick={handleAddClick}>Add Row</button>}</td>
               </tr>
               </>
             );
-          }): <div>Loading Matrix...</div>}
+          }): <tr><td>Loading Matrix...</td></tr>}
           </tbody>
         </table>
         <div className="submit-button-row">
