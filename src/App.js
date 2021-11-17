@@ -1,29 +1,28 @@
 import React, { useState } from "react";
 import './App.css';
 import { data } from './data/merit.json';
-import { v4 } from 'uuid';
+//import { v4 } from 'uuid';
 
 function App() {
   // NOTE: transform the data into a "table" so we can use it properly
-  let matrix = [[{}]];
-
-  for(let r=0; r<data.length; r++) {
-    let row = {
-      gpaRangeLower: data[r][0],
-      gpaRangeUpper: data[r][1],
-      satRangeLower: data[r][2],
-      satRangeUpper: data[r][3],
-      actRangeLower: data[r][4],
-      actRangeUpper: data[r][5],
-      awardAmount: data[r][6]
+  let matrix = [];
+  for(let row of data) {
+    let r = {
+      gpaRangeLower: row[0],
+      gpaRangeUpper: row[1],
+      satRangeLower: row[2],
+      satRangeUpper: row[3],
+      actRangeLower: row[4],
+      actRangeUpper: row[5],
+      awardAmount: row[6]
     }
-    matrix.push(row);
+    matrix.push(r);
   }
-
+  
   // NOTE: set state with the existing data already pre-populated
   
   const [inputList, setInputList] = useState(matrix);
-
+  
   // handle input change
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -57,7 +56,6 @@ function App() {
   const convertInputData = (data) => {
     //console.log(data);
     let output = [];
-    console.log(output);
     for(let i=0; i<data.length; i++) {
       let row = [];
 
@@ -77,7 +75,6 @@ function App() {
     return output;
   }
 
-  console.log(inputList);
   return (
     <div className="App">
       <form onSubmit={handleSubmit}>
@@ -96,9 +93,11 @@ function App() {
           </tr>
           </thead>
           <tbody>
-            {inputList.map((x, i) => {
+            {
+              inputList.map((x, i) => {
               return (
-                <tr key={v4()}>
+                <>
+                <tr>
                   <td>
                     <input
                       name="gpaRangeLower"
@@ -160,10 +159,14 @@ function App() {
                     {inputList.length !== 1 && <button
                       className="remove-button"
                       onClick={() => handleRemoveClick(i)}>Remove Row</button>}
-                    {inputList.length - 1 === i && <button className="add-button" onClick={handleAddClick}>Add Row</button>}
+                    
                   </div>
                 </td>
               </tr>
+              <tr>
+                <td colspan="8" style={{"text-align": "right"}}>{inputList.length - 1 === i && <button className="add-button" onClick={handleAddClick}>Add Row</button>}</td>
+              </tr>
+              </>
             );
           })}
           </tbody>

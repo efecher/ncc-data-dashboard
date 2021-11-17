@@ -7,7 +7,7 @@ input:not([type="submit"]) {
   font-size: 1.5rem;
   width: 5rem;
   border: 0;
-  background: #068;
+  background: #039;
   color: #ffffff;
   text-align: right;
 }
@@ -66,6 +66,7 @@ button {
 
 .add-button {
   background-color: #006600;
+  margin-right: 5px;
 }
 
 .submit-button-row {
