@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import './App.css';
 import { data } from './data/merit.json';
-//import { v4 } from 'uuid';
 
 function App() {
-  // NOTE: transform the data into a "table" so we can use it properly
+  // NOTE: transform the data so we can use it properly
   let matrix = [];
   for(let row of data) {
     let r = {
@@ -79,7 +78,7 @@ function App() {
     <div className="App">
       <form onSubmit={handleSubmit}>
         <h3>Merit Based - Matrix With Test Scores</h3> 
-        <table>
+        <table summary="Merit Based matrix with GPA, SAT/ACT scores.">
           <thead>
           <tr>
             <th>GPA Range Lower Bound</th>
@@ -163,7 +162,7 @@ function App() {
                   </div>
                 </td>
               </tr>
-              <tr>
+              <tr className="void-row">
                 <td colspan="8" style={{"text-align": "right"}}>{inputList.length - 1 === i && <button className="add-button" onClick={handleAddClick}>Add Row</button>}</td>
               </tr>
               </>
