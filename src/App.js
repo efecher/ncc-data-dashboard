@@ -1,26 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './App.css';
-import { data } from './data/merit.json';
+//import { data } from './data/merit.json';
+
 
 function App() {
-  // NOTE: transform the data so we can use it properly
-  let matrix = [];
-  for(let row of data) {
-    let r = {
-      gpaRangeLower: row[0],
-      gpaRangeUpper: row[1],
-      satRangeLower: row[2],
-      satRangeUpper: row[3],
-      actRangeLower: row[4],
-      actRangeUpper: row[5],
-      awardAmount: row[6]
-    }
-    matrix.push(r);
-  }
-  
+  //const [rdata, setRData] = useState(null);
   // NOTE: set state with the existing data already pre-populated
+  const [inputList, setInputList] = useState(null);
   
-  const [inputList, setInputList] = useState(matrix);
+  useEffect(() => {
+    fetch("http://localhost:3001/get/")
+    .then(response => response.json())
+    .then(json => {
+      console.log(json.data); 
+      let matrix = [];
+      for(let row of json.data) {
+        let r = {
+          gpaRangeLower: row[0],
+          gpaRangeUpper: row[1],
+          satRangeLower: row[2],
+          satRangeUpper: row[3],
+          actRangeLower: row[4],
+          actRangeUpper: row[5],
+          awardAmount: row[6]
+        }
+        matrix.push(r);
+      }
+      setInputList(matrix);
+    });
+  }, []);
+
+  // NOTE: transform the data so we can use it properly
+  
   
   // handle input change
   const handleInputChange = (e, index) => {
@@ -49,6 +60,19 @@ function App() {
     document.body.appendChild(p);
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
+    console.log(JSON.stringify(convertInputData(inputList)));
+    fetch('http://localhost:3001/post', {
+      accepts: 'application/json, plain/text',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({data: convertInputData(inputList)})
+    })
+    .then(res => { console.log(res) })
+    .catch(res => console.log(res));
+
     return;
   };
 
@@ -93,7 +117,7 @@ function App() {
           </thead>
           <tbody>
             {
-              inputList.map((x, i) => {
+              (inputList !== null)? inputList.map((x, i) => {
               return (
                 <>
                 <tr>
@@ -167,7 +191,7 @@ function App() {
               </tr>
               </>
             );
-          })}
+          }): <div>Loading Matrix...</div>}
           </tbody>
         </table>
         <div className="submit-button-row">
