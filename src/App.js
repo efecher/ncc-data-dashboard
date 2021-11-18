@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 } from 'uuid';
 //import { data } from './data/merit.json';
 
 
@@ -10,8 +10,23 @@ function App() {
   const [inputList, setInputList] = useState(null);
   
   useEffect(() => {
-    fetch("http://localhost:3001/get/")
-    .then(response => response.json())
+    setInputList([{
+      gpaRangeLower: 0,
+      gpaRangeUpper: 0,
+      satRangeLower: 0,
+      satRangeUpper: 0,
+      actRangeLower: 0,
+      actRangeUpper: 0,
+      awardAmount: 0
+    }]);
+    fetch("http://localhost:3001/get/merit/testscores")
+    .then((response) => {
+      if(response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Error retrieving the remote data.');
+      }
+    })
     .then(json => {
       console.log(json.data); 
       let matrix = [];
@@ -28,6 +43,9 @@ function App() {
         matrix.push(r);
       }
       setInputList(matrix);
+    }) 
+    .catch(error => {
+      console.log(error + " Cannot retrieve the remote data, perhaps we are creating a new file on the server?");
     });
   }, []);
 
@@ -75,7 +93,7 @@ function App() {
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
     console.log(JSON.stringify(convertInputData(inputList)));
-    fetch('http://localhost:3001/post', {
+    fetch('http://localhost:3001/post/merit/testscores', {
       accepts: 'application/json, plain/text',
       mode: 'cors',
       headers: {
@@ -133,7 +151,7 @@ function App() {
             {
               (inputList !== null)? inputList.map((x, i) => {
               return (
-                <>
+                <React.Fragment key={`table-input-${i}`}>
                 <tr>
                   <td>
                     <input
@@ -200,7 +218,7 @@ function App() {
               <tr className="void-row">
                 <td colSpan="8" style={{"textAlign": "right"}}>{inputList.length - 1 === i && <button className="add-button" onClick={handleAddClick}>Add Row</button>}</td>
               </tr>
-              </>
+              </React.Fragment>
             );
           }): <tr><td>Loading Matrix...</td></tr>}
           </tbody>

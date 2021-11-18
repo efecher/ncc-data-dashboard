@@ -12,19 +12,22 @@ app.use(express.json());
 app.use(cors());
 //app.use(express.static(path.join(__dirname), "/public"));
 
-app.get('/get', (req,res) => {
+app.get('/get/merit/testscores', (req,res) => {
   console.log(res);
-  console.log(__dirname);
-  fs.readFile(__dirname + '/generated.json', (err, json) => {
-    let obj = JSON.parse(json);
-    res.json(obj);
+  fs.readFile(__dirname + '/merittestscores.json', (err, json) => {
+    if(err) {
+      console.log(err);
+    } else {
+      let obj = JSON.parse(json);
+      res.json(obj);
+    }
   });
 });
 
 
-app.post('/post', (req,res) => {
-  //console.log(req.body);
-  filePath = __dirname + '/generated.json';
+app.post('/post/merit/testscores', (req,res) => {
+  console.log(req.body);
+  filePath = __dirname + '/merittestscores.json';
   fileContent = JSON.stringify(req.body);
   
   let message = {};
