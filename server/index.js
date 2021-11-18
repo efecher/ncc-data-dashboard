@@ -14,8 +14,8 @@ app.use(cors());
 
 app.get('/get', (req,res) => {
   console.log(res);
-  let data;
-  fs.readFile(__dirname + '../../../public/generated.json', (err, json) => {
+  console.log(__dirname);
+  fs.readFile(__dirname + '/generated.json', (err, json) => {
     let obj = JSON.parse(json);
     res.json(obj);
   });
@@ -24,7 +24,7 @@ app.get('/get', (req,res) => {
 
 app.post('/post', (req,res) => {
   //console.log(req.body);
-  filePath = __dirname + '../../../public/generated.json';
+  filePath = __dirname + '/generated.json';
   fileContent = JSON.stringify(req.body);
   
   let message = {};

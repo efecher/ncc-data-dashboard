@@ -63,6 +63,10 @@ button {
   padding: 10px;
 }
 
+.clear-button {
+  background-color: #b68d06;
+}
+
 .remove-button {
   background-color: #cc0000;
   margin: 5px;

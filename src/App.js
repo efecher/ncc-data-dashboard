@@ -31,8 +31,21 @@ function App() {
     });
   }, []);
 
-  // NOTE: transform the data so we can use it properly
+  // handle clear button
+  const handleClear = () => {
+    setInputList([{
+      gpaRangeLower: 0,
+      gpaRangeUpper: 0,
+      satRangeLower: 0,
+      satRangeUpper: 0,
+      actRangeLower: 0,
+      actRangeUpper: 0,
+      awardAmount: 0
+    }]);
+    return;
+  }
   
+
   
   // handle input change
   const handleInputChange = (e, index) => {
@@ -193,6 +206,7 @@ function App() {
           </tbody>
         </table>
         <div className="submit-button-row">
+          <button className="clear-button" onClick={()=>{handleClear()}}>Clear Matrix</button>
           <input type="submit" value="Submit Matrix" />
         </div>
       </form>
