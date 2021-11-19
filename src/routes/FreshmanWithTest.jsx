@@ -137,7 +137,7 @@ function FreshmanWithTest() {
         <div className="col-2">
           <Navigation />
         </div>
-        <div className="col-10">
+        <div className="col-10 content-area">
           <form onSubmit={handleSubmit}>
             <h3>Merit Based - Matrix With Test Scores</h3> 
             <table summary="Merit Based matrix with GPA, SAT/ACT scores.">

@@ -1,12 +1,14 @@
 @import '~bootstrap/scss/bootstrap.scss';
 
 body {
-  width: 100vw;
   text-align: center;
+  height: 100vh;
 }
 
 .content-area {
   padding: 0 5vw;
+  height: 100vh;
+  overflow-y: scroll;
 }
 
 .container-fluid {
