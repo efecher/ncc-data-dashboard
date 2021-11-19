@@ -1,6 +1,26 @@
+@import '~bootstrap/scss/bootstrap.scss';
+
 body {
   width: 100vw;
   text-align: center;
+}
+
+.content-area {
+  padding: 0 5vw;
+}
+
+.container-fluid {
+  padding: 0;
+}
+
+p {
+  text-align: left;
+  margin: 5vh 5vw;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-align: left;
+  margin: 0 5vw;
 }
 
 input:not([type="submit"]) {
@@ -80,3 +100,30 @@ button {
 .submit-button-row {
   text-align: center;
 }
+
+nav {
+  background-color: #004488;
+  padding: 10px;
+  height: 100vh;
+
+  ul {
+    list-style-type: none;
+    text-align: left;
+
+    .nav-item.home-link {
+      border-bottom: 1px solid #aaaaaa;
+      margin-bottom: 2vh;
+    }
+    
+    .nav-link {
+      font-size: 1.1rem;
+      color: #ffffff;
+
+      &:hover {
+        background-color: #1188ff;
+        color: #000000;
+      }
+    }
+  }
+}
+
