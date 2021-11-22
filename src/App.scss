@@ -21,13 +21,13 @@ p {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  text-align: left;
+  text-align: center;
   margin: 0 5vw;
 }
 
 input:not([type="submit"]) {
   font-size: 1.5rem;
-  width: 5rem;
+  width: 90%;
   border: 0;
   background: #039;
   color: #ffffff;
@@ -39,12 +39,8 @@ input:focus, input::placeholder {
   padding: 3px;
 }
 
-th, td {
-  border: 3px solid #ffffff;
-}
-
 th {
-  padding: 5px;
+  padding: 4px;
   color: #ffffff;
 }
 
@@ -55,17 +51,21 @@ table {
   background-color: #024;
 }
 
-table, td {
-  padding: 2px;
-}
+// table, td {
+//   padding: 1px;
+// }
 
 td {
-  margin: 0 auto;
+  margin: 0 2px;
   text-align: center;
 }
 
 .void-row {
   background-color: #000000;
+  
+  td {
+    text-align: center;
+  }
 }
 
 input[type="submit"] {
@@ -82,11 +82,12 @@ button {
   border: 1px solid #ffffff;
   font-size: 1rem;
   font-weight: bold;
-  padding: 10px;
+  padding: 2px;
 }
 
 .clear-button {
   background-color: #b68d06;
+  padding: 10px;
 }
 
 .remove-button {

@@ -6,7 +6,6 @@ import Navigation from '../Navigation';
 
 
 function FreshmanWithTest() {
-  //const [rdata, setRData] = useState(null);
   // NOTE: set state with the existing data already pre-populated
   const [inputList, setInputList] = useState(null);
   
@@ -222,7 +221,7 @@ function FreshmanWithTest() {
                     </td>
                   </tr>
                   <tr className="void-row">
-                    <td colSpan="8" style={{"textAlign": "right"}}>{inputList.length - 1 === i && <button className="add-button" onClick={handleAddClick}>Add Row</button>}</td>
+                    <td colSpan="8">{inputList.length - 1 === i && <button className="add-button" onClick={handleAddClick}>Add Row</button>}</td>
                   </tr>
                   </React.Fragment>
                 );
