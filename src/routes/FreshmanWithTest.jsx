@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import '../App.scss';
 import Navigation from '../Navigation';
-//import { v4 } from 'uuid';
-//import { data } from './data/merit.json';
+
 
 
 function FreshmanWithTest() {
@@ -11,13 +10,14 @@ function FreshmanWithTest() {
   
   useEffect(() => {
     setInputList([{
-      gpaRangeLower: 0,
-      gpaRangeUpper: 0,
-      satRangeLower: 0,
-      satRangeUpper: 0,
-      actRangeLower: 0,
-      actRangeUpper: 0,
-      awardAmount: 0
+      gpaRangeLower: "",
+      gpaRangeUpper: "",
+      satRangeLower: "",
+      satRangeUpper: "",
+      actRangeLower: "",
+      actRangeUpper: "",
+      awardAmount: "",
+      placeholder: ""
     }]);
     fetch("http://localhost:3001/get/merit/testscores")
     .then((response) => {
@@ -38,7 +38,8 @@ function FreshmanWithTest() {
           satRangeUpper: row[3],
           actRangeLower: row[4],
           actRangeUpper: row[5],
-          awardAmount: row[6]
+          awardAmount: row[6],
+          //placeholder: 0
         }
         matrix.push(r);
       }
@@ -52,13 +53,14 @@ function FreshmanWithTest() {
   // handle clear button
   const handleClear = () => {
     setInputList([{
-      gpaRangeLower: 0,
-      gpaRangeUpper: 0,
-      satRangeLower: 0,
-      satRangeUpper: 0,
-      actRangeLower: 0,
-      actRangeUpper: 0,
-      awardAmount: 0
+      gpaRangeLower: "0",
+      gpaRangeUpper: "0",
+      satRangeLower: "0",
+      satRangeUpper: "0",
+      actRangeLower: "0",
+      actRangeUpper: "0",
+      awardAmount: "0",
+      placeholder: "0"
     }]);
     return;
   }

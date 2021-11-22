@@ -35,8 +35,12 @@ input:not([type="submit"]) {
 }
 
 input:focus, input::placeholder {
-  color: #ffffff;
   padding: 3px;
+}
+
+input:focus {
+  background-color: #0088aa;
+  color: #ffffff;
 }
 
 th {
