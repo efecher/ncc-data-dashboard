@@ -9,6 +9,7 @@ export default function Navigation() {
         <li className="nav-item home-link"><Link className="nav-link" to="/"><strong>Home</strong></Link></li>
         <li className="nav-item"><Link className="nav-link" to="/FreshmanWithTest">Freshman Merit With Test</Link></li>
         <li className="nav-item"><Link className="nav-link" to="/FreshmanTestOptional">Freshman Merit (Test Optional)</Link></li>
+        <li className="nav-item"><Link className="nav-link" to="/FreshmanNeedsBased">Freshman Needs Based</Link></li>
       </ul>
     </nav>
   );
