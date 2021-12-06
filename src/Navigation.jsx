@@ -11,7 +11,8 @@ export default function Navigation() {
         <li className="nav-item"><Link className="nav-link" to="/FreshmanTestOptional">Freshman Merit (Test Optional)</Link></li>
         <li className="nav-item"><Link className="nav-link" to="/FreshmanNeedsBasedNJ">Freshman Needs Based: NJ Residents</Link></li>
         <li className="nav-item"><Link className="nav-link" to="/FreshmanNeedsBasedNonNJ">Freshman Needs Based: Non-NJ Residents</Link></li>
-        <li className="nav-item"><Link className="nav-link" to="/TransferNeedsBasedNJ">Transfer - Needs Based</Link></li>
+        <li className="nav-item"><Link className="nav-link" to="/TransferNeedsBasedNJ">Transfer: Needs Based (NJ Residents)</Link></li>
+        <li className="nav-item"><Link className="nav-link" to="/TransferNeedsBasedNonNJ">Transfer: Needs Based (Non NJ Residents)</Link></li>
       </ul>
     </nav>
   );

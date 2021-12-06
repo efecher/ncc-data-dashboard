@@ -2,31 +2,24 @@ import React, { useState, useEffect } from "react";
 import '../App.scss';
 import Navigation from '../Navigation';
 
-
-
-function FreshmanWithTest() {
+export default function TransferNeedsBasedNonNJ() {
   // NOTE: set state with the existing data already pre-populated
   const [inputList, setInputList] = useState(null);
-  
+
+  //NOTE: Transfer is more complicated and needs-based is dependent on min/max EFC value, and their GPA range (<3, 3.0 - 3.49, >= 3.5) so we will need all those values
+
   useEffect(() => {
     setInputList([{
-      gpaRangeLower: "",
-      gpaRangeUpper: "",
-      satRangeLower: "",
-      satRangeUpper: "",
-      actRangeLower: "",
-      actRangeUpper: "",
-      awardAmount: "",
-      placeholder: ""
+      efcRangeLower: "",
+      efcRangeUpper: "",
+      gpaLowRangeAmount: "",
+      gpaMidRangeAmount: "",
+      gpaHighRangeAmount: "",
+      placeholder: "Enter a value"
     }]);
-    fetch("http://localhost:3001/get/merit/testscores")
+    fetch("http://localhost:3001/get/transfer/transferneedsbasednonnj/")
     .then((response) => {
       if(response.ok) {
-        try {
-          JSON.parse(response);
-        } catch(e) {
-          throw new Error();
-        }
         return response.json();
       } else {
         throw new Error('Error retrieving the remote data.');
@@ -37,13 +30,11 @@ function FreshmanWithTest() {
       let matrix = [];
       for(let row of json.data) {
         let r = {
-          gpaRangeLower: row[0],
-          gpaRangeUpper: row[1],
-          satRangeLower: row[2],
-          satRangeUpper: row[3],
-          actRangeLower: row[4],
-          actRangeUpper: row[5],
-          awardAmount: row[6],
+          efcRangeLower: row[0],
+          efcRangeUpper: row[1],
+          gpaLowRangeAmout: row[2],
+          gpaMidRangeAmout: row[3],
+          gpaHighRangeAmout: row[4],
           //placeholder: 0
         }
         matrix.push(r);
@@ -51,7 +42,6 @@ function FreshmanWithTest() {
       setInputList(matrix);
     }) 
     .catch(error => {
-      alert("Remote data doesn't exist. When submitted, this session will create a new record from scratch on the remote server.");
       console.log(error + " Cannot retrieve the remote data, perhaps we are creating a new file on the server?");
     });
   }, []);
@@ -59,20 +49,16 @@ function FreshmanWithTest() {
   // handle clear button
   const handleClear = () => {
     setInputList([{
-      gpaRangeLower: "0",
-      gpaRangeUpper: "0",
-      satRangeLower: "0",
-      satRangeUpper: "0",
-      actRangeLower: "0",
-      actRangeUpper: "0",
-      awardAmount: "0",
-      placeholder: "0"
+      efcRangeLower: "0",
+      efcRangeUpper: "0",
+      gpaLowRangeAmount: "0",
+      gpaMidRangeAmount: "0",
+      gpaHighRangeAmount: "0",
+      placeholder: "Enter a value"
     }]);
     return;
   }
-  
 
-  
   // handle input change
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -80,28 +66,27 @@ function FreshmanWithTest() {
     list[index][name] = value;
     setInputList(list);
   };
-  
+
   // handle click event of the Remove button
   const handleRemoveClick = index => {
     const list = [...inputList];
     list.splice(index, 1);
     setInputList(list);
   };
-  
+
   // handle click event of the Add button
   const handleAddClick = () => {
-    setInputList([...inputList, { gpaRangeLower: "", gpaRangeUpper: "", satRangeLower: "", satRangeUpper: "", actRangeLower: "", actRangeUpper: "", awardAmount: "" }]);
+    setInputList([...inputList, { efcRangeLower: "", efcRangeUpper: "", gpaLowRangeAmount: "", gpaMidRangeAmount: "", gpaHighRangeAmount: ""}]);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let p = document.createElement('p');
-    p.innerHTML = JSON.stringify(convertInputData(inputList));
-    document.body.appendChild(p);
+    //console.log(inputList);
+    //console.log(JSON.stringify(convertInputData(inputList)));
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
-    console.log(JSON.stringify(convertInputData(inputList)));
-    fetch('http://localhost:3001/post/merit/testscores', {
+    console.log(JSON.stringify(inputList));
+    fetch('http://localhost:3001/post/transfer/transferneedsbasednonnj/', {
       accepts: 'application/json, plain/text',
       mode: 'cors',
       headers: {
@@ -117,20 +102,18 @@ function FreshmanWithTest() {
   };
 
   const convertInputData = (data) => {
-    //console.log(data);
+    console.log(data);
     let output = [];
     for(let i=0; i<data.length; i++) {
       let row = [];
 
       row.push(
         // NOTE: Check if input is a number first before converting from string, empty strings, as in the initial values of the inputs are NaN
-        (data[i].gpaRangeLower === "")? 0 : parseFloat(data[i].gpaRangeLower), 
-        (data[i].gpaRangeUpper === "")? 0 : parseFloat(data[i].gpaRangeUpper), 
-        (data[i].satRangeLower === "")? 0 : parseInt(data[i].satRangeLower), 
-        (data[i].satRangeUpper === "")? 0 : parseInt(data[i].satRangeUpper), 
-        (data[i].actRangeLower === "")? 0 : parseInt(data[i].actRangeLower), 
-        (data[i].actRangeUpper === "")? 0 : parseInt(data[i].actRangeUpper), 
-        (data[i].awardAmount === "")? 0 : parseInt(data[i].awardAmount)
+        (data[i].efcRangeLower === "")? 0 : parseInt(data[i].efcRangeLower), 
+        (data[i].efcRangeUpper === "")? 0 : parseInt(data[i].efcRangeUpper), 
+        (data[i].gpaLowRangeAmount === "")? 0 : parseInt(data[i].gpaLowRangeAmount),
+        (data[i].gpaMidRangeAmount === "")? 0 : parseInt(data[i].gpaMidRangeAmount),
+        (data[i].gpaHighRangeAmount === "")? 0 : parseInt(data[i].gpaHighRangeAmount)
       );
       output.push(row);
     }
@@ -145,18 +128,16 @@ function FreshmanWithTest() {
           <Navigation />
         </div>
         <div className="col-10 content-area">
-          <form onSubmit={handleSubmit}>
-            <h3>Merit Based - Matrix With Test Scores</h3> 
-            <table summary="Merit Based matrix with GPA, SAT/ACT scores.">
+        <form onSubmit={handleSubmit}>
+            <h3>Freshman Needs-Based (NJ Residents)</h3> 
+            <table summary="Needs Based - Non NJ Resident">
               <thead>
               <tr>
-                <th>GPA Range Lower Bound</th>
-                <th>GPA Range Upper Bound</th>
-                <th>SAT Range Lower Bound</th>
-                <th>SAT Range Upper Bound</th>
-                <th>ACT Range Lower Bound</th>
-                <th>ACT Range Upper Bound</th>
-                <th>Award Amount</th>
+                <th>Minimum EFC</th>
+                <th>Maximum EFC</th>
+                <th>GPA &lt; 3</th>
+                <th>GPA 3.0 - 3.49</th>
+                <th>GPA &gt;= 3.5</th>
                 <th>&nbsp;</th>
               </tr>
               </thead>
@@ -168,57 +149,41 @@ function FreshmanWithTest() {
                     <tr>
                       <td>
                         <input
-                          name="gpaRangeLower"
-                          placeholder="0"
-                          value={x.gpaRangeLower}
+                          name="efcRangeLower"
+                          placeholder={x.placeholder}
+                          value={x.efcRangeLower}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
                       <td>
                         <input
-                          name="gpaRangeUpper"
-                          placeholder="0"
-                          value={x.gpaRangeUpper}
+                          name="efcRangeUpper"
+                          placeholder={x.placeholder}
+                          value={x.efcRangeUpper}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
                       <td>
                         <input
-                          name="satRangeLower"
-                          placeholder="0"
-                          value={x.satRangeLower}
+                          name="gpaLowRangeAmount"
+                          placeholder={x.placeholder}
+                          value={x.gpaLowRangeAmount}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
                       <td>
                         <input
-                          name="satRangeUpper"
-                          placeholder="0"
-                          value={x.satRangeUpper}
+                          name="gpaMidRangeAmount"
+                          placeholder={x.placeholder}
+                          value={x.gpaMidRangeAmount}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
                       <td>
                         <input
-                          name="actRangeLower"
-                          placeholder="0"
-                          value={x.actRangeLower}
-                          onChange={e => handleInputChange(e, i)}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          name="actRangeUpper"
-                          placeholder="0"
-                          value={x.actRangeUpper}
-                          onChange={e => handleInputChange(e, i)}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          name="awardAmount"
-                          placeholder="0"
-                          value={x.awardAmount}
+                          name="gpaHighRangeAmount"
+                          placeholder={x.placeholder}
+                          value={x.gpaHighRangeAmount}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
@@ -243,7 +208,6 @@ function FreshmanWithTest() {
           </form>
         </div>
       </div>
-    </div> 
+    </div>
   );
 }
-export default FreshmanWithTest;

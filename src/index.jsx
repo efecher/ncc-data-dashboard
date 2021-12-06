@@ -7,6 +7,7 @@ import FreshmanTestOptional from './routes/FreshmanTestOptional';
 import FreshmanNeedsBasedNJ from './routes/FreshmanNeedsBasedNJ';
 import FreshmanNeedsBasedNonNJ from './routes/FreshmanNeedsBasedNonNJ';
 import TransferNeedsBasedNJ from './routes/TransferNeedsBasedNJ';
+import TransferNeedsBasedNonNJ from './routes/TransferNeedsBasedNonNJ';
 
 render(
   <BrowserRouter>
@@ -17,6 +18,7 @@ render(
       <Route path="/FreshmanNeedsBasedNJ" element={<FreshmanNeedsBasedNJ />} />
       <Route path="/FreshmanNeedsBasedNonNJ" element={<FreshmanNeedsBasedNonNJ />} />
       <Route path="/TransferNeedsBasedNJ" element={<TransferNeedsBasedNJ />} />
+      <Route path="/TransferNeedsBasedNonNJ" element={<TransferNeedsBasedNonNJ />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')
