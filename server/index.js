@@ -36,6 +36,18 @@ app.get('/get/merit/testoptional', (req,res) => {
   });
 });
 
+app.get('/get/needs/freshmannj', (req,res) => {
+  console.log(res);
+  fs.readFile(__dirname + '/needsfreshmannj.json', (err, json) => {
+    if(err) {
+      console.log(err);
+    } else {
+      let obj = JSON.parse(json);
+      res.json(obj);
+    }
+  });
+});
+
 app.post('/post/merit/testscores', (req,res) => {
   console.log(req.body);
   filePath = __dirname + '/merittestscores.json';
@@ -78,7 +90,26 @@ app.post('/post/merit/testoptional', (req,res) => {
   });
 });
 
-
+app.post('/post/needs/freshmannj', (req,res) => {
+  console.log(req.body);
+  filePath = __dirname + '/needsfreshmannj.json';
+  fileContent = JSON.stringify(req.body);
+  
+  let message = {};
+  fs.writeFile(filePath, fileContent, err => {
+    if(err) {
+      console.log(err);
+      message = { error: 500, message: err, timestamp: Date.now()}
+    } else {
+      console.log("Written Successfully.");
+      message = {
+        response: 200,
+        message: "Data successfully submitted.",
+        timsetamp: Date.now()
+      };
+    }
+  });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

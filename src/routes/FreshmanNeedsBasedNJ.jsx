@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import Navigation from '../Navigation';
+import React, { useState, useEffect } from "react";
 import '../App.scss';
+import Navigation from '../Navigation';
 
-function FreshmanTestOptional() {
+export default function FreshmanNeedsBasedNJ() {
   // NOTE: set state with the existing data already pre-populated
   const [inputList, setInputList] = useState(null);
 
   useEffect(() => {
     setInputList([{
-      gpaRangeLower: "",
-      gpaRangeUpper: "",
+      efcRangeLower: "",
+      efcRangeUpper: "",
       awardAmount: "",
       placeholder: "Enter a value"
     }]);
-    fetch("http://localhost:3001/get/merit/testoptional")
+    fetch("http://localhost:3001/get/needs/freshmannj")
     .then((response) => {
       if(response.ok) {
         return response.json();
@@ -26,9 +26,10 @@ function FreshmanTestOptional() {
       let matrix = [];
       for(let row of json.data) {
         let r = {
-          gpaRangeLower: row[0],
-          gpaRangeUpper: row[1],
-          awardAmount: row[2]
+          efcRangeLower: row[0],
+          efcRangeUpper: row[1],
+          awardAmount: row[2],
+          //placeholder: 0
         }
         matrix.push(r);
       }
@@ -42,9 +43,9 @@ function FreshmanTestOptional() {
   // handle clear button
   const handleClear = () => {
     setInputList([{
-      gpaRangeLower: 0,
-      gpaRangeUpper: 0,
-      awardAmount: 0,
+      efcRangeLower: "0",
+      efcRangeUpper: "0",
+      awardAmount: "0",
       placeholder: "Enter a value"
     }]);
     return;
@@ -57,7 +58,7 @@ function FreshmanTestOptional() {
     list[index][name] = value;
     setInputList(list);
   };
-  
+
   // handle click event of the Remove button
   const handleRemoveClick = index => {
     const list = [...inputList];
@@ -67,18 +68,17 @@ function FreshmanTestOptional() {
 
   // handle click event of the Add button
   const handleAddClick = () => {
-    setInputList([...inputList, { gpaRangeLower: "", gpaRangeUpper: "", awardAmount: "" }]);
+    setInputList([...inputList, { efcRangeLower: "", efcRangeUpper: "", awardAmount: "" }]);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let p = document.createElement('p');
-    p.innerHTML = JSON.stringify(convertInputData(inputList));
-    document.body.appendChild(p);
+    //console.log(inputList);
+    //console.log(JSON.stringify(convertInputData(inputList)));
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
-    console.log(JSON.stringify(convertInputData(inputList)));
-    fetch('http://localhost:3001/post/merit/testoptional', {
+    console.log(JSON.stringify(inputList));
+    fetch('http://localhost:3001/post/needs/freshmannj', {
       accepts: 'application/json, plain/text',
       mode: 'cors',
       headers: {
@@ -94,15 +94,15 @@ function FreshmanTestOptional() {
   };
 
   const convertInputData = (data) => {
-    //console.log(data);
+    console.log(data);
     let output = [];
     for(let i=0; i<data.length; i++) {
       let row = [];
 
       row.push(
         // NOTE: Check if input is a number first before converting from string, empty strings, as in the initial values of the inputs are NaN
-        (data[i].gpaRangeLower === "")? 0 : parseFloat(data[i].gpaRangeLower), 
-        (data[i].gpaRangeUpper === "")? 0 : parseFloat(data[i].gpaRangeUpper),  
+        (data[i].efcRangeLower === "")? 0 : parseInt(data[i].efcRangeLower), 
+        (data[i].efcRangeUpper === "")? 0 : parseInt(data[i].efcRangeUpper), 
         (data[i].awardAmount === "")? 0 : parseInt(data[i].awardAmount)
       );
       output.push(row);
@@ -111,7 +111,6 @@ function FreshmanTestOptional() {
     return output;
   }
 
-
   return (
     <div className="container-fluid">
       <div className="row g-0">
@@ -119,13 +118,13 @@ function FreshmanTestOptional() {
           <Navigation />
         </div>
         <div className="col-10 content-area">
-          <form onSubmit={handleSubmit}>
-            <h3>Merit Based - Matrix Without Test Scores</h3> 
-            <table summary="Merit Based matrix - Test Optional.">
+        <form onSubmit={handleSubmit}>
+            <h3>Freshman Needs-Based (NJ Residents)</h3> 
+            <table summary="Merit Based matrix with GPA, SAT/ACT scores.">
               <thead>
               <tr>
-                <th>GPA Range Lower Bound</th>
-                <th>GPA Range Upper Bound</th>
+                <th>Minimum EFC</th>
+                <th>Maximum EFC</th>
                 <th>Award Amount</th>
                 <th>&nbsp;</th>
               </tr>
@@ -138,17 +137,17 @@ function FreshmanTestOptional() {
                     <tr>
                       <td>
                         <input
-                          name="gpaRangeLower"
+                          name="efcRangeLower"
                           placeholder={x.placeholder}
-                          value={x.gpaRangeLower}
+                          value={x.efcRangeLower}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
                       <td>
                         <input
-                          name="gpaRangeUpper"
+                          name="efcRangeUpper"
                           placeholder={x.placeholder}
-                          value={x.gpaRangeUpper}
+                          value={x.efcRangeUpper}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
@@ -181,8 +180,6 @@ function FreshmanTestOptional() {
           </form>
         </div>
       </div>
-    </div> 
+    </div>
   );
 }
-
-export default FreshmanTestOptional;
