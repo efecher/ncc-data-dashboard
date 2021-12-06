@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import '../App.scss';
 import Navigation from '../Navigation';
 
-export default function FreshmanNeedsBasedNJ() {
+export default function FreshmanNeedsBasedNonNJ() {
   // NOTE: set state with the existing data already pre-populated
   const [inputList, setInputList] = useState(null);
 
@@ -13,7 +13,7 @@ export default function FreshmanNeedsBasedNJ() {
       awardAmount: "",
       placeholder: "Enter a value"
     }]);
-    fetch("http://localhost:3001/get/needs/freshmannj")
+    fetch("http://localhost:3001/get/needs/freshmannonnj")
     .then((response) => {
       if(response.ok) {
         return response.json();
@@ -78,7 +78,7 @@ export default function FreshmanNeedsBasedNJ() {
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
     console.log(JSON.stringify(inputList));
-    fetch('http://localhost:3001/post/needs/freshmannj', {
+    fetch('http://localhost:3001/post/needs/freshmannonnj', {
       accepts: 'application/json, plain/text',
       mode: 'cors',
       headers: {
@@ -120,7 +120,7 @@ export default function FreshmanNeedsBasedNJ() {
         <div className="col-10 content-area">
         <form onSubmit={handleSubmit}>
             <h3>Freshman Needs-Based (NJ Residents)</h3> 
-            <table summary="Needs-Based, NJ Resident.">
+            <table summary="Needs Based - Non NJ Resident">
               <thead>
               <tr>
                 <th>Minimum EFC</th>

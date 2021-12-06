@@ -2,18 +2,22 @@ import React, { useState, useEffect } from "react";
 import '../App.scss';
 import Navigation from '../Navigation';
 
-export default function FreshmanNeedsBasedNJ() {
+export default function TransferNeedsBasedNJ() {
   // NOTE: set state with the existing data already pre-populated
   const [inputList, setInputList] = useState(null);
+
+  //NOTE: Transfer is more complicated and needs-based is dependent on min/max EFC value, and their GPA range (<3, 3.0 - 3.49, >= 3.5) so we will need all those values
 
   useEffect(() => {
     setInputList([{
       efcRangeLower: "",
       efcRangeUpper: "",
-      awardAmount: "",
+      gpaLowRangeAmount: "",
+      gpaMidRangeAmount: "",
+      gpaHighRangeAmount: "",
       placeholder: "Enter a value"
     }]);
-    fetch("http://localhost:3001/get/needs/freshmannj")
+    fetch("http://localhost:3001/get/transfer/transferneedsbasednj/")
     .then((response) => {
       if(response.ok) {
         return response.json();
@@ -28,7 +32,9 @@ export default function FreshmanNeedsBasedNJ() {
         let r = {
           efcRangeLower: row[0],
           efcRangeUpper: row[1],
-          awardAmount: row[2],
+          gpaLowRangeAmout: row[2],
+          gpaMidRangeAmout: row[3],
+          gpaHighRangeAmout: row[4],
           //placeholder: 0
         }
         matrix.push(r);
@@ -45,7 +51,9 @@ export default function FreshmanNeedsBasedNJ() {
     setInputList([{
       efcRangeLower: "0",
       efcRangeUpper: "0",
-      awardAmount: "0",
+      gpaLowRangeAmount: "0",
+      gpaMidRangeAmount: "0",
+      gpaHighRangeAmount: "0",
       placeholder: "Enter a value"
     }]);
     return;
@@ -68,7 +76,7 @@ export default function FreshmanNeedsBasedNJ() {
 
   // handle click event of the Add button
   const handleAddClick = () => {
-    setInputList([...inputList, { efcRangeLower: "", efcRangeUpper: "", awardAmount: "" }]);
+    setInputList([...inputList, { efcRangeLower: "", efcRangeUpper: "", gpaLowRangeAmount: "", gpaMidRangeAmount: "", gpaHighRangeAmount: ""}]);
   };
 
   const handleSubmit = (event) => {
@@ -78,7 +86,7 @@ export default function FreshmanNeedsBasedNJ() {
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
     console.log(JSON.stringify(inputList));
-    fetch('http://localhost:3001/post/needs/freshmannj', {
+    fetch('http://localhost:3001/post/transfer/transferneedsbasednj/', {
       accepts: 'application/json, plain/text',
       mode: 'cors',
       headers: {
@@ -103,7 +111,9 @@ export default function FreshmanNeedsBasedNJ() {
         // NOTE: Check if input is a number first before converting from string, empty strings, as in the initial values of the inputs are NaN
         (data[i].efcRangeLower === "")? 0 : parseInt(data[i].efcRangeLower), 
         (data[i].efcRangeUpper === "")? 0 : parseInt(data[i].efcRangeUpper), 
-        (data[i].awardAmount === "")? 0 : parseInt(data[i].awardAmount)
+        (data[i].gpaLowRangeAmount === "")? 0 : parseInt(data[i].gpaLowRangeAmount),
+        (data[i].gpaMidRangeAmount === "")? 0 : parseInt(data[i].gpaMidRangeAmount),
+        (data[i].gpaHighRangeAmount === "")? 0 : parseInt(data[i].gpaHighRangeAmount)
       );
       output.push(row);
     }
@@ -120,12 +130,14 @@ export default function FreshmanNeedsBasedNJ() {
         <div className="col-10 content-area">
         <form onSubmit={handleSubmit}>
             <h3>Freshman Needs-Based (NJ Residents)</h3> 
-            <table summary="Needs-Based, NJ Resident.">
+            <table summary="Needs Based - Non NJ Resident">
               <thead>
               <tr>
                 <th>Minimum EFC</th>
                 <th>Maximum EFC</th>
-                <th>Award Amount</th>
+                <th>GPA &lt; 3</th>
+                <th>GPA 3.0 - 3.49</th>
+                <th>GPA &gt;= 3.5</th>
                 <th>&nbsp;</th>
               </tr>
               </thead>
@@ -153,9 +165,25 @@ export default function FreshmanNeedsBasedNJ() {
                       </td>
                       <td>
                         <input
-                          name="awardAmount"
+                          name="gpaLowRangeAmount"
                           placeholder={x.placeholder}
-                          value={x.awardAmount}
+                          value={x.gpaLowRangeAmount}
+                          onChange={e => handleInputChange(e, i)}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          name="gpaMidRangeAmount"
+                          placeholder={x.placeholder}
+                          value={x.gpaMidRangeAmount}
+                          onChange={e => handleInputChange(e, i)}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          name="gpaHighRangeAmount"
+                          placeholder={x.placeholder}
+                          value={x.gpaHighRangeAmount}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
