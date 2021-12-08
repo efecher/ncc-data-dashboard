@@ -117,14 +117,18 @@ nav {
     list-style-type: none;
     text-align: left;
 
-    .nav-item.home-link {
-      border-bottom: 1px solid #aaaaaa;
-      margin-bottom: 2vh;
+    &:last-child {
+      border-bottom: 1px solid #aaa;
     }
+
     
+
     .nav-link {
       font-size: 1.1rem;
       color: #ffffff;
+      
+      margin-bottom: 0;
+      
 
       &:hover {
         background-color: #1188ff;

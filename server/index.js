@@ -120,9 +120,42 @@ app.get('/get/pell', (req,res) => {
   });
 });
 
+app.get('/get/efcdependent', (req,res) => {
+  console.log(res);
+  fs.readFile(__dirname + '/efcdependent.json', (err, json) => {
+    if(err) {
+      console.log(err);
+    } else {
+      let obj = JSON.parse(json);
+      res.json(obj);
+    }
+  });
+});
+
 app.post('/post/merit/testscores', (req,res) => {
   console.log(req.body);
   filePath = __dirname + '/merittestscores.json';
+  fileContent = JSON.stringify(req.body);
+  
+  let message = {};
+  fs.writeFile(filePath, fileContent, err => {
+    if(err) {
+      console.log(err);
+      message = { error: 500, message: err, timestamp: Date.now()}
+    } else {
+      console.log("Written Successfully.");
+      message = {
+        response: 200,
+        message: "Data successfully submitted.",
+        timsetamp: Date.now()
+      };
+    }
+  });
+});
+
+app.post('/post/efcdependent', (req,res) => {
+  console.log(req.body);
+  filePath = __dirname + '/efcdependent.json';
   fileContent = JSON.stringify(req.body);
   
   let message = {};

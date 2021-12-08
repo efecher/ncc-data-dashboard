@@ -11,6 +11,7 @@ import TransferNeedsBasedNonNJ from './routes/TransferNeedsBasedNonNJ';
 import TransferMeritBased from './routes/TransferMeritBased';
 import Pell from './routes/Pell';
 import TuitionAssistanceGrant from './routes/TuitionAssistanceGrant';
+import EFCDependent from './routes/EFCDependent';
 
 render(
   <BrowserRouter>
@@ -25,6 +26,7 @@ render(
       <Route path="/TransferMeritBased" element={<TransferMeritBased />} />
       <Route path="/Pell" element={<Pell />} />
       <Route path="/TuitionAssistanceGrant" element={<TuitionAssistanceGrant />} />
+      <Route path="/EFCDependent" element={<EFCDependent />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')
