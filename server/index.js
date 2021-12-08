@@ -96,6 +96,18 @@ app.get('/get/needs/freshmannonnj', (req,res) => {
   });
 });
 
+app.get('/get/tag', (req,res) => {
+  console.log(res);
+  fs.readFile(__dirname + '/tag.json', (err, json) => {
+    if(err) {
+      console.log(err);
+    } else {
+      let obj = JSON.parse(json);
+      res.json(obj);
+    }
+  });
+});
+
 app.get('/get/pell', (req,res) => {
   console.log(res);
   fs.readFile(__dirname + '/pell.json', (err, json) => {
@@ -174,6 +186,27 @@ app.post('/post/merit/transfer', (req,res) => {
 app.post('/post/pell', (req,res) => {
   console.log(req.body);
   filePath = __dirname + '/pell.json';
+  fileContent = JSON.stringify(req.body);
+  
+  let message = {};
+  fs.writeFile(filePath, fileContent, err => {
+    if(err) {
+      console.log(err);
+      message = { error: 500, message: err, timestamp: Date.now()}
+    } else {
+      console.log("Written Successfully.");
+      message = {
+        response: 200,
+        message: "Data successfully submitted.",
+        timsetamp: Date.now()
+      };
+    }
+  });
+});
+
+app.post('/post/tag', (req,res) => {
+  console.log(req.body);
+  filePath = __dirname + '/tag.json';
   fileContent = JSON.stringify(req.body);
   
   let message = {};

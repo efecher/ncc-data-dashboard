@@ -10,6 +10,7 @@ import TransferNeedsBasedNJ from './routes/TransferNeedsBasedNJ';
 import TransferNeedsBasedNonNJ from './routes/TransferNeedsBasedNonNJ';
 import TransferMeritBased from './routes/TransferMeritBased';
 import Pell from './routes/Pell';
+import TuitionAssistanceGrant from './routes/TuitionAssistanceGrant';
 
 render(
   <BrowserRouter>
@@ -23,6 +24,7 @@ render(
       <Route path="/TransferNeedsBasedNonNJ" element={<TransferNeedsBasedNonNJ />} />
       <Route path="/TransferMeritBased" element={<TransferMeritBased />} />
       <Route path="/Pell" element={<Pell />} />
+      <Route path="/TuitionAssistanceGrant" element={<TuitionAssistanceGrant />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

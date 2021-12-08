@@ -4,7 +4,7 @@ import Navigation from '../Navigation';
 
 
 
-export default function Pell() {
+export default function TuitionAssistanceGrant() {
   // NOTE: set state with the existing data already pre-populated
   const [inputList, setInputList] = useState(null);
   
@@ -15,7 +15,7 @@ export default function Pell() {
       awardAmount: "",
       placeholder: "Enter a value..."
     }]);
-    fetch("http://localhost:3001/get/pell")
+    fetch("http://localhost:3001/get/tag")
     .then((response) => {
       if(response.ok) {
         try {
@@ -87,7 +87,7 @@ export default function Pell() {
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
     console.log(JSON.stringify(convertInputData(inputList)));
-    fetch('http://localhost:3001/post/pell', {
+    fetch('http://localhost:3001/post/tag', {
       accepts: 'application/json, plain/text',
       mode: 'cors',
       headers: {
@@ -128,8 +128,8 @@ export default function Pell() {
         </div>
         <div className="col-10 content-area">
           <form onSubmit={handleSubmit}>
-            <h3>Pell</h3> 
-            <table summary="Pell Grant Matrix">
+            <h3>Tuition Assistance Grant</h3> 
+            <table summary="Tuition Assistance Grant">
               <thead>
               <tr>
                 <th>EFC Range Lower Bound</th>
