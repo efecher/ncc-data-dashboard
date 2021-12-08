@@ -4,7 +4,7 @@ import Navigation from '../Navigation';
 
 
 
-export default function FreshmanWithTest() {
+export default function TransferMeritBased() {
   // NOTE: set state with the existing data already pre-populated
   const [inputList, setInputList] = useState(null);
   
@@ -12,14 +12,10 @@ export default function FreshmanWithTest() {
     setInputList([{
       gpaRangeLower: "",
       gpaRangeUpper: "",
-      satRangeLower: "",
-      satRangeUpper: "",
-      actRangeLower: "",
-      actRangeUpper: "",
       awardAmount: "",
-      placeholder: ""
+      placeholder: "Enter a value..."
     }]);
-    fetch("http://localhost:3001/get/merit/testscores")
+    fetch("http://localhost:3001/get/merit/transfer")
     .then((response) => {
       if(response.ok) {
         try {
@@ -39,11 +35,7 @@ export default function FreshmanWithTest() {
         let r = {
           gpaRangeLower: row[0],
           gpaRangeUpper: row[1],
-          satRangeLower: row[2],
-          satRangeUpper: row[3],
-          actRangeLower: row[4],
-          actRangeUpper: row[5],
-          awardAmount: row[6],
+          awardAmount: row[2],
           //placeholder: 0
         }
         matrix.push(r);
@@ -61,17 +53,11 @@ export default function FreshmanWithTest() {
     setInputList([{
       gpaRangeLower: "0",
       gpaRangeUpper: "0",
-      satRangeLower: "0",
-      satRangeUpper: "0",
-      actRangeLower: "0",
-      actRangeUpper: "0",
       awardAmount: "0",
-      placeholder: "0"
+      placeholder: "Enter a value..."
     }]);
     return;
   }
-  
-
   
   // handle input change
   const handleInputChange = (e, index) => {
@@ -90,7 +76,7 @@ export default function FreshmanWithTest() {
   
   // handle click event of the Add button
   const handleAddClick = () => {
-    setInputList([...inputList, { gpaRangeLower: "", gpaRangeUpper: "", satRangeLower: "", satRangeUpper: "", actRangeLower: "", actRangeUpper: "", awardAmount: "" }]);
+    setInputList([...inputList, { gpaRangeLower: "", gpaRangeUpper: "",  awardAmount: "" }]);
   };
 
   const handleSubmit = (event) => {
@@ -101,7 +87,7 @@ export default function FreshmanWithTest() {
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
     console.log(JSON.stringify(convertInputData(inputList)));
-    fetch('http://localhost:3001/post/merit/testscores', {
+    fetch('http://localhost:3001/post/merit/transfer', {
       accepts: 'application/json, plain/text',
       mode: 'cors',
       headers: {
@@ -126,10 +112,6 @@ export default function FreshmanWithTest() {
         // NOTE: Check if input is a number first before converting from string, empty strings, as in the initial values of the inputs are NaN
         (data[i].gpaRangeLower === "")? 0 : parseFloat(data[i].gpaRangeLower), 
         (data[i].gpaRangeUpper === "")? 0 : parseFloat(data[i].gpaRangeUpper), 
-        (data[i].satRangeLower === "")? 0 : parseInt(data[i].satRangeLower), 
-        (data[i].satRangeUpper === "")? 0 : parseInt(data[i].satRangeUpper), 
-        (data[i].actRangeLower === "")? 0 : parseInt(data[i].actRangeLower), 
-        (data[i].actRangeUpper === "")? 0 : parseInt(data[i].actRangeUpper), 
         (data[i].awardAmount === "")? 0 : parseInt(data[i].awardAmount)
       );
       output.push(row);
@@ -147,15 +129,11 @@ export default function FreshmanWithTest() {
         <div className="col-10 content-area">
           <form onSubmit={handleSubmit}>
             <h3>Merit Based - Matrix With Test Scores</h3> 
-            <table summary="Merit Based matrix with GPA, SAT/ACT scores.">
+            <table summary="Transfer - Merit Based (GPA)">
               <thead>
               <tr>
                 <th>GPA Range Lower Bound</th>
                 <th>GPA Range Upper Bound</th>
-                <th>SAT Range Lower Bound</th>
-                <th>SAT Range Upper Bound</th>
-                <th>ACT Range Lower Bound</th>
-                <th>ACT Range Upper Bound</th>
                 <th>Award Amount</th>
                 <th>&nbsp;</th>
               </tr>
@@ -169,7 +147,7 @@ export default function FreshmanWithTest() {
                       <td>
                         <input
                           name="gpaRangeLower"
-                          placeholder="0"
+                          placeholder={x.placeholder}
                           value={x.gpaRangeLower}
                           onChange={e => handleInputChange(e, i)}
                         />
@@ -177,47 +155,15 @@ export default function FreshmanWithTest() {
                       <td>
                         <input
                           name="gpaRangeUpper"
-                          placeholder="0"
+                          placeholder={x.placeholder}
                           value={x.gpaRangeUpper}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
                       <td>
                         <input
-                          name="satRangeLower"
-                          placeholder="0"
-                          value={x.satRangeLower}
-                          onChange={e => handleInputChange(e, i)}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          name="satRangeUpper"
-                          placeholder="0"
-                          value={x.satRangeUpper}
-                          onChange={e => handleInputChange(e, i)}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          name="actRangeLower"
-                          placeholder="0"
-                          value={x.actRangeLower}
-                          onChange={e => handleInputChange(e, i)}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          name="actRangeUpper"
-                          placeholder="0"
-                          value={x.actRangeUpper}
-                          onChange={e => handleInputChange(e, i)}
-                        />
-                      </td>
-                      <td>
-                        <input
                           name="awardAmount"
-                          placeholder="0"
+                          placeholder={x.placeholder}
                           value={x.awardAmount}
                           onChange={e => handleInputChange(e, i)}
                         />

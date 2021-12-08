@@ -13,6 +13,7 @@ export default function Navigation() {
         <li className="nav-item"><Link className="nav-link" to="/FreshmanNeedsBasedNonNJ">Freshman Needs Based: Non-NJ Residents</Link></li>
         <li className="nav-item"><Link className="nav-link" to="/TransferNeedsBasedNJ">Transfer: Needs Based (NJ Residents)</Link></li>
         <li className="nav-item"><Link className="nav-link" to="/TransferNeedsBasedNonNJ">Transfer: Needs Based (Non NJ Residents)</Link></li>
+        <li className="nav-item"><Link className="nav-link" to="/TransferMeritBased">Transfer: Merit-Based (GPA)</Link></li>
       </ul>
     </nav>
   );
