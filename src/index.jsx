@@ -12,6 +12,8 @@ import TransferMeritBased from './routes/TransferMeritBased';
 import Pell from './routes/Pell';
 import TuitionAssistanceGrant from './routes/TuitionAssistanceGrant';
 import EFCDependent from './routes/EFCDependent';
+import EFCIndependentNoDependents from './routes/EFCIndependentNoDependents';
+import EFCIndependentWithDependents from './routes/EFCIndependentWithDependents';
 
 render(
   <BrowserRouter>
@@ -27,6 +29,8 @@ render(
       <Route path="/Pell" element={<Pell />} />
       <Route path="/TuitionAssistanceGrant" element={<TuitionAssistanceGrant />} />
       <Route path="/EFCDependent" element={<EFCDependent />} />
+      <Route path="/EFCIndependentNoDependents" element={<EFCIndependentNoDependents />} />
+      <Route path="/EFCIndependentWithDependents" element={<EFCIndependentWithDependents />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

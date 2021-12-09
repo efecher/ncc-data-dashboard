@@ -132,6 +132,30 @@ app.get('/get/efcdependent', (req,res) => {
   });
 });
 
+app.get('/get/efcindnodep', (req,res) => {
+  console.log(res);
+  fs.readFile(__dirname + '/efcindnodep.json', (err, json) => {
+    if(err) {
+      console.log(err);
+    } else {
+      let obj = JSON.parse(json);
+      res.json(obj);
+    }
+  });
+});
+
+app.get('/get/efcindwithdep', (req,res) => {
+  console.log(res);
+  fs.readFile(__dirname + '/efcindwithdep.json', (err, json) => {
+    if(err) {
+      console.log(err);
+    } else {
+      let obj = JSON.parse(json);
+      res.json(obj);
+    }
+  });
+});
+
 app.post('/post/merit/testscores', (req,res) => {
   console.log(req.body);
   filePath = __dirname + '/merittestscores.json';
@@ -156,6 +180,48 @@ app.post('/post/merit/testscores', (req,res) => {
 app.post('/post/efcdependent', (req,res) => {
   console.log(req.body);
   filePath = __dirname + '/efcdependent.json';
+  fileContent = JSON.stringify(req.body);
+  
+  let message = {};
+  fs.writeFile(filePath, fileContent, err => {
+    if(err) {
+      console.log(err);
+      message = { error: 500, message: err, timestamp: Date.now()}
+    } else {
+      console.log("Written Successfully.");
+      message = {
+        response: 200,
+        message: "Data successfully submitted.",
+        timsetamp: Date.now()
+      };
+    }
+  });
+});
+
+app.post('/post/efcindnodep', (req,res) => {
+  console.log(req.body);
+  filePath = __dirname + '/efcindnodep.json';
+  fileContent = JSON.stringify(req.body);
+  
+  let message = {};
+  fs.writeFile(filePath, fileContent, err => {
+    if(err) {
+      console.log(err);
+      message = { error: 500, message: err, timestamp: Date.now()}
+    } else {
+      console.log("Written Successfully.");
+      message = {
+        response: 200,
+        message: "Data successfully submitted.",
+        timsetamp: Date.now()
+      };
+    }
+  });
+});
+
+app.post('/post/efcindwithdep', (req,res) => {
+  console.log(req.body);
+  filePath = __dirname + '/efcindwithdep.json';
   fileContent = JSON.stringify(req.body);
   
   let message = {};

@@ -4,7 +4,7 @@ import Navigation from '../Navigation';
 
 
 
-export default function EFCDependent() {
+export default function EFCIndependentWithDependents() {
   // NOTE: set state with the existing data already pre-populated
   const [inputList, setInputList] = useState(null);
   
@@ -23,7 +23,7 @@ export default function EFCDependent() {
       over99999: "",
       placeholder: "Enter a value..."
     }]);
-    fetch("http://localhost:3001/get/efcdependent")
+    fetch("http://localhost:3001/get/efcindwithdep")
     .then((response) => {
       if(response.ok) {
         try {
@@ -123,7 +123,7 @@ export default function EFCDependent() {
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
     console.log(JSON.stringify(convertInputData(inputList)));
-    fetch('http://localhost:3001/post/efcdependent', {
+    fetch('http://localhost:3001/post/efcindwithdep', {
       accepts: 'application/json, plain/text',
       mode: 'cors',
       headers: {
@@ -172,8 +172,8 @@ export default function EFCDependent() {
         </div>
         <div className="col-10 content-area">
           <form onSubmit={handleSubmit}>
-            <h3>EFC Dependent</h3> 
-            <table summary="EFC Dependent">
+            <h3>EFC - Independent with Dependents</h3> 
+            <table summary="EFC Independent with Dependents">
               <thead>
               <tr>
                 <th>No. In College</th>

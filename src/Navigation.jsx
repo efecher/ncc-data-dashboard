@@ -17,6 +17,8 @@ export default function Navigation() {
         <li className="nav-item"><Link className="nav-link" to="/Pell">Pell</Link></li>
         <li className="nav-item"><Link className="nav-link" to="/TuitionAssistanceGrant">Tuition Assistance Grant</Link></li>
         <li className="nav-item"><Link className="nav-link" to="/EFCDependent">EFC - Dependent</Link></li>
+        <li className="nav-item"><Link className="nav-link" to="/EFCIndependentNoDependents">EFC - Independent with no Dependents</Link></li>
+        <li className="nav-item"><Link className="nav-link" to="/EFCIndependentWithDependents">EFC - Independent with Dependents</Link></li>
       </ul>
     </nav>
   );
