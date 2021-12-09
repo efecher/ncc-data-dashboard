@@ -19,6 +19,7 @@ export default function Navigation() {
         <li className="nav-item"><Link className="nav-link" to="/EFCDependent">EFC - Dependent</Link></li>
         <li className="nav-item"><Link className="nav-link" to="/EFCIndependentNoDependents">EFC - Independent with no Dependents</Link></li>
         <li className="nav-item"><Link className="nav-link" to="/EFCIndependentWithDependents">EFC - Independent with Dependents</Link></li>
+        <li className="nav-item"><Link className="nav-link" to="/Tuition">SHU Tuition and Expenses</Link></li>
       </ul>
     </nav>
   );

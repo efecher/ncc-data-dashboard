@@ -14,6 +14,7 @@ import TuitionAssistanceGrant from './routes/TuitionAssistanceGrant';
 import EFCDependent from './routes/EFCDependent';
 import EFCIndependentNoDependents from './routes/EFCIndependentNoDependents';
 import EFCIndependentWithDependents from './routes/EFCIndependentWithDependents';
+import Tuition from './routes/Tuition';
 
 render(
   <BrowserRouter>
@@ -31,6 +32,7 @@ render(
       <Route path="/EFCDependent" element={<EFCDependent />} />
       <Route path="/EFCIndependentNoDependents" element={<EFCIndependentNoDependents />} />
       <Route path="/EFCIndependentWithDependents" element={<EFCIndependentWithDependents />} />
+      <Route path="/Tuition" element={<Tuition />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')
