@@ -17,36 +17,28 @@ export default function TuitionAssistanceGrant() {
     }]);
     fetch("https://site8.auth.dev.shu.commonspotcloud.com/rest/data/ncc/get/tag/matrix")
     .then((response) => {
-      if(response.ok) {
-        try {
-          JSON.parse(response);
-          console.log(JSON.parse(response));
-        } catch(e) {
-          console.log(e);
-          throw new Error();
-        }
-        return response.json();
-      } else {
-        throw new Error('Error retrieving the remote data.');
-      }
+      return response.json();
     })
     .then(json => {
-      console.log(json.data); 
-      let matrix = [];
-      for(let row of json.data) {
-        let r = {
-          minEFC: row[0],
-          maxEFC: row[1],
-          awardAmount: row[2],
-          //placeholder: 0
+      if('error' in json) {
+        // NOTE: if there is an error, i.e., the data is not found, the API wll return an object with an 'error' property. If this happens
+        throw new Error();
+      } else {
+        let matrix = [];
+        for(let row of json.data) {
+          let r = {
+            minEFC: row[0],
+            maxEFC: row[1],
+            awardAmount: row[2],
+            //placeholder: 0
+          }
+          matrix.push(r);
         }
-        matrix.push(r);
-      }
-      setInputList(matrix);
+        setInputList(matrix);
+      } 
     }) 
     .catch(error => {
-      alert("Remote data doesn't exist. When submitted, this session will create a new record from scratch on the remote server.");
-      console.log(error + " Cannot retrieve the remote data, perhaps we are creating a new file on the server?");
+      console.log("Remote data doesn't exist. When submitted, this session will create a new record from scratch on the remote server.");
     });
   }, []);
 
@@ -89,8 +81,8 @@ export default function TuitionAssistanceGrant() {
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
     console.log(JSON.stringify(convertInputData(inputList)));
-    fetch('http://localhost:3001/post/tag', {
-      accepts: 'application/json, plain/text',
+    fetch('https://site8.auth.dev.shu.commonspotcloud.com/rest/data/ncc/post/tag/matrix', {
+      accepts: 'application/json',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
