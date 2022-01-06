@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React /*, { useState, useEffect }*/ from "react";
 import '../App.scss';
 import Navigation from '../Navigation';
 
 
 
 export default function Tuition() {
-  const [inputList, setInputList] = useState(null);
+ /* const [inputList, setInputList] = useState(null);
 
   useEffect(() => {
     setInputList({
@@ -17,7 +17,7 @@ export default function Tuition() {
       financialAidTuition: "",
       financialAidFees: "",
       financialAidRoomAndBoard: "",
-      placeholder: "Enter a value..."
+      placeholder: "0"
     });
     fetch("http://localhost:3001/get/tuitioninfo")
     .then((response) => {
@@ -53,7 +53,7 @@ export default function Tuition() {
       alert("Remote data doesn't exist. When submitted, this session will create a new record from scratch on the remote server.");
       console.log(error + " Cannot retrieve the remote data, perhaps we are creating a new file on the server?");
     });
-  }, []);
+  }, []);*/
 
   return (
     <div className="container-fluid">

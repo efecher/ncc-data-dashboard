@@ -11,7 +11,7 @@ export default function FreshmanNeedsBasedNJ() {
       efcRangeLower: "",
       efcRangeUpper: "",
       awardAmount: "",
-      placeholder: "Enter a value"
+      placeholder: "0"
     }]);
     fetch("http://localhost:3001/get/needs/freshmannj")
     .then((response) => {
@@ -46,7 +46,7 @@ export default function FreshmanNeedsBasedNJ() {
       efcRangeLower: "0",
       efcRangeUpper: "0",
       awardAmount: "0",
-      placeholder: "Enter a value"
+      placeholder: "0"
     }]);
     return;
   }

@@ -21,7 +21,7 @@ export default function EFCDependent() {
       eightyKTo89999: "",
       ninetyKTo99999: "",
       over99999: "",
-      placeholder: "Enter a value..."
+      placeholder: "0"
     }]);
     fetch("http://localhost:3001/get/efcdependent")
     .then((response) => {
@@ -78,7 +78,7 @@ export default function EFCDependent() {
       eightyKTo89999: "",
       ninetyKTo99999: "",
       over99999: "",
-      placeholder: "Enter a value..."
+      placeholder: "0"
     }]);
     return;
   }

@@ -13,7 +13,7 @@ export default function TransferMeritBased() {
       gpaRangeLower: "",
       gpaRangeUpper: "",
       awardAmount: "",
-      placeholder: "Enter a value..."
+      placeholder: "0"
     }]);
     fetch("http://localhost:3001/get/merit/transfer")
     .then((response) => {
@@ -54,7 +54,7 @@ export default function TransferMeritBased() {
       gpaRangeLower: "0",
       gpaRangeUpper: "0",
       awardAmount: "0",
-      placeholder: "Enter a value..."
+      placeholder: "0"
     }]);
     return;
   }

@@ -17,7 +17,7 @@ export default function FreshmanWithTest() {
       actRangeLower: "",
       actRangeUpper: "",
       awardAmount: "",
-      placeholder: ""
+      placeholder: "0"
     }]);
     fetch("http://localhost:3001/get/merit/testscores")
     .then((response) => {

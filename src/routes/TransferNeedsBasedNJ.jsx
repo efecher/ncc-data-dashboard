@@ -15,7 +15,7 @@ export default function TransferNeedsBasedNJ() {
       gpaLowRangeAmount: "",
       gpaMidRangeAmount: "",
       gpaHighRangeAmount: "",
-      placeholder: "Enter a value"
+      placeholder: "0"
     }]);
     fetch("http://localhost:3001/get/transfer/transferneedsbasednj/")
     .then((response) => {
@@ -54,7 +54,7 @@ export default function TransferNeedsBasedNJ() {
       gpaLowRangeAmount: "0",
       gpaMidRangeAmount: "0",
       gpaHighRangeAmount: "0",
-      placeholder: "Enter a value"
+      placeholder: "0"
     }]);
     return;
   }

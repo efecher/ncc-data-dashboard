@@ -13,14 +13,16 @@ export default function TuitionAssistanceGrant() {
       minEFC: "",
       maxEFC: "",
       awardAmount: "",
-      placeholder: "Enter a value..."
+      placeholder: "0"
     }]);
-    fetch("http://localhost:3001/get/tag")
+    fetch("https://site8.auth.dev.shu.commonspotcloud.com/rest/data/ncc/get/tag/matrix")
     .then((response) => {
       if(response.ok) {
         try {
           JSON.parse(response);
+          console.log(JSON.parse(response));
         } catch(e) {
+          console.log(e);
           throw new Error();
         }
         return response.json();
@@ -54,7 +56,7 @@ export default function TuitionAssistanceGrant() {
       minEFC: "0",
       maxEFC: "0",
       awardAmount: "0",
-      placeholder: "Enter a value..."
+      placeholder: "0"
     }]);
     return;
   }
