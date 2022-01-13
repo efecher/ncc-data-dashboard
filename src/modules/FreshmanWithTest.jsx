@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import '../App.scss';
-import Navigation from '../Navigation';
-
-
 
 export default function FreshmanWithTest() {
   // NOTE: set state with the existing data already pre-populated
@@ -51,7 +48,7 @@ export default function FreshmanWithTest() {
       setInputList(matrix);
     }) 
     .catch(error => {
-      alert("Remote data doesn't exist. When submitted, this session will create a new record from scratch on the remote server.");
+      console.log("Remote data doesn't exist. When submitted, this session will create a new record from scratch on the remote server.");
       console.log(error + " Cannot retrieve the remote data, perhaps we are creating a new file on the server?");
     });
   }, []);
@@ -95,9 +92,9 @@ export default function FreshmanWithTest() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let p = document.createElement('p');
-    p.innerHTML = JSON.stringify(convertInputData(inputList));
-    document.body.appendChild(p);
+    // let p = document.createElement('p');
+    // p.innerHTML = JSON.stringify(convertInputData(inputList));
+    // document.body.appendChild(p);
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
     console.log(JSON.stringify(convertInputData(inputList)));
@@ -140,14 +137,11 @@ export default function FreshmanWithTest() {
 
   return (
     <div className="container-fluid">
-      <div className="row g-0">
-        <div className="col-2">
-          <Navigation />
-        </div>
-        <div className="col-10 content-area">
+      <div className="grid grid-x">
+        <div className="cell medium-12 content-area">
           <form onSubmit={handleSubmit}>
-            <h3>Merit Based - Matrix With Test Scores</h3> 
-            <table summary="Merit Based matrix with GPA, SAT/ACT scores.">
+            <h3>Freshman Merit Based - Matrix With Test Scores</h3> 
+            <table summary="Freshman Merit Based matrix with GPA, SAT/ACT scores.">
               <thead>
               <tr>
                 <th>GPA Range Lower Bound</th>
@@ -229,7 +223,7 @@ export default function FreshmanWithTest() {
                     </td>
                   </tr>
                   <tr className="void-row">
-                    <td colSpan="8">{inputList.length - 1 === i && <button className="add-button" onClick={handleAddClick}>Add Row</button>}</td>
+                    <td colSpan="8">{inputList.length - 1 === i && <button className="button" onClick={handleAddClick}>Add Row</button>}</td>
                   </tr>
                   </React.Fragment>
                 );

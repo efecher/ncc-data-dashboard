@@ -1,45 +1,55 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Navigation from './Navigation';
 import './App.scss';
+import Home from './modules/Home';
 import FreshmanWithTest from './modules/FreshmanWithTest';
 import FreshmanTestOptional from './modules/FreshmanTestOptional';
 import FreshmanNeedsBasedNJ from './modules/FreshmanNeedsBasedNJ';
-import FreshmanNeedsBasedNonNJ from './modules/FreshmanNeedsBasedNonNJ';
-import TransferNeedsBasedNJ from './modules/TransferNeedsBasedNJ';
-import TransferNeedsBasedNonNJ from './modules/TransferNeedsBasedNonNJ';
-import TransferMeritBased from './modules/TransferMeritBased';
-import Pell from './modules/Pell';
-import TuitionAssistanceGrant from './modules/TuitionAssistanceGrant';
-import EFCDependent from './modules/EFCDependent';
-import EFCIndependentNoDependents from './modules/EFCIndependentNoDependents';
-import EFCIndependentWithDependents from './modules/EFCIndependentWithDependents';
-import Tuition from './modules/Tuition';
+// import FreshmanNeedsBasedNonNJ from './modules/FreshmanNeedsBasedNonNJ';
+// import TransferNeedsBasedNJ from './modules/TransferNeedsBasedNJ';
+// import TransferNeedsBasedNonNJ from './modules/TransferNeedsBasedNonNJ';
+// import TransferMeritBased from './modules/TransferMeritBased';
+// import Pell from './modules/Pell';
+// import TuitionAssistanceGrant from './modules/TuitionAssistanceGrant';
+// import EFCDependent from './modules/EFCDependent';
+// import EFCIndependentNoDependents from './modules/EFCIndependentNoDependents';
+// import EFCIndependentWithDependents from './modules/EFCIndependentWithDependents';
+// import Tuition from './modules/Tuition';
 
-export default function App() {
-  const [currentModule, setCurrentModule] = useState("Home");
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
   
-  const selectBoxChangeHandler = (e) => {
-    //console.log(e.target.value);
-    setCurrentModule(e.target.value);
-  };
+    this.state = {
+      currentModule: "Home"
+    }
+  }
 
-  return (
-    <div className="container-fluid">
-      <div className="row g-0">
-        <div className="col-12">
-          <h2>Net Cost Calculator - Application Data Management</h2>
-          <p className="text-center">Select from the data categories to edit values</p>
-          <div className="row g-0">
-            <div className="col-2 offset-md-5">
-              <Navigation handler={selectBoxChangeHandler} />
-            </div>
-          </div>
-        </div>
-       
-        <div className="col-10">
+  loadModule = () => {
+    console.log(this.state.currentModule);
+    switch(this.state.currentModule) {
+      case "Freshman Merit With Test": return <FreshmanWithTest />;
+      case "Freshman Merit Test Optional": return <FreshmanTestOptional />;
+      case "Freshman Needs Based NJ Residents": return <FreshmanNeedsBasedNJ />;
+      default: return <Home />;
+    }
+  }
+
+  handleSelectModule = (e) => {
+    this.setState({
+      currentModule: e.target.value
+    });
+  }
+
+
+  render() {
+    return (
+      <>
+        <Navigation handler={this.handleSelectModule} />
+        {this.loadModule()}    
           
-        </div>
-      </div>
-    </div>
-  )
+        
+      </>
+    );
+  }
 }

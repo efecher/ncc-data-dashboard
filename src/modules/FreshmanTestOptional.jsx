@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Navigation from '../Navigation';
 import '../App.scss';
 
 function FreshmanTestOptional() {
@@ -72,9 +71,6 @@ function FreshmanTestOptional() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let p = document.createElement('p');
-    p.innerHTML = JSON.stringify(convertInputData(inputList));
-    document.body.appendChild(p);
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
     console.log(JSON.stringify(convertInputData(inputList)));
@@ -114,11 +110,8 @@ function FreshmanTestOptional() {
 
   return (
     <div className="container-fluid">
-      <div className="row g-0">
-        <div className="col-2">
-          <Navigation />
-        </div>
-        <div className="col-10 content-area">
+      <div className="grid grid-x">
+        <div className="cell medium-12 content-area">
           <form onSubmit={handleSubmit}>
             <h3>Merit Based - Matrix Without Test Scores</h3> 
             <table summary="Merit Based matrix - Test Optional.">
@@ -167,7 +160,7 @@ function FreshmanTestOptional() {
                     </td>
                   </tr>
                   <tr className="void-row">
-                    <td colSpan="8">{inputList.length - 1 === i && <button className="add-button" onClick={handleAddClick}>Add Row</button>}</td>
+                    <td colSpan="8">{inputList.length - 1 === i && <button className="button" onClick={handleAddClick}>Add Row</button>}</td>
                   </tr>
                   </React.Fragment>
                 );
