@@ -1,8 +1,8 @@
 //@import '~bootstrap/scss/bootstrap.scss';
 
-body {
-  text-align: center;
-}
+// body {
+//   text-align: center;
+// }
 
 .content-area {
   padding: 0 5vw;
@@ -11,9 +11,9 @@ body {
   // overflow-y: scroll;
 }
 
-.container-fluid {
-  padding: 0;
-}
+// .container-fluid {
+//   padding: 0;
+// }
 
 select {
   width: 33.333333%;
@@ -34,8 +34,13 @@ input:focus, input::placeholder {
   padding: 3px;
 }
 
-th {
-  padding: 4px;
+thead {
+  background-color: #024;
+  th {
+    padding: 4px;
+    text-align: center;
+    color: #ffffff;
+  }
 }
 
 table {
@@ -45,6 +50,7 @@ table {
 }
 
 tbody {
+  background-color: #048;
   tr {
     td {
       color: #ffffff;
@@ -53,9 +59,9 @@ tbody {
   }
 }
 
-// table, td {
-//   padding: 1px;
-// }
+table, td {
+  padding: 1px;
+}
 
 td {
   margin: 0 2px;
@@ -63,76 +69,21 @@ td {
 }
 
 .void-row {
-  background-color: #000000;
-  
-  td {
-    text-align: center;
+  tr {
+    td {
+      background-color: #000000;
+      text-align: center;
+    }
   }
 }
 
-input[type="submit"] {
-  font-size: 1rem;
-  background-color: #064;
-  color: #ffffff;
-  padding: 10px;
-  border: 0;
-  margin-left: 3px;
-}
-
-button {
-  color: #ffffff;
-  border: 1px solid #ffffff;
-  font-size: 1rem;
-  font-weight: bold;
-  padding: 2px;
-}
-
-.clear-button {
-  background-color: #b68d06;
-  padding: 10px;
-}
-
-.remove-button {
-  background-color: #cc0000;
-  margin: 5px;
-}
-
-.add-button {
-  background-color: #006600;
-  margin: 5px;
+.submit-button {
+  background-color: #883600;
 }
 
 .submit-button-row {
   text-align: center;
 }
 
-nav {
-  background-color: #004488;
-  padding: 10px;
-  height: 100vh;
 
-  ul {
-    list-style-type: none;
-    text-align: left;
-
-    &:last-child {
-      border-bottom: 1px solid #aaa;
-    }
-
-    
-
-    .nav-link {
-      font-size: 1.1rem;
-      color: #ffffff;
-      
-      margin-bottom: 0;
-      
-
-      &:hover {
-        background-color: #1188ff;
-        color: #000000;
-      }
-    }
-  }
-}
 

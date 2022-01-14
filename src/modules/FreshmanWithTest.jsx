@@ -218,7 +218,7 @@ export default function FreshmanWithTest() {
                       </td>
                     <td>
                       {inputList.length !== 1 && <button
-                        className="remove-button"
+                        className="button"
                         onClick={() => handleRemoveClick(i)}>Remove Row</button>}
                     </td>
                   </tr>
@@ -231,8 +231,8 @@ export default function FreshmanWithTest() {
               </tbody>
             </table>
             <div className="submit-button-row">
-              <button className="clear-button" onClick={()=>{handleClear()}}>Clear Matrix</button>
-              <input type="submit" value="Submit Matrix" />
+              <button className="button" onClick={()=>{handleClear()}}>Clear Matrix</button>
+              <input type="submit" className="button submit-button" value="Submit Matrix" />
             </div>
           </form>
         </div>

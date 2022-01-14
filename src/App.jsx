@@ -45,10 +45,12 @@ export default class App extends React.Component {
   render() {
     return (
       <>
-        <Navigation handler={this.handleSelectModule} />
-        {this.loadModule()}    
-          
-        
+      <div className="grid grid-x">
+        <div className="cell medium-12 text-center">
+          <Navigation handler={this.handleSelectModule} />
+          {this.loadModule()} 
+        </div>
+      </div>  
       </>
     );
   }
