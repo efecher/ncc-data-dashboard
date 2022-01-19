@@ -4,6 +4,8 @@ import '../App.scss';
 export default function FreshmanWithTest() {
   // NOTE: set state with the existing data already pre-populated
   const [inputList, setInputList] = useState(null);
+  // NOTE: set saved state of this dashboard
+  const [saved, setSaved] = useState(false);
   
   useEffect(() => {
     setInputList([{
@@ -89,7 +91,7 @@ export default function FreshmanWithTest() {
     setInputList([...inputList, { gpaRangeLower: "", gpaRangeUpper: "", satRangeLower: "", satRangeUpper: "", actRangeLower: "", actRangeUpper: "", awardAmount: "" }]);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // let p = document.createElement('p');
     // p.innerHTML = JSON.stringify(convertInputData(inputList));
@@ -97,7 +99,7 @@ export default function FreshmanWithTest() {
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
     console.log(JSON.stringify(convertInputData(inputList)));
-    fetch('http://localhost:3001/post/merit/testscores', {
+    await fetch('https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/post/freshmanwithtest', {
       accepts: 'application/json, plain/text',
       mode: 'cors',
       headers: {
@@ -106,7 +108,9 @@ export default function FreshmanWithTest() {
       method: 'POST',
       body: JSON.stringify({data: convertInputData(inputList)})
     })
-    .then(res => { console.log(res) })
+    .then(() => {
+      setSaved(true);
+    })
     .catch(res => console.log(res));
 
     return;
@@ -140,7 +144,7 @@ export default function FreshmanWithTest() {
         <div className="cell medium-12 content-area">
           <form onSubmit={handleSubmit}>
             <h3>Freshman Merit Based - Matrix With Test Scores</h3> 
-            <table summary="Freshman Merit Based matrix with GPA, SAT/ACT scores.">
+            <table id="ncc-data-dashboard" summary="Freshman Merit Based matrix with GPA, SAT/ACT scores.">
               <thead>
               <tr>
                 <th>GPA Range Lower Bound</th>
@@ -153,7 +157,7 @@ export default function FreshmanWithTest() {
                 <th>&nbsp;</th>
               </tr>
               </thead>
-              <tbody>
+              <tbody style={(saved)? {animation: "savedTable 1s ease-in-out"}: {backgroundColor: "#fefefe"}}>
                 {
                   (inputList !== null)? inputList.map((x, i) => {
                   return (

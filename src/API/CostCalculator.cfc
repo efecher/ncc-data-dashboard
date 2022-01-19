@@ -13,6 +13,8 @@ component
 	rest = true
 	restPath = 'costcalculator'
 {
+  //cfheader(name="Access-Control-Allow-Methods" value="GET,POST");
+  //cfheader(name="Access-Control-Allow-Headers" value="Content-Type");
   /**
 	* @displayName 'getJSON'
 	* @description 'gets JSON data for the specified category'
@@ -30,10 +32,8 @@ component
   {
     try {
       fileData = fileRead(expandPath('/_cs_apps/cost-calculator/' & category & '.json'));
-      cfheader(name="Access-Control-Allow-Origin", value="*");
       return fileData; 
     } catch (any error) {
-      cfheader(name="Access-Control-Allow-Origin", value="*");
       return '{"error": "error getting data."}';
     }
   } // END function 'get'
