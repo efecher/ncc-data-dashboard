@@ -30,8 +30,10 @@ component
   {
     try {
       fileData = fileRead(expandPath('/_cs_apps/cost-calculator/' & category & '.json'));
+      cfheader(name="Access-Control-Allow-Origin", value="*");
       return fileData; 
     } catch (any error) {
+      cfheader(name="Access-Control-Allow-Origin", value="*");
       return '{"error": "error getting data."}';
     }
   } // END function 'get'
@@ -51,7 +53,6 @@ component
   returnFormat='json'
   responseMessages="404:Not Found,200:successful,10:notdefined"
   {
-    
     fileStatus = application.adf.csData.CSFile(
       action='write',
       destination='/cust/webroot/site8/_cs_apps/cost-calculator/' & category & '.json',

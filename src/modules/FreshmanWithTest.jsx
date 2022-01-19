@@ -16,15 +16,14 @@ export default function FreshmanWithTest() {
       awardAmount: "",
       placeholder: "0"
     }]);
-    fetch("http://localhost:3001/get/merit/testscores")
+    fetch("https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/get/freshmanwithtest")
     .then((response) => {
       if(response.ok) {
         try {
-          JSON.parse(response);
+          return response.json();
         } catch(e) {
           throw new Error();
         }
-        return response.json();
       } else {
         throw new Error('Error retrieving the remote data.');
       }
