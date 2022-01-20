@@ -4,6 +4,8 @@ import '../App.scss';
 function FreshmanTestOptional() {
   // NOTE: set state with the existing data already pre-populated
   const [inputList, setInputList] = useState(null);
+  // NOTE: set saved state of this dashboard
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     setInputList([{
@@ -12,10 +14,14 @@ function FreshmanTestOptional() {
       awardAmount: "",
       placeholder: "0"
     }]);
-    fetch("http://localhost:3001/get/merit/testoptional")
+    fetch("https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/get/freshmantestoptional")
     .then((response) => {
       if(response.ok) {
-        return response.json();
+        try {
+          return response.json();
+        } catch(e) {
+          throw new Error();
+        }
       } else {
         throw new Error('Error retrieving the remote data.');
       }
@@ -34,6 +40,7 @@ function FreshmanTestOptional() {
       setInputList(matrix);
     }) 
     .catch(error => {
+      console.log("Remote data doesn't exist. When submitted, this session will create a new record from scratch on the remote server.");
       console.log(error + " Cannot retrieve the remote data, perhaps we are creating a new file on the server?");
     });
   }, []);
@@ -41,9 +48,9 @@ function FreshmanTestOptional() {
   // handle clear button
   const handleClear = () => {
     setInputList([{
-      gpaRangeLower: 0,
-      gpaRangeUpper: 0,
-      awardAmount: 0,
+      gpaRangeLower: "0",
+      gpaRangeUpper: "0",
+      awardAmount: "0",
       placeholder: "0"
     }]);
     return;
@@ -74,7 +81,7 @@ function FreshmanTestOptional() {
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
     console.log(JSON.stringify(convertInputData(inputList)));
-    fetch('http://localhost:3001/post/merit/testoptional', {
+    fetch('https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/post/freshmantestoptional', {
       accepts: 'application/json, plain/text',
       mode: 'cors',
       headers: {
@@ -83,7 +90,9 @@ function FreshmanTestOptional() {
       method: 'POST',
       body: JSON.stringify({data: convertInputData(inputList)})
     })
-    .then(res => { console.log(res) })
+    .then(() => {
+      setSaved(true);
+    })
     .catch(res => console.log(res));
 
     return;
@@ -114,7 +123,7 @@ function FreshmanTestOptional() {
         <div className="cell medium-12 content-area">
           <form onSubmit={handleSubmit}>
             <h3>Merit Based - Matrix Without Test Scores</h3> 
-            <table summary="Merit Based matrix - Test Optional.">
+            <table id="ncc-data-dashboard" summary="Merit Based matrix - Test Optional.">
               <thead>
               <tr>
                 <th>GPA Range Lower Bound</th>
@@ -168,8 +177,8 @@ function FreshmanTestOptional() {
               </tbody>
             </table>
             <div className="submit-button-row">
-              <button className="clear-button" onClick={()=>{handleClear()}}>Clear Matrix</button>
-              <input type="submit" value="Submit Matrix" />
+              <button className="button" onClick={()=>{handleClear()}}>Clear Matrix</button>
+              <input type="submit" className="button submit-button" value="Submit Matrix" />
             </div>
           </form>
         </div>

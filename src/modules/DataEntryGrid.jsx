@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from "react";
 import '../App.scss';
 
-export default function FreshmanWithTest() {
+export default function DataEntryGrid(props) {
   // NOTE: set state with the existing data already pre-populated
   const [inputList, setInputList] = useState(null);
   // NOTE: set saved state of this dashboard
   const [saved, setSaved] = useState(false);
-  
+
   useEffect(() => {
     setInputList([{
-      gpaRangeLower: "",
-      gpaRangeUpper: "",
-      satRangeLower: "",
-      satRangeUpper: "",
-      actRangeLower: "",
-      actRangeUpper: "",
-      awardAmount: "",
+      // gpaRangeLower: "",
+      // gpaRangeUpper: "",
+      // satRangeLower: "",
+      // satRangeUpper: "",
+      // actRangeLower: "",
+      // actRangeUpper: "",
+      // awardAmount: "",
+      props.configData.map()
       placeholder: "0"
     }]);
-    fetch("https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/get/freshmanwithtest")
+    fetch(`https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/get/${props.dataCategory}`)
     .then((response) => {
       if(response.ok) {
         try {
@@ -31,7 +32,7 @@ export default function FreshmanWithTest() {
       }
     })
     .then(json => {
-      console.log(json.data); 
+      //(json.data); 
       let matrix = [];
       for(let row of json.data) {
         let r = {
@@ -54,6 +55,7 @@ export default function FreshmanWithTest() {
     });
   }, []);
 
+
   // handle clear button
   const handleClear = () => {
     setInputList([{
@@ -68,9 +70,7 @@ export default function FreshmanWithTest() {
     }]);
     return;
   }
-  
 
-  
   // handle input change
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -78,14 +78,14 @@ export default function FreshmanWithTest() {
     list[index][name] = value;
     setInputList(list);
   };
-  
+
   // handle click event of the Remove button
   const handleRemoveClick = index => {
     const list = [...inputList];
     list.splice(index, 1);
     setInputList(list);
   };
-  
+
   // handle click event of the Add button
   const handleAddClick = () => {
     setInputList([...inputList, { gpaRangeLower: "", gpaRangeUpper: "", satRangeLower: "", satRangeUpper: "", actRangeLower: "", actRangeUpper: "", awardAmount: "" }]);
@@ -98,7 +98,7 @@ export default function FreshmanWithTest() {
     // document.body.appendChild(p);
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
-    console.log(JSON.stringify(convertInputData(inputList)));
+    //console.log(JSON.stringify(convertInputData(inputList)));
     await fetch('https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/post/freshmanwithtest', {
       accepts: 'application/json, plain/text',
       mode: 'cors',
@@ -136,14 +136,14 @@ export default function FreshmanWithTest() {
     }
 
     return output;
-  }
+  };
 
   return (
     <div className="container-fluid">
       <div className="grid grid-x">
         <div className="cell medium-12 content-area">
           <form onSubmit={handleSubmit}>
-            <h3>Freshman Merit Based - Matrix With Test Scores</h3> 
+            <h3>{props.headline}</h3> 
             <table id="ncc-data-dashboard" summary="Freshman Merit Based matrix with GPA, SAT/ACT scores.">
               <thead>
               <tr>
@@ -230,9 +230,19 @@ export default function FreshmanWithTest() {
                   </tr>
                   </React.Fragment>
                 );
-              }): <tr><td>Loading Matrix...</td></tr>}
+              }): <tr><td>Loading Matrix...</td></tr>
+              }
               </tbody>
             </table>
+            <div className="grid grid-x">
+              <div className="cell medium-12">
+                {
+                  (saved === true)
+                  ? <p className="save-message">Your updates have been saved</p>
+                  : <p></p>
+                }
+              </div>
+            </div>
             <div className="submit-button-row">
               <button className="button" onClick={()=>{handleClear()}}>Clear Matrix</button>
               <input type="submit" className="button submit-button" value="Submit Matrix" />
