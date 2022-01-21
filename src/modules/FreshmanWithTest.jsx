@@ -33,24 +33,35 @@ export default function FreshmanWithTest() {
     .then(json => {
       console.log(json.data); 
       let matrix = [];
-      for(let row of json.data) {
-        let r = {
-          gpaRangeLower: row[0],
-          gpaRangeUpper: row[1],
-          satRangeLower: row[2],
-          satRangeUpper: row[3],
-          actRangeLower: row[4],
-          actRangeUpper: row[5],
-          awardAmount: row[6],
-          //placeholder: 0
+      if(typeof json.data !== 'undefined') {
+        for(let row of json.data) {
+          let r = {
+            gpaRangeLower: row[0],
+            gpaRangeUpper: row[1],
+            satRangeLower: row[2],
+            satRangeUpper: row[3],
+            actRangeLower: row[4],
+            actRangeUpper: row[5],
+            awardAmount: row[6]
+            //placeholder: 0
+          }
+          matrix.push(r);
         }
-        matrix.push(r);
+      } else {
+        matrix.push({
+          gpaRangeLower: 0,
+            gpaRangeUpper: 0,
+            satRangeLower: 0,
+            satRangeUpper: 0,
+            actRangeLower: 0,
+            actRangeUpper: 0,
+            awardAmount: 0
+        });
       }
       setInputList(matrix);
     }) 
     .catch(error => {
-      console.log("Remote data doesn't exist. When submitted, this session will create a new record from scratch on the remote server.");
-      console.log(error + " Cannot retrieve the remote data, perhaps we are creating a new file on the server?");
+      console.log(error);
     });
   }, []);
 
@@ -147,14 +158,14 @@ export default function FreshmanWithTest() {
             <table id="ncc-data-dashboard" summary="Freshman Merit Based matrix with GPA, SAT/ACT scores.">
               <thead>
               <tr>
-                <th>GPA Range Lower Bound</th>
-                <th>GPA Range Upper Bound</th>
-                <th>SAT Range Lower Bound</th>
-                <th>SAT Range Upper Bound</th>
-                <th>ACT Range Lower Bound</th>
-                <th>ACT Range Upper Bound</th>
-                <th>Award Amount</th>
-                <th>&nbsp;</th>
+                <th className="text-center">GPA Range Lower Bound</th>
+                <th className="text-center">GPA Range Upper Bound</th>
+                <th className="text-center">SAT Range Lower Bound</th>
+                <th className="text-center">SAT Range Upper Bound</th>
+                <th className="text-center">ACT Range Lower Bound</th>
+                <th className="text-center">ACT Range Upper Bound</th>
+                <th className="text-center">Award Amount</th>
+                <th className="text-center">&nbsp;</th>
               </tr>
               </thead>
               <tbody>
@@ -163,7 +174,7 @@ export default function FreshmanWithTest() {
                   return (
                     <React.Fragment key={`table-input-${i}`}>
                     <tr>
-                      <td>
+                      <td className="text-center">
                         <input
                           name="gpaRangeLower"
                           placeholder="0"
@@ -171,7 +182,7 @@ export default function FreshmanWithTest() {
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
-                      <td>
+                      <td className="text-center">
                         <input
                           name="gpaRangeUpper"
                           placeholder="0"
@@ -179,7 +190,7 @@ export default function FreshmanWithTest() {
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
-                      <td>
+                      <td className="text-center">
                         <input
                           name="satRangeLower"
                           placeholder="0"
@@ -187,7 +198,7 @@ export default function FreshmanWithTest() {
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
-                      <td>
+                      <td className="text-center">
                         <input
                           name="satRangeUpper"
                           placeholder="0"
@@ -195,7 +206,7 @@ export default function FreshmanWithTest() {
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
-                      <td>
+                      <td className="text-center">
                         <input
                           name="actRangeLower"
                           placeholder="0"
@@ -203,7 +214,7 @@ export default function FreshmanWithTest() {
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
-                      <td>
+                      <td className="text-center">
                         <input
                           name="actRangeUpper"
                           placeholder="0"
@@ -211,7 +222,7 @@ export default function FreshmanWithTest() {
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
-                      <td>
+                      <td className="text-center">
                         <input
                           name="awardAmount"
                           placeholder="0"
@@ -219,7 +230,7 @@ export default function FreshmanWithTest() {
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
-                    <td>
+                    <td className="text-center">
                       {inputList.length !== 1 && <button
                         className="button"
                         onClick={() => handleRemoveClick(i)}>Remove Row</button>}

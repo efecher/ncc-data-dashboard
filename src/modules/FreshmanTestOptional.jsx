@@ -27,21 +27,28 @@ function FreshmanTestOptional() {
       }
     })
     .then(json => {
-      console.log(json.data); 
-      let matrix = [];
-      for(let row of json.data) {
-        let r = {
-          gpaRangeLower: row[0],
-          gpaRangeUpper: row[1],
-          awardAmount: row[2]
+      console.log(json.data);
+      let matrix = []; 
+      if(typeof json.data !== 'undefined') {
+        for(let row of json.data) {
+          let r = {
+            gpaRangeLower: row[0],
+            gpaRangeUpper: row[1],
+            awardAmount: row[2]
+          }
+          matrix.push(r);
         }
-        matrix.push(r);
+      } else {
+        matrix.push({
+          gpaRangeLower: 0,
+          gpaRangeUpper: 0,
+          awardAmount: 0
+        });
       }
       setInputList(matrix);
     }) 
     .catch(error => {
-      console.log("Remote data doesn't exist. When submitted, this session will create a new record from scratch on the remote server.");
-      console.log(error + " Cannot retrieve the remote data, perhaps we are creating a new file on the server?");
+      console.log(error);
     });
   }, []);
 
@@ -126,10 +133,10 @@ function FreshmanTestOptional() {
             <table id="ncc-data-dashboard" summary="Merit Based matrix - Test Optional.">
               <thead>
               <tr>
-                <th>GPA Range Lower Bound</th>
-                <th>GPA Range Upper Bound</th>
-                <th>Award Amount</th>
-                <th>&nbsp;</th>
+                <th className="text-center">GPA Range Lower Bound</th>
+                <th className="text-center">GPA Range Upper Bound</th>
+                <th className="text-center">Award Amount</th>
+                <th className="text-center">&nbsp;</th>
               </tr>
               </thead>
               <tbody>
@@ -138,7 +145,7 @@ function FreshmanTestOptional() {
                   return (
                     <React.Fragment key={`table-input-${i}`}>
                     <tr>
-                      <td>
+                      <td className="text-center">
                         <input
                           name="gpaRangeLower"
                           placeholder={x.placeholder}
@@ -146,7 +153,7 @@ function FreshmanTestOptional() {
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
-                      <td>
+                      <td className="text-center">
                         <input
                           name="gpaRangeUpper"
                           placeholder={x.placeholder}
@@ -154,7 +161,7 @@ function FreshmanTestOptional() {
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
-                      <td>
+                      <td className="text-center">
                         <input
                           name="awardAmount"
                           placeholder={x.placeholder}
@@ -162,9 +169,9 @@ function FreshmanTestOptional() {
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
-                    <td>
+                    <td className="text-center">
                       {inputList.length !== 1 && <button
-                        className="remove-button"
+                        className="button"
                         onClick={() => handleRemoveClick(i)}>Remove Row</button>}
                     </td>
                   </tr>

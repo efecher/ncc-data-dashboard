@@ -13,10 +13,14 @@ export default function FreshmanNeedsBasedNJ() {
       awardAmount: "",
       placeholder: "0"
     }]);
-    fetch("http://localhost:3001/get/needs/freshmannj")
+    fetch("https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/get/freshmanneedsbasednj")
     .then((response) => {
       if(response.ok) {
-        return response.json();
+        try {
+          return response.json();
+        } catch(e) {
+          throw new Error();
+        }
       } else {
         throw new Error('Error retrieving the remote data.');
       }
@@ -24,19 +28,27 @@ export default function FreshmanNeedsBasedNJ() {
     .then(json => {
       console.log(json.data); 
       let matrix = [];
-      for(let row of json.data) {
-        let r = {
-          efcRangeLower: row[0],
-          efcRangeUpper: row[1],
-          awardAmount: row[2],
-          //placeholder: 0
+      if(typeof json.data !== 'undefined') {
+        for(let row of json.data) {
+          let r = {
+            efcRangeLower: row[0],
+            efcRangeUpper: row[1],
+            awardAmount: row[2],
+            //placeholder: 0
+          }
+          matrix.push(r);
         }
-        matrix.push(r);
+      } else {
+        matrix.push({
+          efcRangeLower: 0,
+          efcRangeUpper: 0,
+          awardAmount: 0
+        });
       }
       setInputList(matrix);
     }) 
     .catch(error => {
-      console.log(error + " Cannot retrieve the remote data, perhaps we are creating a new file on the server?");
+      console.log(error);
     });
   }, []);
 
@@ -78,7 +90,7 @@ export default function FreshmanNeedsBasedNJ() {
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
     console.log(JSON.stringify(inputList));
-    fetch('http://localhost:3001/post/needs/freshmannj', {
+    fetch('https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/post/freshmanneedsbasednj', {
       accepts: 'application/json, plain/text',
       mode: 'cors',
       headers: {
@@ -113,20 +125,17 @@ export default function FreshmanNeedsBasedNJ() {
 
   return (
     <div className="container-fluid">
-      <div className="row g-0">
-        <div className="col-2">
-          <Navigation />
-        </div>
-        <div className="col-10 content-area">
-        <form onSubmit={handleSubmit}>
+      <div className="grid grid-x">
+        <div className="cell medium-12 content-area">
+          <form onSubmit={handleSubmit}>
             <h3>Freshman Needs-Based (NJ Residents)</h3> 
-            <table summary="Needs-Based, NJ Resident.">
+            <table id="ncc-data-dashboard" summary="Needs-Based, NJ Resident.">
               <thead>
               <tr>
-                <th>Minimum EFC</th>
-                <th>Maximum EFC</th>
-                <th>Award Amount</th>
-                <th>&nbsp;</th>
+                <th className="text-center">Minimum EFC</th>
+                <th className="text-center">Maximum EFC</th>
+                <th className="text-center">Award Amount</th>
+                <th className="text-center">&nbsp;</th>
               </tr>
               </thead>
               <tbody>
@@ -135,7 +144,7 @@ export default function FreshmanNeedsBasedNJ() {
                   return (
                     <React.Fragment key={`table-input-${i}`}>
                     <tr>
-                      <td>
+                      <td className="text-center">
                         <input
                           name="efcRangeLower"
                           placeholder={x.placeholder}
@@ -143,7 +152,7 @@ export default function FreshmanNeedsBasedNJ() {
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
-                      <td>
+                      <td className="text-center">
                         <input
                           name="efcRangeUpper"
                           placeholder={x.placeholder}
@@ -151,7 +160,7 @@ export default function FreshmanNeedsBasedNJ() {
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
-                      <td>
+                      <td className="text-center">
                         <input
                           name="awardAmount"
                           placeholder={x.placeholder}
@@ -161,7 +170,7 @@ export default function FreshmanNeedsBasedNJ() {
                       </td>
                     <td>
                       {inputList.length !== 1 && <button
-                        className="remove-button"
+                        className="button"
                         onClick={() => handleRemoveClick(i)}>Remove Row</button>}
                     </td>
                   </tr>
@@ -174,8 +183,8 @@ export default function FreshmanNeedsBasedNJ() {
               </tbody>
             </table>
             <div className="submit-button-row">
-              <button className="clear-button" onClick={()=>{handleClear()}}>Clear Matrix</button>
-              <input type="submit" value="Submit Matrix" />
+              <button className="button" onClick={()=>{handleClear()}}>Clear Matrix</button>
+              <input type="submit" className="button" value="Submit Matrix" />
             </div>
           </form>
         </div>
