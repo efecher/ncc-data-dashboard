@@ -6,34 +6,27 @@ export default function FreshmanWithTest() {
   const [inputList, setInputList] = useState(null);
   // NOTE: set saved state of this dashboard
   const [saved, setSaved] = useState(false);
+
+  const getURL = "https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/get/freshmanwithtest";
+
+  const postURL = "https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/post/freshmanwithtest";
+
+  // NOTE: we want the data fetch to be synchronous because we can't really do anything until we have it, we don't want a default table to load with no data and then "flash" to one containing the data when it loads. 
+  const fetchData = async (url) => {
+    const response = await fetch(url);
+    if(response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Error retrieving the data");
+    }
+  };
   
   useEffect(() => {
-    setInputList([{
-      gpaRangeLower: "",
-      gpaRangeUpper: "",
-      satRangeLower: "",
-      satRangeUpper: "",
-      actRangeLower: "",
-      actRangeUpper: "",
-      awardAmount: "",
-      placeholder: "0"
-    }]);
-    fetch("https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/get/freshmanwithtest")
-    .then((response) => {
-      if(response.ok) {
-        try {
-          return response.json();
-        } catch(e) {
-          throw new Error();
-        }
-      } else {
-        throw new Error('Error retrieving the remote data.');
-      }
-    })
+    fetchData(getURL)
     .then(json => {
-      console.log(json.data); 
       let matrix = [];
       if(typeof json.data !== 'undefined') {
+        // NOTE: cycle through and populate the existing data
         for(let row of json.data) {
           let r = {
             gpaRangeLower: row[0],
@@ -42,12 +35,13 @@ export default function FreshmanWithTest() {
             satRangeUpper: row[3],
             actRangeLower: row[4],
             actRangeUpper: row[5],
-            awardAmount: row[6]
-            //placeholder: 0
+            awardAmount: row[6],
+            placeholder: "0"
           }
           matrix.push(r);
         }
       } else {
+        // NOTE: there isn't any existing data, we're creating a new file
         matrix.push({
           gpaRangeLower: 0,
             gpaRangeUpper: 0,
@@ -55,15 +49,18 @@ export default function FreshmanWithTest() {
             satRangeUpper: 0,
             actRangeLower: 0,
             actRangeUpper: 0,
-            awardAmount: 0
+            awardAmount: 0,
+            placeholder: "0"
         });
       }
       setInputList(matrix);
-    }) 
+    })
     .catch(error => {
-      console.log(error);
-    });
+      console.error(error);
+    })
   }, []);
+    
+    
 
   // handle clear button
   const handleClear = () => {
@@ -102,7 +99,7 @@ export default function FreshmanWithTest() {
     setInputList([...inputList, { gpaRangeLower: "", gpaRangeUpper: "", satRangeLower: "", satRangeUpper: "", actRangeLower: "", actRangeUpper: "", awardAmount: "" }]);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     // let p = document.createElement('p');
     // p.innerHTML = JSON.stringify(convertInputData(inputList));
@@ -110,7 +107,7 @@ export default function FreshmanWithTest() {
 
     // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
     console.log(JSON.stringify(convertInputData(inputList)));
-    await fetch('https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/post/freshmanwithtest', {
+    fetch('https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/post/freshmanwithtest', {
       accepts: 'application/json, plain/text',
       mode: 'cors',
       headers: {
