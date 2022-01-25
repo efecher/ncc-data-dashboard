@@ -11,7 +11,7 @@ export default function FreshmanWithTest() {
 
   const postURL = "https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/post/freshmanwithtest";
 
-  // NOTE: we want the data fetch to be synchronous because we can't really do anything until we have it, we don't want a default table to load with no data and then "flash" to one containing the data when it loads. 
+  // NOTE: we want the data fetch to be synchronous because we can't really do anything until we have it, we don't want a default table to load with no data and then "flash" to one containing the data when it loads. Reference: https://stackoverflow.com/questions/55008076/react-useeffect-hook-and-async-await-own-fetch-data-func
   const fetchData = async (url) => {
     const response = await fetch(url);
     if(response.ok) {
@@ -60,8 +60,6 @@ export default function FreshmanWithTest() {
     })
   }, []);
     
-    
-
   // handle clear button
   const handleClear = () => {
     setInputList([{
@@ -76,8 +74,6 @@ export default function FreshmanWithTest() {
     }]);
     return;
   }
-  
-
   
   // handle input change
   const handleInputChange = (e, index) => {
