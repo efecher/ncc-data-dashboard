@@ -12,7 +12,7 @@ app.listen(port, () => {
 app.use(express.json());
 
 
-app.get('/rest/data/get/:category', [(req, res, next) => {
+app.get('/rest/data/costcalculator/get/:category', [(req, res, next) => {
   fs.readFile(__dirname + '/json/' + req.params.category + '.json', (err, json) => {
     if (err) {
       next(err)
@@ -24,9 +24,9 @@ app.get('/rest/data/get/:category', [(req, res, next) => {
 }]);
 
 
-app.post('/post/merit/testscores', (req, res) => {
-  console.log(req.body);
-  filePath = __dirname + '/merittestscores.json';
+app.post('/rest/data/costcalculator/post/:category', (req, res) => {
+  //console.log(req.body);
+  filePath = __dirname + '/json/' + req.params.category + '.json';
   fileContent = JSON.stringify(req.body);
 
   let message = {};

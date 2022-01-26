@@ -7,9 +7,10 @@ export default function FreshmanWithTest() {
   // NOTE: set saved state of this dashboard
   const [saved, setSaved] = useState(false);
 
-  const getURL = "https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/get/freshmanwithtest";
+  // NOTE: this URL should match the real environment so we don't need to change anything for a "live" build
+  const getURL = "/rest/data/costcalculator/get/freshmanmeritwithtest";
 
-  const postURL = "https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/post/freshmanwithtest";
+  const postURL = "/rest/data/costcalculator/post/freshmanwithtest";
 
   // NOTE: we want the data fetch to be synchronous because we can't really do anything until we have it, we don't want a default table to load with no data and then "flash" to one containing the data when it loads. Reference: https://stackoverflow.com/questions/55008076/react-useeffect-hook-and-async-await-own-fetch-data-func
   const fetchData = async (url) => {
@@ -98,13 +99,9 @@ export default function FreshmanWithTest() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // let p = document.createElement('p');
-    // p.innerHTML = JSON.stringify(convertInputData(inputList));
-    // document.body.appendChild(p);
-
-    // NOTE: eventually, code to store the input somewhere to persist it so it can be loaded next run
+    
     console.log(JSON.stringify(convertInputData(inputList)));
-    fetch('https://site8.auth.dev.shu.commonspotcloud.com/rest/data/costcalculator/post/freshmanwithtest', {
+    fetch(postURL, {
       accepts: 'application/json, plain/text',
       mode: 'cors',
       headers: {

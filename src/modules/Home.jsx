@@ -10,10 +10,10 @@ export default function Home() {
   
   // NOTE: running this on the HOME component for test purposes. Check if the dev server is running properly
   useEffect(() => {
-    fetchData('/rest/data/get/freshmanmeritwithtest')
-    .then(res => {
-      console.log(res.express);
-    });
+    // fetchData('/rest/data/get/freshmanmeritwithtest')
+    // .then(res => {
+    //   console.log(res.express);
+    // });
     
   }, []);
 
