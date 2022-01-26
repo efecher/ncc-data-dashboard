@@ -7,14 +7,16 @@
 * @output true
 */
 
+
+
 component
 	consumes = 'application/json,text/plain,text/json'
 	produces = 'application/json,text/json'
 	rest = true
 	restPath = 'costcalculator'
 {
-  //cfheader(name="Access-Control-Allow-Methods" value="GET,POST");
-  //cfheader(name="Access-Control-Allow-Headers" value="Content-Type");
+  cfheader(name="Access-Control-Allow-Origin", value="*");
+  cfheader(name="Content-Type", value="application/json");
   /**
 	* @displayName 'getJSON'
 	* @description 'gets JSON data for the specified category'
@@ -31,7 +33,7 @@ component
   responseMessages="404:Not Found,200:successful,10:notdefined"
   {
     try {
-      fileData = fileRead(expandPath('/_cs_apps/cost-calculator/' & category & '.json'));
+      fileData = fileRead(expandPath('/_cs_apps/cost-calculator/json/' & category & '.json'));
       return fileData; 
     } catch (any error) {
       return '{"error": "error getting data."}';
@@ -55,8 +57,8 @@ component
   {
     fileStatus = application.adf.csData.CSFile(
       action='write',
-      destination='/cust/webroot/site8/_cs_apps/cost-calculator/' & category & '.json',
-      file='/cust/webroot/site8/_cs_apps/cost-calculator/' & category & '.json',
+      destination='/cust/webroot/site8/_cs_apps/cost-calculator/json/' & category & '.json',
+      file='/cust/webroot/site8/_cs_apps/cost-calculator/json/' & category & '.json',
       output=getHTTPRequestData().content
     );
     return "ok";

@@ -24,6 +24,7 @@ export default function FreshmanWithTest() {
   useEffect(() => {
     fetchData(getURL)
     .then(json => {
+      console.log(json.data);
       let matrix = [];
       if(typeof json.data !== 'undefined') {
         // NOTE: cycle through and populate the existing data
