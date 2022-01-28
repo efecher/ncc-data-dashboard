@@ -1,6 +1,6 @@
 import React from 'react';
 import Navigation from './Navigation';
-import './App.scss';
+import './style/App.scss';
 import Home from './modules/Home';
 import FreshmanWithTest from './modules/FreshmanWithTest';
 import FreshmanTestOptional from './modules/FreshmanTestOptional';
@@ -45,12 +45,16 @@ export default class App extends React.Component {
   render() {
     return (
       <>
-      <div className="grid grid-x">
-        <div className="cell medium-12 text-center">
-          <Navigation handler={this.handleSelectModule} />
-          {this.loadModule()} 
+        <div className="row">
+          <nav className="col-2">
+            <h3>Net Cost Calculator</h3>
+            <h4>Data Management</h4>
+            <Navigation handler={this.handleSelectModule} />
+          </nav>
+          <div className="col-10">
+            {this.loadModule()} 
+          </div>  
         </div>
-      </div>  
       </>
     );
   }

@@ -1,5 +1,5 @@
 import React /*, { useState, useEffect }*/ from "react";
-import '../App.scss';
+
 import Navigation from '../Navigation';
 
 

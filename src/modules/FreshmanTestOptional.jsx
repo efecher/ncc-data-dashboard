@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../App.scss';
+
 
 function FreshmanTestOptional() {
   // NOTE: set state with the existing data already pre-populated

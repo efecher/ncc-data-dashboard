@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import '../App.scss';
+import '../style/App.scss';
 
 export default function FreshmanWithTest() {
   // NOTE: set state with the existing data already pre-populated
   const [inputList, setInputList] = useState(null);
   // NOTE: set saved state of this dashboard
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState(true);
 
   // NOTE: this URL should match the real environment so we don't need to change anything for a "live" build
   const getURL = "/rest/data/costcalculator/get/freshmanmeritwithtest";
-
   const postURL = "/rest/data/costcalculator/post/freshmanwithtest";
 
   // NOTE: we want the data fetch to be synchronous because we can't really do anything until we have it, we don't want a default table to load with no data and then "flash" to one containing the data when it loads. Reference: https://stackoverflow.com/questions/55008076/react-useeffect-hook-and-async-await-own-fetch-data-func
@@ -83,6 +82,7 @@ export default function FreshmanWithTest() {
     const list = [...inputList];
     list[index][name] = value;
     setInputList(list);
+    setSaved(false);
   };
   
   // handle click event of the Remove button
@@ -90,17 +90,19 @@ export default function FreshmanWithTest() {
     const list = [...inputList];
     list.splice(index, 1);
     setInputList(list);
+    setSaved(false);
   };
   
   // handle click event of the Add button
   const handleAddClick = () => {
     setInputList([...inputList, { gpaRangeLower: "", gpaRangeUpper: "", satRangeLower: "", satRangeUpper: "", actRangeLower: "", actRangeUpper: "", awardAmount: "" }]);
+    setSaved(false);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    console.log(JSON.stringify(convertInputData(inputList)));
+    //console.log(JSON.stringify(convertInputData(inputList)));
     fetch(postURL, {
       accepts: 'application/json, plain/text',
       mode: 'cors',
@@ -114,7 +116,7 @@ export default function FreshmanWithTest() {
       setSaved(true);
     })
     .catch(res => console.log(res));
-
+    setSaved(true);
     return;
   };
 
@@ -140,12 +142,13 @@ export default function FreshmanWithTest() {
     return output;
   }
 
+  console.log(saved);
   return (
-    <div className="container-fluid">
-      <div className="grid grid-x">
-        <div className="cell medium-12 content-area">
+    <div className="container">
+      <div className="row">
+        <div className="col md-12">
           <form onSubmit={handleSubmit}>
-            <h3>Freshman Merit Based - Matrix With Test Scores</h3> 
+            <h3>Freshman Merit Based - Matrix With Test Scores {saved ? null : "(Unsaved Changes)"}</h3> 
             <table id="ncc-data-dashboard" summary="Freshman Merit Based matrix with GPA, SAT/ACT scores.">
               <thead>
               <tr>
@@ -227,7 +230,7 @@ export default function FreshmanWithTest() {
                         onClick={() => handleRemoveClick(i)}>Remove Row</button>}
                     </td>
                   </tr>
-                  <tr className="void-row">
+                  <tr>
                     <td colSpan="8">{inputList.length - 1 === i && <button className="button" onClick={handleAddClick}>Add Row</button>}</td>
                   </tr>
                   </React.Fragment>
@@ -235,9 +238,11 @@ export default function FreshmanWithTest() {
               }): <tr><td>Loading Matrix...</td></tr>}
               </tbody>
             </table>
-            <div className="submit-button-row">
-              <button className="button" onClick={()=>{handleClear()}}>Clear Matrix</button>
-              <input type="submit" className="button submit-button" value="Submit Matrix" />
+            <div className="row">
+              <div className="col md-6">
+                <button className="button" onClick={()=>{handleClear()}}>Clear Matrix</button>
+                <input type="submit" className="button submit-button" value="Submit Matrix" />
+              </div>
             </div>
           </form>
         </div>
