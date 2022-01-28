@@ -1,8 +1,10 @@
 import React from 'react';
-
+import './style/Navigation.scss';
 
 export default function Navigation(props) {
   return (
+      <>
+      <p>Select from the items below to begin editing data:</p>
       <select onChange={(e) => {props.handler(e)}}>
         <option value="Home">Home</option>
         <option value="Freshman Merit With Test">Freshman Merit With Test</option>
@@ -19,5 +21,6 @@ export default function Navigation(props) {
         <option value="EFC Independent with Dependents">EFC - Independent with Dependents</option>
         <option value="SHU Tuition and Expenses">SHU Tuition and Expenses</option>
       </select>
+      </>
   );
 }

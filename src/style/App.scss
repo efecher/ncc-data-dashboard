@@ -1,7 +1,14 @@
 @import '~bootstrap/scss/bootstrap.scss';
 nav {
     background-color: #004488;
-    select {
-        max-width: 100%;
+    height: 100vh;
+}
+
+.title-contain {
+    padding: 5px 10px;
+    border-bottom: 1px solid #fefefe;
+    h3,
+    h4 {
+        color: #fefefe;
     }
 }
