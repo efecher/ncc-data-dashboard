@@ -13,20 +13,26 @@ export default function Matrix(props) {
 
   // NOTE: we want the data fetch to be synchronous because we can't really do anything until we have it, we don't want a default table to load with no data and then "flash" to one containing the data when it loads. Reference: https://stackoverflow.com/questions/55008076/react-useeffect-hook-and-async-await-own-fetch-data-func
   const fetchData = async (url) => {
-    const response = await fetch(url);
-    if(response.ok) {
-      return response.json();
-    } else {
-      throw new Error("Error retrieving the data");
+    try {
+      const response = await fetch(url);
+      if(response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Error retrieving the data");
+      }
+    } catch (error) {
+      console.log("The Data doesn't exist on the server or there is an error attempting to retrieve it.");
+      // NOTE: assume the server data doesn't exist as in we are creating a brand new matrix.
+
     }
   };
   
   useEffect(() => {
     fetchData(getURL)
     .then(json => {
-      console.log(json.data);
+      console.log(json);
       let matrix = [];
-      if(typeof json.data !== 'undefined') {
+      if(typeof json !== 'undefined') {
         // NOTE: cycle through and populate the existing data
         for(let row of json.data) {
           let r = {
@@ -148,10 +154,10 @@ export default function Matrix(props) {
     <header>
       <h3>Freshman Merit Based - Matrix With Test Scores {saved ? null : <span style={{fontWeight: "bold", color: "red"}}>*</span>}</h3>
     </header> 
-    <div className="matrix-area">
-      <div className="row">
-        <div className="col md-12">
-          <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
+      <div className="matrix-area">
+        <div className="row g-0">
+          <div className="col md-12">
             <table className="matrix" summary="Freshman Merit Based matrix with GPA, SAT/ACT scores.">
               <thead>
               <tr>
@@ -234,23 +240,23 @@ export default function Matrix(props) {
                     </td>
                   </tr>
                   <tr>
-                    <td colSpan="8">{inputList.length - 1 === i && <button className="button" onClick={handleAddClick}>Add Row</button>}</td>
+                    <td className="add-row-button" colSpan="8">{inputList.length - 1 === i && <button className="button" onClick={handleAddClick}>Add Row</button>}</td>
                   </tr>
                   </React.Fragment>
                 );
               }): <tr><td>Loading Matrix...</td></tr>}
               </tbody>
             </table>
-            <div className="row">
-              <div className="col md-6">
-                <button className="button" onClick={()=>{handleClear()}}>Clear Matrix</button>
-                <input type="submit" className="button submit-button" value="Submit Matrix" />
-              </div>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
-    </div> 
+      <div className="row g-0">
+        <div className="action-buttons col md-2 offset-md-5">
+          <button type="button" className="btn btn-info" onClick={()=>{handleClear()}}>Clear Matrix</button>
+          <input type="submit" className="btn btn-primary" value="Submit Matrix" />
+        </div>
+      </div> 
+    </form>
     </>
   );
 }

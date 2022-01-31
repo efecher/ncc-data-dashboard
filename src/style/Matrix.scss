@@ -4,5 +4,30 @@ header {
 }
 
 .matrix-area {
-    padding: 15px;
+    height: 80vh;
+    width: 95%;
+    margin-left: 2.5%;
+    overflow-y: scroll;
+    box-shadow: 0px 1px 2px 3px #030303;
+}
+
+table {
+    width: 100%;
+    th {
+        text-align: center;
+    }
+    input {
+        border: 2px solid #000000;
+        margin: 10px 0;
+    }
+}
+
+.add-row-button {
+    padding-top: 10px;
+    text-align: center;
+    background-color: #050505;
+}
+
+.btn {
+    margin: 20px;
 }

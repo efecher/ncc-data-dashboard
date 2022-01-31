@@ -39,8 +39,9 @@ app.post('/rest/data/costcalculator/post/:category', (req, res) => {
       message = {
         response: 200,
         message: "Data successfully submitted.",
-        timsetamp: Date.now()
+        timestamp: Date.now()
       };
+      res.send(message);
     }
   });
 });
