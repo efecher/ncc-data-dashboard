@@ -174,62 +174,63 @@ export default function Matrix(props) {
               <tbody>
                 {
                   (inputList !== null)? inputList.map((x, i) => {
-                  return (
+                    console.log(props.config.columns);
+                    return (
                     <React.Fragment key={`table-input-${i}`}>
                     <tr>
                       <td className="text-center">
                         <input
-                          name="gpaRangeLower"
+                          name={x[0]}
                           placeholder="0"
-                          value={x.gpaRangeLower}
+                          value={x[0]}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
                       <td className="text-center">
                         <input
-                          name="gpaRangeUpper"
+                          name={x[1]}
                           placeholder="0"
-                          value={x.gpaRangeUpper}
+                          value={x[1]}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
                       <td className="text-center">
                         <input
-                          name="satRangeLower"
+                          name={x[2]}
                           placeholder="0"
-                          value={x.satRangeLower}
+                          value={x[2]}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
                       <td className="text-center">
                         <input
-                          name="satRangeUpper"
+                          name={x[3]}
                           placeholder="0"
-                          value={x.satRangeUpper}
+                          value={x[3]}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
                       <td className="text-center">
                         <input
-                          name="actRangeLower"
+                          name={x[4]}
                           placeholder="0"
-                          value={x.actRangeLower}
+                          value={x[4]}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
                       <td className="text-center">
                         <input
-                          name="actRangeUpper"
+                          name={x[5]}
                           placeholder="0"
-                          value={x.actRangeUpper}
+                          value={x[5]}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
                       <td className="text-center">
                         <input
-                          name="awardAmount"
+                          name={x[6]}
                           placeholder="0"
-                          value={x.awardAmount}
+                          value={x[6]}
                           onChange={e => handleInputChange(e, i)}
                         />
                       </td>
