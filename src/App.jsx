@@ -30,7 +30,7 @@ export default class App extends React.Component {
   }
 
   loadModule = () => {
-    console.log(this.state.currentModule);
+    //console.log(this.state.currentModule);
     // NOTE: find the corresponding Matrix config for the currentModule
     for(let i=0; i<config.length; i++) {
       if(i === this.state.currentModule) {

@@ -6,10 +6,10 @@ export default function Matrix(props) {
   const [inputList, setInputList] = useState(null);
   // NOTE: set saved state of this dashboard
   const [saved, setSaved] = useState(true);
-
+  console.log(props.config.urls.get);
   // NOTE: this URL should match the real environment so we don't need to change anything for a "live" build
-  const getURL = "/rest/data/costcalculator/get/freshmanmeritwithtest";
-  const postURL = "/rest/data/costcalculator/post/freshmanwithtest";
+  const getURL = props.config.urls.get;
+  const postURL = props.config.urls.post;
 
   // NOTE: we want the data fetch to be synchronous because we can't really do anything until we have it, we don't want a default table to load with no data and then "flash" to one containing the data when it loads. Reference: https://stackoverflow.com/questions/55008076/react-useeffect-hook-and-async-await-own-fetch-data-func
   const fetchData = async (url) => {
@@ -30,7 +30,7 @@ export default function Matrix(props) {
   useEffect(() => {
     fetchData(getURL)
     .then(json => {
-      console.log(json);
+      //console.log(json);
       let matrix = [];
       if(typeof json !== 'undefined') {
         // NOTE: cycle through and populate the existing data
@@ -65,7 +65,7 @@ export default function Matrix(props) {
     .catch(error => {
       console.error(error);
     })
-  }, []);
+  }, [getURL]);
     
   // handle clear button
   const handleClear = () => {
@@ -148,7 +148,7 @@ export default function Matrix(props) {
     return output;
   }
 
-  console.log(saved);
+  //console.log(saved);
   return (
     <>
     <header>
