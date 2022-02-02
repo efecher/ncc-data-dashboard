@@ -6,6 +6,10 @@ export default function Matrix(props) {
   const [inputList, setInputList] = useState(null);
   // NOTE: set saved state of this dashboard
   const [saved, setSaved] = useState(true);
+
+  // NOTE: save column names for re-use
+  const columnNames = props.config.columns;
+
   //console.log(props.config.urls.get);
   // NOTE: this URL should match the real environment so we don't need to change anything for a "live" build
   const getURL = props.config.urls.get;
@@ -41,44 +45,39 @@ export default function Matrix(props) {
           for(let col=0; col<rowData.length; col++) {
             // NOTE: get each column value, put it in the current row.
             //console.log(rowData[col]);
-            r[`${props.config.columns[col].stateVariableName}`] = rowData[col];
+            r[`${columnNames[col].stateVariableName}`] = rowData[col];
           }
           matrix.push(r);
         }
       } else {
         // NOTE: there isn't any existing data, we're creating a new file
+        // NOTE: default matrix
+        let r = {};
+        for(let col=0; col<props.config.columns.length; col++) {
+          r[`${columnNames[col].stateVariableName}`] = "0";
+        }
         
-        
-        matrix.push({
-          gpaRangeLower: 0,
-            gpaRangeUpper: 0,
-            satRangeLower: 0,
-            satRangeUpper: 0,
-            actRangeLower: 0,
-            actRangeUpper: 0,
-            awardAmount: 0,
-            placeholder: "0"
-        });
+        matrix.push(r);
       }
       setInputList(matrix);
     })
     .catch(error => {
       console.error(error);
     })
-  }, [getURL, props.config.columns]);
+  }, [getURL, props.config.columns, columnNames]);
     
   // handle clear button
   const handleClear = () => {
-    setInputList([{
-      gpaRangeLower: "0",
-      gpaRangeUpper: "0",
-      satRangeLower: "0",
-      satRangeUpper: "0",
-      actRangeLower: "0",
-      actRangeUpper: "0",
-      awardAmount: "0",
-      placeholder: "0"
-    }]);
+    let r = {};
+    let _inputList = [];
+
+    for(let col=0; col<columnNames.length; col++) {
+      r[`${columnNames[col]}`] = "0";
+    }
+
+    _inputList.push(r);
+
+    setInputList(r);
     return;
   }
   
@@ -101,7 +100,13 @@ export default function Matrix(props) {
   
   // handle click event of the Add button
   const handleAddClick = () => {
-    setInputList([...inputList, { gpaRangeLower: "", gpaRangeUpper: "", satRangeLower: "", satRangeUpper: "", actRangeLower: "", actRangeUpper: "", awardAmount: "" }]);
+    let r = {};
+
+    for(let col=0; col<columnNames.length; col++) {
+      r[`${columnNames[col]}`] = "0";
+    }
+
+    setInputList([...inputList, r]);
     setSaved(false);
   };
 
@@ -126,29 +131,49 @@ export default function Matrix(props) {
     return;
   };
 
+  // NOTE: convert string data from inputs to floats or integers as needed
   const convertInputData = (data) => {
     //console.log(data);
     let output = [];
     for(let i=0; i<data.length; i++) {
-      let row = [];
-
-      row.push(
-        // NOTE: Check if input is a number first before converting from string, empty strings, as in the initial values of the inputs are NaN
-        (data[i].gpaRangeLower === "")? 0 : parseFloat(data[i].gpaRangeLower), 
-        (data[i].gpaRangeUpper === "")? 0 : parseFloat(data[i].gpaRangeUpper), 
-        (data[i].satRangeLower === "")? 0 : parseInt(data[i].satRangeLower), 
-        (data[i].satRangeUpper === "")? 0 : parseInt(data[i].satRangeUpper), 
-        (data[i].actRangeLower === "")? 0 : parseInt(data[i].actRangeLower), 
-        (data[i].actRangeUpper === "")? 0 : parseInt(data[i].actRangeUpper), 
-        (data[i].awardAmount === "")? 0 : parseInt(data[i].awardAmount)
-      );
-      output.push(row);
+      // NOTE: get the row data
+      let row = data[i];
+      let convertedRow = {};
+      console.log(row);
+      for(let col=0; col<row.length; col++) {
+        // NOTE: pull out individual values in the row for conversion
+        if(isNaN(parseFloat(row[col]))) {
+          convertedRow[columnNames.stateVariableName] = parseInt(data[i][columnNames.stateVariableName]);
+        } else {
+          convertedRow[columnNames.stateVariableName] = parseFloat(data[i][columnNames.stateVariableName]);
+        }
+      }
+      output.push(convertedRow);
     }
 
     return output;
   }
+    
+      
+
+  //     row.push(
+  //       // NOTE: Check if input is a number first before converting from string, empty strings, as in the initial values of the inputs are NaN
+  //       (data[i].gpaRangeLower === "")? 0 : parseFloat(data[i].gpaRangeLower), 
+  //       (data[i].gpaRangeUpper === "")? 0 : parseFloat(data[i].gpaRangeUpper), 
+  //       (data[i].satRangeLower === "")? 0 : parseInt(data[i].satRangeLower), 
+  //       (data[i].satRangeUpper === "")? 0 : parseInt(data[i].satRangeUpper), 
+  //       (data[i].actRangeLower === "")? 0 : parseInt(data[i].actRangeLower), 
+  //       (data[i].actRangeUpper === "")? 0 : parseInt(data[i].actRangeUpper), 
+  //       (data[i].awardAmount === "")? 0 : parseInt(data[i].awardAmount)
+  //     );
+  //     output.push(row);
+  //   }
+
+  //   return output;
+  // }
 
   //console.log(saved);
+
   return (
     <>
     <header>
