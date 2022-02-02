@@ -6,7 +6,7 @@ export default function Matrix(props) {
   const [inputList, setInputList] = useState(null);
   // NOTE: set saved state of this dashboard
   const [saved, setSaved] = useState(true);
-  console.log(props.config.urls.get);
+  //console.log(props.config.urls.get);
   // NOTE: this URL should match the real environment so we don't need to change anything for a "live" build
   const getURL = props.config.urls.get;
   const postURL = props.config.urls.post;
@@ -30,20 +30,20 @@ export default function Matrix(props) {
   useEffect(() => {
     fetchData(getURL)
     .then(json => {
-      //console.log(json);
+      //console.log(props.config.columns);
       let matrix = [];
       if(typeof json !== 'undefined') {
-        // NOTE: cycle through and populate the existing data
-        for(let row of json.data) {
-          let r = {
-            gpaRangeLower: row[0],
-            gpaRangeUpper: row[1],
-            satRangeLower: row[2],
-            satRangeUpper: row[3],
-            actRangeLower: row[4],
-            actRangeUpper: row[5],
-            awardAmount: row[6],
-            placeholder: "0"
+        // NOTE: cycle through and populate the existing data,
+        // We don't know at runtime the names of the colums or how many
+        console.log(json.data);
+        for(let row=0; row<json.data.length; row++) {
+          // NOTE: for each row
+          let rowData = json.data[row];
+          let r = {};
+          for(let col=0; col<rowData.length; col++) {
+            // NOTE: get each column value, put it in the current row.
+            //console.log(rowData[col]);
+            r[`${props.config.columns[col].stateVariableName}`] = rowData[col];
           }
           matrix.push(r);
         }
@@ -65,7 +65,7 @@ export default function Matrix(props) {
     .catch(error => {
       console.error(error);
     })
-  }, [getURL]);
+  }, [getURL, props.config.columns]);
     
   // handle clear button
   const handleClear = () => {
@@ -172,68 +172,23 @@ export default function Matrix(props) {
               </tr>
               </thead>
               <tbody>
+                {/*console.log(inputList)*/}
                 {
                   (inputList !== null)? inputList.map((x, i) => {
-                    console.log(props.config.columns);
+                    //console.log(x);
                     return (
                     <React.Fragment key={`table-input-${i}`}>
                     <tr>
-                      <td className="text-center">
-                        <input
-                          name={x[0]}
-                          placeholder="0"
-                          value={x[0]}
-                          onChange={e => handleInputChange(e, i)}
-                        />
-                      </td>
-                      <td className="text-center">
-                        <input
-                          name={x[1]}
-                          placeholder="0"
-                          value={x[1]}
-                          onChange={e => handleInputChange(e, i)}
-                        />
-                      </td>
-                      <td className="text-center">
-                        <input
-                          name={x[2]}
-                          placeholder="0"
-                          value={x[2]}
-                          onChange={e => handleInputChange(e, i)}
-                        />
-                      </td>
-                      <td className="text-center">
-                        <input
-                          name={x[3]}
-                          placeholder="0"
-                          value={x[3]}
-                          onChange={e => handleInputChange(e, i)}
-                        />
-                      </td>
-                      <td className="text-center">
-                        <input
-                          name={x[4]}
-                          placeholder="0"
-                          value={x[4]}
-                          onChange={e => handleInputChange(e, i)}
-                        />
-                      </td>
-                      <td className="text-center">
-                        <input
-                          name={x[5]}
-                          placeholder="0"
-                          value={x[5]}
-                          onChange={e => handleInputChange(e, i)}
-                        />
-                      </td>
-                      <td className="text-center">
-                        <input
-                          name={x[6]}
-                          placeholder="0"
-                          value={x[6]}
-                          onChange={e => handleInputChange(e, i)}
-                        />
-                      </td>
+                      {
+                        <td className="text-center">
+                          <input
+                            name={x[0]}
+                            placeholder="0"
+                            value={x[0]}
+                            onChange={e => handleInputChange(e, i)}
+                          />
+                        </td>
+                      }
                     <td className="text-center">
                       {inputList.length !== 1 && <button
                         className="button"
