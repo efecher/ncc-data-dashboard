@@ -1,0 +1,53 @@
+{
+  "config": [{
+    "name": "freshmanmeritwithtest",
+    "matrixName": "Freshman Merit With Test (SAT/ACT)",
+    "urls": {
+      "get": "/rest/data/costcalculator/get/freshmanmeritwithtest",
+      "post": "/rest/data/costcalculator/post/freshmanmeritwithtest"
+    },
+    "columns": [{
+        "columnName": "GPA Range Lower Bound",
+        "stateVariableName": "gpaRangeLower",
+        "placeholder": "0",
+        "float": true
+      },
+      {
+        "columnName": "GPA Range Upper Bound",
+        "stateVariableName": "gpaRangeUpper",
+        "placeholder": "0",
+        "float": true
+      },
+      {
+        "columnName": "SAT Range Lower Bound",
+        "stateVariableName": "satRangeLower",
+        "placeholder": "0",
+        "float": false
+      },
+      {
+        "columnName": "SAT Range Upper Bound",
+        "stateVariableName": "satRangeUpper",
+        "placeholder": "0",
+        "float": false
+      },
+      {
+        "columnName": "ACT Range Lower Bound",
+        "stateVariableName": "actRangeLower",
+        "placeholder": "0",
+        "float": false
+      },
+      {
+        "columnName": "ACT Range Upper Bound",
+        "stateVariableName": "actRangeUpper",
+        "placeholder": "0",
+        "float": false
+      },
+      {
+        "columnName": "Award Amount",
+        "stateVariableName": "awardAmount",
+        "placeholder": "0",
+        "float": false
+      }
+    ]
+  }]
+}

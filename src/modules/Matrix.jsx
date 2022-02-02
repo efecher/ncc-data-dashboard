@@ -30,12 +30,10 @@ export default function Matrix(props) {
   useEffect(() => {
     fetchData(getURL)
     .then(json => {
-      //console.log(props.config.columns);
       let matrix = [];
       if(typeof json !== 'undefined') {
         // NOTE: cycle through and populate the existing data,
         // We don't know at runtime the names of the colums or how many
-        console.log(json.data);
         for(let row=0; row<json.data.length; row++) {
           // NOTE: for each row
           let rowData = json.data[row];
@@ -49,6 +47,8 @@ export default function Matrix(props) {
         }
       } else {
         // NOTE: there isn't any existing data, we're creating a new file
+        
+        
         matrix.push({
           gpaRangeLower: 0,
             gpaRangeUpper: 0,
