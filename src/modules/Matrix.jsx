@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from 'uuid';
 import '../style/Matrix.scss';
 
 export default function Matrix(props) {
@@ -34,21 +35,23 @@ export default function Matrix(props) {
   useEffect(() => {
     fetchData(getURL)
     .then(json => {
+      //console.log(json);
       let matrix = [];
       if(typeof json !== 'undefined') {
-        // NOTE: cycle through and populate the existing data,
-        // We don't know at runtime the names of the colums or how many
-        for(let row=0; row<json.data.length; row++) {
-          // NOTE: for each row
-          let rowData = json.data[row];
-          let r = {};
-          for(let col=0; col<rowData.length; col++) {
-            // NOTE: get each column value, put it in the current row.
-            //console.log(rowData[col]);
-            r[`${columnNames[col].stateVariableName}`] = rowData[col];
+        // NOTE: capture the entire matrix in a variable for easier manipulation
+        let mData = json.data;
+        // NOTE: cycle through the rows and get data by row
+        for(let row=0; row<mData.length; row++) {
+          // NOTE: this should be our current row in the matrix
+          let rData = mData[row];
+          let _row = {};
+          for(let col=0; col<rData.length; col++) {
+            // NOTE: now at the individual column per row
+            _row[`${columnNames[col].stateVariableName}`] = rData[col];
           }
-          matrix.push(r);
+          matrix.push(_row);
         }
+
       } else {
         // NOTE: there isn't any existing data, we're creating a new file
         // NOTE: default matrix
@@ -59,6 +62,7 @@ export default function Matrix(props) {
         
         matrix.push(r);
       }
+      //console.log(matrix);
       setInputList(matrix);
     })
     .catch(error => {
@@ -77,7 +81,7 @@ export default function Matrix(props) {
 
     _inputList.push(r);
 
-    setInputList(r);
+    setInputList(_inputList);
     return;
   }
   
@@ -154,30 +158,11 @@ export default function Matrix(props) {
     return output;
   }
     
-      
-
-  //     row.push(
-  //       // NOTE: Check if input is a number first before converting from string, empty strings, as in the initial values of the inputs are NaN
-  //       (data[i].gpaRangeLower === "")? 0 : parseFloat(data[i].gpaRangeLower), 
-  //       (data[i].gpaRangeUpper === "")? 0 : parseFloat(data[i].gpaRangeUpper), 
-  //       (data[i].satRangeLower === "")? 0 : parseInt(data[i].satRangeLower), 
-  //       (data[i].satRangeUpper === "")? 0 : parseInt(data[i].satRangeUpper), 
-  //       (data[i].actRangeLower === "")? 0 : parseInt(data[i].actRangeLower), 
-  //       (data[i].actRangeUpper === "")? 0 : parseInt(data[i].actRangeUpper), 
-  //       (data[i].awardAmount === "")? 0 : parseInt(data[i].awardAmount)
-  //     );
-  //     output.push(row);
-  //   }
-
-  //   return output;
-  // }
-
-  //console.log(saved);
 
   return (
     <>
     <header>
-      <h3>Freshman Merit Based - Matrix With Test Scores {saved ? null : <span style={{fontWeight: "bold", color: "red"}}>*</span>}</h3>
+      <h3>{props.config.matrixName} {saved ? null : <span style={{fontWeight: "bold", color: "red"}}>*</span>}</h3>
     </header> 
     <form onSubmit={handleSubmit}>
       <div className="matrix-area">
@@ -186,46 +171,16 @@ export default function Matrix(props) {
             <table className="matrix" summary="Freshman Merit Based matrix with GPA, SAT/ACT scores.">
               <thead>
               <tr>
-                <th>GPA Range Lower Bound</th>
-                <th >GPA Range Upper Bound</th>
-                <th>SAT Range Lower Bound</th>
-                <th>SAT Range Upper Bound</th>
-                <th>ACT Range Lower Bound</th>
-                <th>ACT Range Upper Bound</th>
-                <th>Award Amount</th>
+                {
+                  props.config.columns.map((c) => {
+                    return <th key={uuidv4()}>{c.columnName}</th>
+                  })
+                }
                 <th>&nbsp;</th>
               </tr>
               </thead>
               <tbody>
-                {/*console.log(inputList)*/}
-                {
-                  (inputList !== null)? inputList.map((x, i) => {
-                    //console.log(x);
-                    return (
-                    <React.Fragment key={`table-input-${i}`}>
-                    <tr>
-                      {
-                        <td className="text-center">
-                          <input
-                            name={x[0]}
-                            placeholder="0"
-                            value={x[0]}
-                            onChange={e => handleInputChange(e, i)}
-                          />
-                        </td>
-                      }
-                    <td className="text-center">
-                      {inputList.length !== 1 && <button
-                        className="button"
-                        onClick={() => handleRemoveClick(i)}>Remove Row</button>}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="add-row-button" colSpan="8">{inputList.length - 1 === i && <button className="button" onClick={handleAddClick}>Add Row</button>}</td>
-                  </tr>
-                  </React.Fragment>
-                );
-              }): <tr><td>Loading Matrix...</td></tr>}
+                <tr><td>Loading Matrix...</td></tr>
               </tbody>
             </table>
           </div>
