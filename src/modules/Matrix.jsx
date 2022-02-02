@@ -117,44 +117,39 @@ export default function Matrix(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    //console.log(JSON.stringify(convertInputData(inputList)));
-    fetch(postURL, {
-      accepts: 'application/json, plain/text',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({data: convertInputData(inputList)})
-    })
-    .then(() => {
-      setSaved(true);
-    })
-    .catch(res => console.log(res));
-    setSaved(true);
+    console.log((convertInputData(inputList)));
+    // fetch(postURL, {
+    //   accepts: 'application/json, plain/text',
+    //   mode: 'cors',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   method: 'POST',
+    //   body: JSON.stringify({data: convertInputData(inputList)})
+    // })
+    // .then(() => {
+    //   setSaved(true);
+    // })
+    // .catch(res => console.log(res));
+    // setSaved(true);
     return;
   };
 
-  // NOTE: convert string data from inputs to floats or integers as needed
+  // NOTE: convert string data from inputs to floats or integers as needed,
+  //       output should be a 2D array representing the matrix
   const convertInputData = (data) => {
-    //console.log(data);
+    console.log(data);
     let output = [];
-    for(let i=0; i<data.length; i++) {
-      // NOTE: get the row data
-      let row = data[i];
-      let convertedRow = {};
-      console.log(row);
-      for(let col=0; col<row.length; col++) {
-        // NOTE: pull out individual values in the row for conversion
-        if(isNaN(parseFloat(row[col]))) {
-          convertedRow[columnNames.stateVariableName] = parseInt(data[i][columnNames.stateVariableName]);
-        } else {
-          convertedRow[columnNames.stateVariableName] = parseFloat(data[i][columnNames.stateVariableName]);
-        }
+    for(let r=0; r<data.length; r++) {
+      let row = data[r];
+      let rowProps = Object.keys(row);
+      console.log(rowProps);
+      let rowValues = [];
+      for(let p of rowProps) {
+        rowValues.push(row[`${p}`]);
       }
-      output.push(convertedRow);
+      output.push(rowValues);
     }
-
     return output;
   }
     
@@ -168,7 +163,7 @@ export default function Matrix(props) {
       <div className="matrix-area">
         <div className="row g-0">
           <div className="col md-12">
-            <table className="matrix" summary="Freshman Merit Based matrix with GPA, SAT/ACT scores.">
+            <table className="matrix" summary={props.config.matrixName}>
               <thead>
               <tr>
                 {
@@ -180,15 +175,16 @@ export default function Matrix(props) {
               </tr>
               </thead>
               <tbody>
+                
                 { 
                   (inputList !== null)? 
-                  inputList.map((r, i) => {
-                    let names = Object.keys(r);
+                  inputList.map((r) => {
+                    
                     return ( 
                       <tr key={uuidv4()}>
                         {
-                          names.map((c, j) => {
-                            console.log(c);
+                          Object.keys(r).map((c, i) => { 
+                            //console.log(columnNames[i].placeholder);
                             return (
                               <td key={uuidv4()} className="text-center">
                                 <input 
@@ -200,6 +196,18 @@ export default function Matrix(props) {
                               </td>
                             )
                           })
+                            
+                          //   return (
+                          //     <td key={uuidv4()} className="text-center">
+                          //       <input 
+                          //         name={c}
+                          //         placeholder={columnNames[i].placeholder}
+                          //         value={r[`${columnNames.stateVariableName}`]}
+                          //         onChange={e => handleInputChange(e, i)}
+                          //       />
+                          //     </td>
+                          //   )
+                          // })
                         }
                       </tr>
                     )
