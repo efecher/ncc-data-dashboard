@@ -180,7 +180,33 @@ export default function Matrix(props) {
               </tr>
               </thead>
               <tbody>
-                <tr><td>Loading Matrix...</td></tr>
+                { 
+                  (inputList !== null)? 
+                  inputList.map((r, i) => {
+                    let names = Object.keys(r);
+                    return ( 
+                      <tr key={uuidv4()}>
+                        {
+                          names.map((c, j) => {
+                            console.log(c);
+                            return (
+                              <td key={uuidv4()} className="text-center">
+                                <input 
+                                  name={c}
+                                  placeholder={columnNames[i].placeholder}
+                                  value={r[c]}
+                                  onChange={e => handleInputChange(e, i)}
+                                />
+                              </td>
+                            )
+                          })
+                        }
+                      </tr>
+                    )
+                  })
+                :
+                  <tr><td>Loading Matrix...</td></tr>
+                }
               </tbody>
             </table>
           </div>
