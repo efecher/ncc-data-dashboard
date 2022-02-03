@@ -85,14 +85,6 @@ export default function Matrix(props) {
     return;
   }
   
-  // handle input change
-  const handleInputChange = (e, index) => {
-    const { name, value } = e.target;
-    const list = [...inputList];
-    list[index][name] = value;
-    setInputList(list);
-    setSaved(false);
-  };
   
   // handle click event of the Remove button
   const handleRemoveClick = index => {
@@ -152,7 +144,18 @@ export default function Matrix(props) {
     }
     return output;
   }
-    
+  
+  // handle input change
+  // TODO: fix bugs here in handling the correct inputs.
+  const handleInputChange = (e, row, index) => {
+    const { name, value } = e.target;
+    const list = [...inputList];
+    console.log(row);
+    console.log(index);
+    list[row][index] = value;
+    setInputList(list);
+    setSaved(false);
+  };
 
   return (
     <>
@@ -175,23 +178,23 @@ export default function Matrix(props) {
               </tr>
               </thead>
               <tbody>
-                
+                {/*console.log(inputList)*/}
                 { 
                   (inputList !== null)? 
-                  inputList.map((r) => {
-                    
+                  inputList.map((r, j) => {
+                    //console.log(r);
                     return ( 
                       <tr key={uuidv4()}>
                         {
                           Object.keys(r).map((c, i) => { 
-                            //console.log(columnNames[i].placeholder);
+                            console.log(r[c]);
                             return (
                               <td key={uuidv4()} className="text-center">
                                 <input 
                                   name={c}
-                                  placeholder={columnNames[i].placeholder}
+                                  placeholder="0"
                                   value={r[c]}
-                                  onChange={e => handleInputChange(e, i)}
+                                  onChange={e => handleInputChange(e, j, i)}
                                 />
                               </td>
                             )
