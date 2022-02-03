@@ -110,21 +110,21 @@ export default function Matrix(props) {
     event.preventDefault();
     
     //console.log((convertInputData(inputList)));
-    // fetch(postURL, {
-    //   accepts: 'application/json, plain/text',
-    //   mode: 'cors',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   method: 'POST',
-    //   body: JSON.stringify({data: convertInputData(inputList)})
-    // })
-    // .then(() => {
-    //   setSaved(true);
-    // })
-    // .catch(res => console.log(res));
-    // setSaved(true);
-    return;
+    fetch(postURL, {
+      accepts: 'application/json, plain/text',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({data: inputList})
+    })
+    .then(() => {
+      setSaved(true);
+    })
+    .catch(res => console.log(res));
+    setSaved(true);
+    return true;
   };
 
   // NOTE: convert string data from inputs to floats or integers as needed,
