@@ -99,9 +99,9 @@ export default function Matrix(props) {
     let r = {};
 
     for(let col=0; col<columnNames.length; col++) {
-      r[`${columnNames[col]}`] = "0";
+      r[`${columnNames[col].stateVariableName}`] = "0";
     }
-
+    console.log(r);
     setInputList([...inputList, r]);
     setSaved(false);
   };
@@ -157,78 +157,66 @@ export default function Matrix(props) {
   };
 
   return (
-    <>
-    <header>
-      <h3>{props.config.matrixName} {saved ? null : <span style={{fontWeight: "bold", color: "red"}}>*</span>}</h3>
-    </header> 
-    <form onSubmit={handleSubmit}>
-      <div className="matrix-area">
-        <div className="row g-0">
-          <div className="col md-12">
-            <table className="matrix" summary={props.config.matrixName}>
-              <thead>
-              <tr>
-                {
-                  props.config.columns.map((c) => {
-                    return <th key={uuidv4()}>{c.columnName}</th>
-                  })
-                }
-                <th>&nbsp;</th>
-              </tr>
-              </thead>
-              <tbody>
-                {/*console.log(inputList)*/}
-                { 
-                  (inputList !== null)? 
-                  inputList.map((r, j) => {
-                    //console.log(r);
-                    return ( 
-                      <tr key={uuidv4()}>
-                        {
-                          Object.keys(r).map((c, i) => { 
-                            //console.log(j);
-                            return (
-                              <td key={uuidv4()} className="text-center">
-                                <input 
-                                  name={c}
-                                  placeholder="0"
-                                  value={r[c]}
-                                  onChange={e => handleInputChange(e, j, c)}
-                                />
-                              </td>
-                            )
-                          })
-                            
-                          //   return (
-                          //     <td key={uuidv4()} className="text-center">
-                          //       <input 
-                          //         name={c}
-                          //         placeholder={columnNames[i].placeholder}
-                          //         value={r[`${columnNames.stateVariableName}`]}
-                          //         onChange={e => handleInputChange(e, i)}
-                          //       />
-                          //     </td>
-                          //   )
-                          // })
-                        }
-                      </tr>
-                    )
-                  })
-                :
-                  <tr><td>Loading Matrix...</td></tr>
-                }
-              </tbody>
-            </table>
+    (inputList !== null)? 
+      <>
+      <header>
+        <h3>{props.config.matrixName} {saved ? null : <span style={{fontWeight: "bold", color: "red"}}>*</span>}</h3>
+      </header> 
+      <form onSubmit={handleSubmit}>
+        <div className="matrix-area">
+          <div className="row g-0">
+            <div className="col md-12">
+              <table className="matrix" summary={props.config.matrixName}>
+                <thead>
+                <tr>
+                  {
+                    props.config.columns.map((c) => {
+                      return <th key={uuidv4()}>{c.columnName}</th>
+                    })
+                  }
+                  <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                  { 
+                    inputList.map((r, j) => {
+                      //console.log(r);
+                      return ( 
+                        <tr key={uuidv4()}>
+                          {
+                            Object.keys(r).map((c, i) => { 
+                              //console.log(j);
+                              return (
+                                <td key={uuidv4()} className="text-center">
+                                  <input 
+                                    name={c}
+                                    placeholder="0"
+                                    value={r[c]}
+                                    onChange={e => handleInputChange(e, j, c)}
+                                  />
+                                </td>
+                                
+                              )
+                            })
+                          }
+                        </tr>
+                      )
+                    })
+                  }
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="row g-0">
-        <div className="action-buttons col md-2 offset-md-5">
-          <button type="button" className="btn btn-info" onClick={()=>{handleClear()}}>Clear Matrix</button>
-          <input type="submit" className="btn btn-primary" value="Submit Matrix" />
-        </div>
-      </div> 
-    </form>
-    </>
+        <div className="row g-0">
+          <div className="action-buttons col md-3">
+            <button type="button" className="btn btn-success" onClick={()=>{handleAddClick()}}>Add Row</button>
+            <button type="button" className="btn btn-info" onClick={()=>{handleClear()}}>Clear Matrix</button>
+            <input type="submit" className="btn btn-primary" value="Submit Matrix" />
+          </div>
+        </div> 
+      </form>
+      </>
+     : <p>Loading data...</p>
   );
 }
