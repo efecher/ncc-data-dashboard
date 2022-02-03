@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
+import { stringToNumeric } from '../utils/utils';
 import '../style/Matrix.scss';
 
 export default function Matrix(props) {
@@ -44,14 +45,14 @@ export default function Matrix(props) {
         for(let row=0; row<mData.length; row++) {
           // NOTE: this should be our current row in the matrix
           let rData = mData[row];
-          console.log(rData);
+          //console.log(rData);
           let r = {};
           for(let col=0; col<props.config.columns.length; col++) {
             r[`${columnNames[col].stateVariableName}`] = rData[col];
           }
           matrix.push(r);
         }
-        console.log(matrix);
+        //console.log(matrix);
       } else {
         // NOTE: there isn't any existing data, we're creating a new file
         // NOTE: default matrix
@@ -61,7 +62,7 @@ export default function Matrix(props) {
         }
         matrix.push(r);
       }
-      console.log(matrix);
+      //console.log(matrix);
       setInputList(matrix);
     })
     .catch(error => {
@@ -105,10 +106,27 @@ export default function Matrix(props) {
     setSaved(false);
   };
 
+  // NOTE: convert table data from state to numeric matrix for output
+  const convertInputData = (data) => { 
+    let matrix = [];
+    for(let r=0; r<data.length; r++) {
+      let rData = data[r];
+      let cols = Object.keys(rData);
+      //console.log(cols);
+      let convertedRow = [];
+      for(let c=0; c<cols.length; c++) {
+        //console.log(rData[`${cols[c]}`]);
+        convertedRow.push(stringToNumeric(rData[`${cols[c]}`]));
+      }
+      matrix.push(convertedRow);
+    }  
+    return matrix;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    //console.log((convertInputData(inputList)));
+    console.log((convertInputData(inputList)));
     fetch(postURL, {
       accepts: 'application/json, plain/text',
       mode: 'cors',
@@ -116,7 +134,7 @@ export default function Matrix(props) {
         'Content-Type': 'application/json'
       },
       method: 'POST',
-      body: JSON.stringify({data: inputList})
+      body: JSON.stringify({data: convertInputData(inputList)})
     })
     .then(() => {
       setSaved(true);
@@ -124,24 +142,6 @@ export default function Matrix(props) {
     .catch(res => console.log(res));
     setSaved(true);
     return true;
-  };
-
-  // NOTE: convert string data from inputs to floats or integers as needed,
-  //       output should be a 2D array representing the matrix
-  const convertInputData = (data) => { 
-    let isFloat = parseFloat(data);
-    if(isNaN(isFloat)) {
-      // NOTE: not a float, try integer
-      let isInteger = parseInt(data);
-      if(isNaN(isInteger)) {
-        // NOTE: input is not a number, reject it
-        throw new Error("input is not a numeric value.");
-      } else {
-        return parseInt(data);
-      }
-    } else {
-      return isFloat;
-    }
   };
   
   // handle input change
@@ -186,7 +186,7 @@ export default function Matrix(props) {
                       <tr key={uuidv4()}>
                         {
                           Object.keys(r).map((c, i) => { 
-                            console.log(j);
+                            //console.log(j);
                             return (
                               <td key={uuidv4()} className="text-center">
                                 <input 
