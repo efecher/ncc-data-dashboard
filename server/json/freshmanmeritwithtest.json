@@ -1,1 +1,4 @@
-{"data":[{"gpaRangeLower":0,"gpaRangeUpper":2.49,"satRangeLower":0,"satRangeUpper":1069,"actRangeLower":0,"actRangeUpper":21,"awardAmount":0},{"gpaRangeLower":3,"gpaRangeUpper":2.49,"satRangeLower":1070,"satRangeUpper":1110,"actRangeLower":22,"actRangeUpper":22,"awardAmount":0}]}
+{ "data": [
+    [0, 2.49, 0, 1069, 0, 21, 0],
+    [0, 2.49, 1070, 1110, 22, 22, 0]
+  ] }

@@ -44,14 +44,14 @@ export default function Matrix(props) {
         for(let row=0; row<mData.length; row++) {
           // NOTE: this should be our current row in the matrix
           let rData = mData[row];
-          let _row = {};
-          for(let col=0; col<rData.length; col++) {
-            // NOTE: now at the individual column per row
-            _row[`${columnNames[col].stateVariableName}`] = rData[col];
+          console.log(rData);
+          let r = {};
+          for(let col=0; col<props.config.columns.length; col++) {
+            r[`${columnNames[col].stateVariableName}`] = rData[col];
           }
-          matrix.push(_row);
+          matrix.push(r);
         }
-
+        console.log(matrix);
       } else {
         // NOTE: there isn't any existing data, we're creating a new file
         // NOTE: default matrix
@@ -59,10 +59,9 @@ export default function Matrix(props) {
         for(let col=0; col<props.config.columns.length; col++) {
           r[`${columnNames[col].stateVariableName}`] = "0";
         }
-        
         matrix.push(r);
       }
-      //console.log(matrix);
+      console.log(matrix);
       setInputList(matrix);
     })
     .catch(error => {
@@ -146,14 +145,13 @@ export default function Matrix(props) {
   };
   
   // handle input change
-  // TODO: fix bugs here in handling the correct inputs.
   const handleInputChange = (e, row, name) => {
     //console.log(e.target);
-    console.log(row);
+    //console.log(row);
     const list = [...inputList];
-    console.log(list[row]);
+    //console.log(list[row]);
     list[row][`${name}`] = convertInputData(e.target.value);
-    console.log(list);
+    //console.log(list);
     setInputList(list);
     return true;
   };
