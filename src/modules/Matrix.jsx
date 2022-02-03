@@ -109,7 +109,7 @@ export default function Matrix(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    console.log((convertInputData(inputList)));
+    //console.log((convertInputData(inputList)));
     // fetch(postURL, {
     //   accepts: 'application/json, plain/text',
     //   mode: 'cors',
@@ -129,32 +129,33 @@ export default function Matrix(props) {
 
   // NOTE: convert string data from inputs to floats or integers as needed,
   //       output should be a 2D array representing the matrix
-  const convertInputData = (data) => {
-    console.log(data);
-    let output = [];
-    for(let r=0; r<data.length; r++) {
-      let row = data[r];
-      let rowProps = Object.keys(row);
-      console.log(rowProps);
-      let rowValues = [];
-      for(let p of rowProps) {
-        rowValues.push(row[`${p}`]);
+  const convertInputData = (data) => { 
+    let isFloat = parseFloat(data);
+    if(isNaN(isFloat)) {
+      // NOTE: not a float, try integer
+      let isInteger = parseInt(data);
+      if(isNaN(isInteger)) {
+        // NOTE: input is not a number, reject it
+        throw new Error("input is not a numeric value.");
+      } else {
+        return parseInt(data);
       }
-      output.push(rowValues);
+    } else {
+      return isFloat;
     }
-    return output;
-  }
+  };
   
   // handle input change
   // TODO: fix bugs here in handling the correct inputs.
-  const handleInputChange = (e, row, index) => {
-    const { name, value } = e.target;
-    const list = [...inputList];
+  const handleInputChange = (e, row, name) => {
+    //console.log(e.target);
     console.log(row);
-    console.log(index);
-    list[row][index] = value;
+    const list = [...inputList];
+    console.log(list[row]);
+    list[row][`${name}`] = convertInputData(e.target.value);
+    console.log(list);
     setInputList(list);
-    setSaved(false);
+    return true;
   };
 
   return (
@@ -187,14 +188,14 @@ export default function Matrix(props) {
                       <tr key={uuidv4()}>
                         {
                           Object.keys(r).map((c, i) => { 
-                            console.log(r[c]);
+                            console.log(j);
                             return (
                               <td key={uuidv4()} className="text-center">
                                 <input 
                                   name={c}
                                   placeholder="0"
                                   value={r[c]}
-                                  onChange={e => handleInputChange(e, j, i)}
+                                  onChange={e => handleInputChange(e, j, c)}
                                 />
                               </td>
                             )
