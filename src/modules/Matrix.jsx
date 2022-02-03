@@ -182,7 +182,8 @@ export default function Matrix(props) {
                     inputList.map((r, j) => {
                       //console.log(r);
                       return ( 
-                        <tr key={uuidv4()}>
+                        <React.Fragment key={uuidv4()}>
+                        <tr>
                           {
                             Object.keys(r).map((c, i) => { 
                               //console.log(j);
@@ -195,11 +196,22 @@ export default function Matrix(props) {
                                     onChange={e => handleInputChange(e, j, c)}
                                   />
                                 </td>
-                                
                               )
                             })
                           }
+                          <td>
+                            {
+                              inputList.length > 1 &&  
+                              <button 
+                                className="btn btn-danger"
+                                onClick={()=>handleRemoveClick(j)}
+                              >
+                                &times;
+                              </button>
+                            }
+                          </td>
                         </tr>
+                        </React.Fragment>
                       )
                     })
                   }
