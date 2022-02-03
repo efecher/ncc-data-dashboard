@@ -16,7 +16,7 @@ import Matrix from './modules/Matrix';
 // import EFCIndependentNoDependents from './modules/EFCIndependentNoDependents';
 // import EFCIndependentWithDependents from './modules/EFCIndependentWithDependents';
 // import Tuition from './modules/Tuition';
-
+import { stringToNumeric } from './utils/utils';
 import { config } from './config/matrices.json';
 
 export default class App extends React.Component {
@@ -41,7 +41,7 @@ export default class App extends React.Component {
 
   handleSelectModule = (e) => {
     this.setState({
-      currentModule: e.target.value
+      currentModule: stringToNumeric(e.target.value)
     });
   }
 

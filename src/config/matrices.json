@@ -49,5 +49,28 @@
         "float": false
       }
     ]
+  }, {
+    "name": "freshmanmerittestoptional",
+    "matrixName": "Freshman Merit Test Optional",
+    "urls": {
+      "get": "/rest/data/costcalculator/get/freshmanmerittestoptional",
+      "post": "/rest/data/costcalculator/post/freshmanmerittestoptional"
+    },
+    "columns": [{
+      "columnName": "GPA Range Lower Bound",
+      "stateVariableName": "gpaRangeLower",
+      "placeholder": "0",
+      "float": true
+    }, {
+      "columnName": "GPA Range Upper Bound",
+      "stateVariableName": "gpaRangeUpper",
+      "placeholder": "0",
+      "float": true
+    }, {
+      "columnName": "Award Amount",
+      "stateVariableName": "awardAmount",
+      "placeholder": "0",
+      "float": false
+    }]
   }]
 }
