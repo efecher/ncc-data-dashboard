@@ -58,7 +58,7 @@ export default function Matrix(props) {
         // NOTE: default matrix
         let r = {};
         for(let col=0; col<props.config.columns.length; col++) {
-          r[`${columnNames[col].stateVariableName}`] = "0";
+          r[`${columnNames[col].stateVariableName}`] = "";
         }
         matrix.push(r);
       }
@@ -76,7 +76,7 @@ export default function Matrix(props) {
     let _inputList = [];
 
     for(let col=0; col<columnNames.length; col++) {
-      r[`${columnNames[col]}`] = "0";
+      r[`${columnNames[col]}`] = "";
     }
 
     _inputList.push(r);
@@ -99,7 +99,7 @@ export default function Matrix(props) {
     let r = {};
 
     for(let col=0; col<columnNames.length; col++) {
-      r[`${columnNames[col].stateVariableName}`] = "0";
+      r[`${columnNames[col].stateVariableName}`] = "";
     }
     console.log(r);
     setInputList([...inputList, r]);

@@ -72,5 +72,28 @@
       "placeholder": "0",
       "float": false
     }]
+  }, {
+    "name": "freshmanneedsbasednj",
+    "matrixName": "Freshman Needs-Based (NJ Residents)",
+    "urls": {
+      "get": "/rest/data/costcalculator/get/freshmanneedsbasednj",
+      "post": "/rest/data/costcalculator/post/freshmanneedsbasednj"
+    },
+    "columns": [{
+      "columnName": "EFC Range Lower Bound",
+      "stateVariableName": "efcRangeLower",
+      "placeholder": "0",
+      "float": false
+    }, {
+      "columnName": "EFC Range Upper Bound",
+      "stateVariableName": "efcRangeUpper",
+      "placeholder": "0",
+      "float": false
+    }, {
+      "columnName": "Award Amount",
+      "stateVariableName": "awardAmount",
+      "placeholder": "0",
+      "float": false
+    }]
   }]
 }
