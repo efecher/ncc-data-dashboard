@@ -48,7 +48,7 @@ export default function Matrix(props) {
           //console.log(rData);
           let r = {};
           for(let col=0; col<props.config.columns.length; col++) {
-            r[`${columnNames[col].stateVariableName}`] = rData[col];
+            r[`${columnNames[col].stateVariableName}`] = rData[col].toString();
           }
           matrix.push(r);
         }
@@ -146,12 +146,13 @@ export default function Matrix(props) {
   
   // handle input change
   const handleInputChange = (e, row, name) => {
-    //console.log(e.target);
-    //console.log(row);
+    console.log(e.target);
+    console.log(row);
+    console.log(name);
     const list = [...inputList];
     //console.log(list[row]);
-    list[row][`${name}`] = convertInputData(e.target.value);
-    //console.log(list);
+    list[row][`${name}`] = e.target.value;
+    //console.log(list[row][`${name}`]);
     setInputList(list);
     return true;
   };
@@ -182,18 +183,19 @@ export default function Matrix(props) {
                     inputList.map((r, j) => {
                       //console.log(r);
                       return ( 
-                        <React.Fragment key={uuidv4()}>
-                        <tr>
+                        <tr key={r}>
                           {
                             Object.keys(r).map((c, i) => { 
-                              //console.log(j);
+                              //console.log(inputList[j][c]);
+                              //console.log(`${c}`);
+                              //console.log(r[c]);
                               return (
-                                <td key={uuidv4()} className="text-center">
+                                <td key={c} className="text-center">
                                   <input 
                                     name={c}
                                     placeholder="0"
-                                    value={r[c]}
-                                    onChange={e => handleInputChange(e, j, c)}
+                                    value={inputList[j][c]}
+                                    onChange={e => handleInputChange(e,j,c)}
                                   />
                                 </td>
                               )
@@ -211,7 +213,7 @@ export default function Matrix(props) {
                             }
                           </td>
                         </tr>
-                        </React.Fragment>
+                        
                       )
                     })
                   }
