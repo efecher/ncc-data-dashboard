@@ -1,99 +1,464 @@
 {
   "config": [{
-    "name": "freshmanmeritwithtest",
-    "matrixName": "Freshman Merit With Test (SAT/ACT)",
-    "urls": {
-      "get": "/rest/data/costcalculator/get/freshmanmeritwithtest",
-      "post": "/rest/data/costcalculator/post/freshmanmeritwithtest"
-    },
-    "columns": [{
+      "name": "freshmanmeritwithtest",
+      "matrixName": "Freshman Merit With Test (SAT/ACT)",
+      "urls": {
+        "get": "/rest/data/costcalculator/get/freshmanmeritwithtest",
+        "post": "/rest/data/costcalculator/post/freshmanmeritwithtest"
+      },
+      "columns": [{
+          "columnName": "GPA Range Lower Bound",
+          "stateVariableName": "gpaRangeLower",
+          "placeholder": "0",
+          "float": true
+        },
+        {
+          "columnName": "GPA Range Upper Bound",
+          "stateVariableName": "gpaRangeUpper",
+          "placeholder": "0",
+          "float": true
+        },
+        {
+          "columnName": "SAT Range Lower Bound",
+          "stateVariableName": "satRangeLower",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "SAT Range Upper Bound",
+          "stateVariableName": "satRangeUpper",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "ACT Range Lower Bound",
+          "stateVariableName": "actRangeLower",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "ACT Range Upper Bound",
+          "stateVariableName": "actRangeUpper",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Award Amount",
+          "stateVariableName": "awardAmount",
+          "placeholder": "0",
+          "float": false
+        }
+      ]
+    }, {
+      "name": "freshmanmerittestoptional",
+      "matrixName": "Freshman Merit Test Optional",
+      "urls": {
+        "get": "/rest/data/costcalculator/get/freshmanmerittestoptional",
+        "post": "/rest/data/costcalculator/post/freshmanmerittestoptional"
+      },
+      "columns": [{
         "columnName": "GPA Range Lower Bound",
         "stateVariableName": "gpaRangeLower",
         "placeholder": "0",
         "float": true
-      },
-      {
+      }, {
         "columnName": "GPA Range Upper Bound",
         "stateVariableName": "gpaRangeUpper",
         "placeholder": "0",
         "float": true
-      },
-      {
-        "columnName": "SAT Range Lower Bound",
-        "stateVariableName": "satRangeLower",
-        "placeholder": "0",
-        "float": false
-      },
-      {
-        "columnName": "SAT Range Upper Bound",
-        "stateVariableName": "satRangeUpper",
-        "placeholder": "0",
-        "float": false
-      },
-      {
-        "columnName": "ACT Range Lower Bound",
-        "stateVariableName": "actRangeLower",
-        "placeholder": "0",
-        "float": false
-      },
-      {
-        "columnName": "ACT Range Upper Bound",
-        "stateVariableName": "actRangeUpper",
-        "placeholder": "0",
-        "float": false
-      },
-      {
+      }, {
         "columnName": "Award Amount",
         "stateVariableName": "awardAmount",
         "placeholder": "0",
         "float": false
-      }
-    ]
-  }, {
-    "name": "freshmanmerittestoptional",
-    "matrixName": "Freshman Merit Test Optional",
-    "urls": {
-      "get": "/rest/data/costcalculator/get/freshmanmerittestoptional",
-      "post": "/rest/data/costcalculator/post/freshmanmerittestoptional"
+      }]
+    }, {
+      "name": "freshmanneedsbasednj",
+      "matrixName": "Freshman Needs-Based (NJ Residents)",
+      "urls": {
+        "get": "/rest/data/costcalculator/get/freshmanneedsbasednj",
+        "post": "/rest/data/costcalculator/post/freshmanneedsbasednj"
+      },
+      "columns": [{
+        "columnName": "EFC Range Lower Bound",
+        "stateVariableName": "efcRangeLower",
+        "placeholder": "0",
+        "float": false
+      }, {
+        "columnName": "EFC Range Upper Bound",
+        "stateVariableName": "efcRangeUpper",
+        "placeholder": "0",
+        "float": false
+      }, {
+        "columnName": "Award Amount",
+        "stateVariableName": "awardAmount",
+        "placeholder": "0",
+        "float": false
+      }]
+    }, {
+      "name": "freshmanneedsbasednonnj",
+      "matrixName": "Freshman Needs-Based (NON-NJ Residents)",
+      "urls": {
+        "get": "/rest/data/costcalculator/get/freshmanneedsbasednonnj",
+        "post": "/rest/data/costcalculator/post/freshmanneedsbasednonnj"
+      },
+      "columns": [{
+        "columnName": "EFC Range Lower Bound",
+        "stateVariableName": "efcRangeLower",
+        "placeholder": "0",
+        "float": false
+      }, {
+        "columnName": "EFC Range Upper Bound",
+        "stateVariableName": "efcRangeUpper",
+        "placeholder": "0",
+        "float": false
+      }, {
+        "columnName": "Award Amount",
+        "stateVariableName": "awardAmount",
+        "placeholder": "0",
+        "float": false
+      }]
+    }, {
+      "name": "transferneedsbasednj",
+      "matrixName": "Transfer Needs-Based (NJ Residents)",
+      "urls": {
+        "get": "/rest/data/costcalculator/get/transferbasednj",
+        "post": "/rest/data/costcalculator/post/transferneedsbasednj"
+      },
+      "columns": [{
+        "columnName": "EFC Range Lower Bound",
+        "stateVariableName": "efcRangeLower",
+        "placeholder": "0",
+        "float": false
+      }, {
+        "columnName": "EFC Range Upper Bound",
+        "stateVariableName": "efcRangeUpper",
+        "placeholder": "0",
+        "float": false
+      }, {
+        "columnName": "Award If GPA < 3",
+        "stateVariableName": "awardGPALessThan3",
+        "placeholder": "0",
+        "float": false
+      }, {
+        "columnName": "Award If GPA 3 - 3.49",
+        "stateVariableName": "awardGPA3To349",
+        "placeholder": "0",
+        "float": false
+      }, {
+        "columnName": "Award If GPA >= 3.5",
+        "stateVariableName": "awardGPAGreaterEquals35",
+        "placeholder": "0",
+        "float": false
+      }]
     },
-    "columns": [{
-      "columnName": "GPA Range Lower Bound",
-      "stateVariableName": "gpaRangeLower",
-      "placeholder": "0",
-      "float": true
-    }, {
-      "columnName": "GPA Range Upper Bound",
-      "stateVariableName": "gpaRangeUpper",
-      "placeholder": "0",
-      "float": true
-    }, {
-      "columnName": "Award Amount",
-      "stateVariableName": "awardAmount",
-      "placeholder": "0",
-      "float": false
-    }]
-  }, {
-    "name": "freshmanneedsbasednj",
-    "matrixName": "Freshman Needs-Based (NJ Residents)",
-    "urls": {
-      "get": "/rest/data/costcalculator/get/freshmanneedsbasednj",
-      "post": "/rest/data/costcalculator/post/freshmanneedsbasednj"
+    {
+      "name": "transferneedsbasednonnj",
+      "matrixName": "Transfer Needs-Based (NON-NJ Residents)",
+      "urls": {
+        "get": "/rest/data/costcalculator/get/transferbasednonnj",
+        "post": "/rest/data/costcalculator/post/transferneedsbasednonnj"
+      },
+      "columns": [{
+          "columnName": "EFC Range Lower Bound",
+          "stateVariableName": "efcRangeLower",
+          "placeholder": "0",
+          "float": false
+        }, {
+          "columnName": "EFC Range Upper Bound",
+          "stateVariableName": "efcRangeUpper",
+          "placeholder": "0",
+          "float": false
+        }, {
+          "columnName": "Award If GPA < 3",
+          "stateVariableName": "awardGPALessThan3",
+          "placeholder": "0",
+          "float": false
+        }, {
+          "columnName": "Award If GPA 3 - 3.49",
+          "stateVariableName": "awardGPA3To349",
+          "placeholder": "0",
+          "float": false
+        }, {
+          "columnName": "Award If GPA >= 3.5",
+          "stateVariableName": "awardGPAGreaterEquals35",
+          "placeholder": "0",
+          "float": false
+        }
+
+      ]
     },
-    "columns": [{
-      "columnName": "EFC Range Lower Bound",
-      "stateVariableName": "efcRangeLower",
-      "placeholder": "0",
-      "float": false
+    {
+      "name": "pell",
+      "matrixName": "Pell Grant",
+      "urls": {
+        "get": "/rest/data/costcalculator/get/pell",
+        "post": "/rest/data/costcalculator/post/pell"
+      },
+      "columns": [{
+          "columnName": "EFC Range Lower Bound",
+          "stateVariableName": "efcRangeLower",
+          "placeholder": "0",
+          "float": false
+        }, {
+          "columnName": "EFC Range Upper Bound",
+          "stateVariableName": "efcRangeUpper",
+          "placeholder": "0",
+          "float": false
+        }, {
+          "columnName": "Award",
+          "stateVariableName": "awardAmount",
+          "placeholder": "0",
+          "float": false
+        }
+
+      ]
+    },
+    {
+      "name": "tag",
+      "matrixName": "Tuition Assistance Grant",
+      "urls": {
+        "get": "/rest/data/costcalculator/get/tag",
+        "post": "/rest/data/costcalculator/post/tag"
+      },
+      "columns": [{
+          "columnName": "EFC Range Lower Bound",
+          "stateVariableName": "efcRangeLower",
+          "placeholder": "0",
+          "float": false
+        }, {
+          "columnName": "EFC Range Upper Bound",
+          "stateVariableName": "efcRangeUpper",
+          "placeholder": "0",
+          "float": false
+        }, {
+          "columnName": "Award",
+          "stateVariableName": "awardAmount",
+          "placeholder": "0",
+          "float": false
+        }
+
+      ]
+    },
+    {
+      "name": "efcindependentnodependents",
+      "matrixName": "EFC - Independent with No Dependents",
+      "urls": {
+        "get": "/rest/data/costcalculator/get/efcindependentnodependents",
+        "post": "/rest/data/costcalculator/post/efcindependentnodependents"
+      },
+      "columns": [{
+          "columnName": "No. In College",
+          "stateVariableName": "numberInCollege",
+          "placeholder": "0",
+          "float": false
+        }, {
+          "columnName": "No. Family Memebers",
+          "stateVariableName": "numInFamily",
+          "placeholder": "0",
+          "float": false
+        }, {
+          "columnName": "Income < 30K",
+          "stateVariableName": "incomeBelow30K",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $30k-39,999",
+          "stateVariableName": "income30kTo39999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $40k-49,999",
+          "stateVariableName": "income40kTo49999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $50k-59,999",
+          "stateVariableName": "income50kTo59999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $60k-69,999",
+          "stateVariableName": "income60kTo69999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $70k-79,999",
+          "stateVariableName": "income70kTo79999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $80k-89,999",
+          "stateVariableName": "income80kTo89999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $90k-99,999",
+          "stateVariableName": "income90kTo99999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $100k and over",
+          "stateVariableName": "income100kAndOver",
+          "placeholder": "0",
+          "float": false
+        }
+
+      ]
     }, {
-      "columnName": "EFC Range Upper Bound",
-      "stateVariableName": "efcRangeUpper",
-      "placeholder": "0",
-      "float": false
+      "name": "efcindependentwithdependents",
+      "matrixName": "EFC - Independent with Dependents",
+      "urls": {
+        "get": "/rest/data/costcalculator/get/efcindependentwithdependents",
+        "post": "/rest/data/costcalculator/post/efcindependentwithdependents"
+      },
+      "columns": [{
+          "columnName": "No. In College",
+          "stateVariableName": "numberInCollege",
+          "placeholder": "0",
+          "float": false
+        }, {
+          "columnName": "No. Family Memebers",
+          "stateVariableName": "numInFamily",
+          "placeholder": "0",
+          "float": false
+        }, {
+          "columnName": "Income < 30K",
+          "stateVariableName": "incomeBelow30K",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $30k-39,999",
+          "stateVariableName": "income30kTo39999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $40k-49,999",
+          "stateVariableName": "income40kTo49999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $50k-59,999",
+          "stateVariableName": "income50kTo59999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $60k-69,999",
+          "stateVariableName": "income60kTo69999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $70k-79,999",
+          "stateVariableName": "income70kTo79999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $80k-89,999",
+          "stateVariableName": "income80kTo89999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $90k-99,999",
+          "stateVariableName": "income90kTo99999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $100k and over",
+          "stateVariableName": "income100kAndOver",
+          "placeholder": "0",
+          "float": false
+        }
+
+      ]
     }, {
-      "columnName": "Award Amount",
-      "stateVariableName": "awardAmount",
-      "placeholder": "0",
-      "float": false
-    }]
-  }]
+      "name": "efcdependent",
+      "matrixName": "EFC - Dependent",
+      "urls": {
+        "get": "/rest/data/costcalculator/get/efcdependent",
+        "post": "/rest/data/costcalculator/post/efcdependent"
+      },
+      "columns": [{
+          "columnName": "No. In College",
+          "stateVariableName": "numberInCollege",
+          "placeholder": "0",
+          "float": false
+        }, {
+          "columnName": "No. Family Memebers",
+          "stateVariableName": "numInFamily",
+          "placeholder": "0",
+          "float": false
+        }, {
+          "columnName": "Income < 30K",
+          "stateVariableName": "incomeBelow30K",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $30k-39,999",
+          "stateVariableName": "income30kTo39999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $40k-49,999",
+          "stateVariableName": "income40kTo49999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $50k-59,999",
+          "stateVariableName": "income50kTo59999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $60k-69,999",
+          "stateVariableName": "income60kTo69999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $70k-79,999",
+          "stateVariableName": "income70kTo79999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $80k-89,999",
+          "stateVariableName": "income80kTo89999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $90k-99,999",
+          "stateVariableName": "income90kTo99999",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Income $100k and over",
+          "stateVariableName": "income100kAndOver",
+          "placeholder": "0",
+          "float": false
+        }
+
+      ]
+    }
+  ]
 }

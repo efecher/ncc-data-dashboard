@@ -5,20 +5,22 @@ header {
 
 .matrix-area {
     height: 80vh;
-    width: 95%;
-    margin-left: 2.5%;
+    width: 100%;
+    //margin-left: 1%;
     overflow-y: scroll;
-    box-shadow: 0px 1px 2px 3px #030303;
+    //box-shadow: 0px 1px 2px 3px #030303;
 }
 
 table {
     width: 100%;
     th {
         text-align: center;
+        font-size: .68rem;
     }
     input {
         border: 2px solid #000000;
         margin: 10px 0;
+        text-align: center;
     }
 }
 
