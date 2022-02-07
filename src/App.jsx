@@ -50,14 +50,16 @@ export default class App extends React.Component {
     return (
       <>
         <div className="row g-0">
-          <nav className="col-1">
+          <nav className="col-12">
             <div className="title-contain">
               <h3>Net Cost Calculator</h3>
               <h4>Data Management</h4>
             </div>
             <Navigation handler={this.handleSelectModule} config={this.state.config} />
           </nav>
-          <div className="col-11">
+        </div>
+        <div className="row g-0">
+          <div className="col-12">
             {this.loadModule()} 
           </div>  
         </div>

@@ -71,17 +71,16 @@ export default function Matrix(props) {
   }, [getURL, props.config.columns, columnNames]);
     
   // handle clear button
+  // TODO: fix 
   const handleClear = () => {
     let r = {};
-    let _inputList = [];
-
+    
+    //console.log(columnNames);
     for(let col=0; col<columnNames.length; col++) {
-      r[`${columnNames[col]}`] = "";
+      console.log(columnNames[col].stateVariableName);
     }
-
-    _inputList.push(r);
-
-    setInputList(_inputList);
+    //console.dir(r);
+    setInputList(r);
     return;
   }
   

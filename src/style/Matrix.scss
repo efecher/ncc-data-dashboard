@@ -1,26 +1,27 @@
-header {
-    background-color: #4299f0;
-    color: #fefefe;
-}
-
 .matrix-area {
     height: 80vh;
-    width: 100%;
+    max-width: 100%;
     //margin-left: 1%;
-    overflow-y: scroll;
+    //overflow-y: scroll;
     //box-shadow: 0px 1px 2px 3px #030303;
 }
 
 table {
-    width: 100%;
+    max-width: 100%;
     th {
         text-align: center;
-        font-size: .68rem;
+    }
+    th,
+    td {
+        max-width: 10rem;
+        font-size: 1rem;
     }
     input {
         border: 2px solid #000000;
         margin: 10px 0;
         text-align: center;
+        font-size: .8rem;
+        font-weight: bold;
     }
 }
 

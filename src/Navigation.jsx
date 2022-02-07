@@ -17,11 +17,13 @@ export default function Navigation(props) {
   };
   
   return (
-      <>
-      <p>Select from the items below to begin editing data:</p>
-      <select onChange={(e) => {props.handler(e)}}>
-        {renderOptions(props.config)}
-      </select>
-      </>
+      <header>
+        <p>Select from the items below to begin editing data:</p>
+        <span id="chooser-wrapper">
+          <select onChange={(e) => {props.handler(e)}}>
+            {renderOptions(props.config)}
+          </select>
+        </span>
+      </header>
   );
 }
