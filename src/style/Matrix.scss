@@ -21,11 +21,18 @@
     }
     th {
         border-bottom: 2px solid #000000;
+        &:not(:last-of-type) {
+            background-color: #2f2f2f;
+            color: #ffffff;
+        }
+        &:last-of-type {
+            background-color: #801717;
+        }
     }
     .remove-button-column {
         border-left: 2px solid #000000;
-        background-color: #49211e;
         color: #ffffff;
+        background-color: #333333;
     }
 }
 
