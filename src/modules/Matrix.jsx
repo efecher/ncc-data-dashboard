@@ -100,7 +100,7 @@ export default function Matrix(props) {
     for(let col=0; col<columnNames.length; col++) {
       r[`${columnNames[col].stateVariableName}`] = "";
     }
-    console.log(r);
+    //console.log(r);
     setInputList([...inputList, r]);
     setSaved(false);
   };
@@ -159,9 +159,9 @@ export default function Matrix(props) {
   return (
     (inputList !== null)? 
       <>
-      <header>
+      <div id="main">
         <h3>{props.config.matrixName} {saved ? null : <span style={{fontWeight: "bold", color: "red"}}>*</span>}</h3>
-      </header> 
+      </div> 
       <form onSubmit={handleSubmit}>
         <div className="container-fluid">
           <div className="row g-0">
@@ -174,22 +174,22 @@ export default function Matrix(props) {
                       return <th key={uuidv4()}>{c.columnName}</th>
                     })
                   }
-                  <th>&nbsp;</th>
+                  <th className="remove-button-column">Remove Row</th>
                 </tr>
                 </thead>
                 <tbody>
                   { 
                     inputList.map((r, j) => {
-                      //console.log(r);
+                      //console.log(j);
                       return ( 
-                        <tr key={r}>
+                        <tr key={j}>
                           {
                             Object.keys(r).map((c, i) => { 
                               //console.log(inputList[j][c]);
-                              //console.log(`${c}`);
+                              //console.log(c);
                               //console.log(r[c]);
                               return (
-                                <td key={c} >
+                                <td key={`${c.stateVariableName}-${i}`} >
                                   <input 
                                     name={c}
                                     placeholder="0"
@@ -200,7 +200,7 @@ export default function Matrix(props) {
                               )
                             })
                           }
-                          <td>
+                          <td className="remove-button-column">
                             {
                               inputList.length > 1 &&  
                               <button 
@@ -221,10 +221,14 @@ export default function Matrix(props) {
             </div>
           </div>
         </div>
-        <div className="row g-0">
-          <div className="action-buttons col md-3">
+        <div className="row g-0 ">
+          <div className="action-buttons col-md-1">
             <button type="button" className="btn btn-success" onClick={()=>{handleAddClick()}}>Add Row</button>
+          </div>
+          <div className="action-buttons col-md-1">
             <button type="button" className="btn btn-info" onClick={()=>{handleClear()}}>Clear Matrix</button>
+          </div>
+          <div className="action-buttons col-md-1">
             <input type="submit" className="btn btn-primary" value="Submit Matrix" />
           </div>
         </div> 

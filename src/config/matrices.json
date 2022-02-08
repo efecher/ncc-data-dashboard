@@ -459,6 +459,56 @@
         }
 
       ]
+    }, {
+      "name": "transfermeritbased",
+      "matrixName": "Transfer - Merit Based",
+      "urls": {
+        "get": "/rest/data/costcalculator/get/transfermeritbased",
+        "post": "/rest/data/costcalculator/post/transfermeritbased"
+      },
+      "columns": [{
+          "columnName": "GPA Lower Bound",
+          "stateVariableName": "gpaRangeLower",
+          "placeholder": "0",
+          "float": true
+        }, {
+          "columnName": "GPA Upper Bound",
+          "stateVariableName": "gpaRangeUpper",
+          "placeholder": "0",
+          "float": true
+        },
+        {
+          "columnName": "Award Amount",
+          "stateVariableName": "awardAmount",
+          "placeholder": "0",
+          "float": false
+        }
+      ]
+    }, {
+      "name": "tuition",
+      "matrixName": "SHU Tuition",
+      "urls": {
+        "get": "/rest/data/costcalculator/get/tuition",
+        "post": "/rest/data/costcalculator/post/tuition"
+      },
+      "columns": [{
+          "columnName": "GPA Lower Bound",
+          "stateVariableName": "gpaRangeLower",
+          "placeholder": "0",
+          "float": true
+        }, {
+          "columnName": "GPA Upper Bound",
+          "stateVariableName": "gpaRangeUpper",
+          "placeholder": "0",
+          "float": true
+        },
+        {
+          "columnName": "Award Amount",
+          "stateVariableName": "awardAmount",
+          "placeholder": "0",
+          "float": false
+        }
+      ]
     }
   ]
 }

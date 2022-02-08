@@ -52,10 +52,9 @@ export default class App extends React.Component {
         <div className="row g-0">
           <nav className="col-12">
             <div className="title-contain">
-              <h3>Net Cost Calculator</h3>
-              <h4>Data Management</h4>
+              <h3>Net Cost Calculator Data Management Console</h3>
             </div>
-            <Navigation handler={this.handleSelectModule} config={this.state.config} />
+            <Navigation handler={this.handleSelectModule} config={this.state.config} currentModule={this.state.currentModule} />
           </nav>
         </div>
         <div className="row g-0">
