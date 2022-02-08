@@ -394,65 +394,65 @@
         "post": "/rest/data/costcalculator/post/efcdependent"
       },
       "columns": [{
-          "columnName": "No. In College",
+          "columnName": "# In College",
           "stateVariableName": "numberInCollege",
           "placeholder": "0",
           "float": false
         }, {
-          "columnName": "No. Family Memebers",
+          "columnName": "# Family Memebers",
           "stateVariableName": "numInFamily",
           "placeholder": "0",
           "float": false
         }, {
-          "columnName": "Income < 30K",
+          "columnName": "< $30K",
           "stateVariableName": "incomeBelow30K",
           "placeholder": "0",
           "float": false
         },
         {
-          "columnName": "Income $30k-39,999",
+          "columnName": "$30k-39,999",
           "stateVariableName": "income30kTo39999",
           "placeholder": "0",
           "float": false
         },
         {
-          "columnName": "Income $40k-49,999",
+          "columnName": "$40k-49,999",
           "stateVariableName": "income40kTo49999",
           "placeholder": "0",
           "float": false
         },
         {
-          "columnName": "Income $50k-59,999",
+          "columnName": "$50k-59,999",
           "stateVariableName": "income50kTo59999",
           "placeholder": "0",
           "float": false
         },
         {
-          "columnName": "Income $60k-69,999",
+          "columnName": "$60k-69,999",
           "stateVariableName": "income60kTo69999",
           "placeholder": "0",
           "float": false
         },
         {
-          "columnName": "Income $70k-79,999",
+          "columnName": "$70k-79,999",
           "stateVariableName": "income70kTo79999",
           "placeholder": "0",
           "float": false
         },
         {
-          "columnName": "Income $80k-89,999",
+          "columnName": "$80k-89,999",
           "stateVariableName": "income80kTo89999",
           "placeholder": "0",
           "float": false
         },
         {
-          "columnName": "Income $90k-99,999",
+          "columnName": "$90k-99,999",
           "stateVariableName": "income90kTo99999",
           "placeholder": "0",
           "float": false
         },
         {
-          "columnName": "Income $100k and over",
+          "columnName": "$100k+",
           "stateVariableName": "income100kAndOver",
           "placeholder": "0",
           "float": false

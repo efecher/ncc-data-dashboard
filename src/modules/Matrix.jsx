@@ -163,10 +163,10 @@ export default function Matrix(props) {
         <h3>{props.config.matrixName} {saved ? null : <span style={{fontWeight: "bold", color: "red"}}>*</span>}</h3>
       </header> 
       <form onSubmit={handleSubmit}>
-        <div className="matrix-area">
+        <div className="container-fluid">
           <div className="row g-0">
             <div className="col md-12">
-              <table className="matrix" summary={props.config.matrixName}>
+              <table className="table" summary={props.config.matrixName}>
                 <thead>
                 <tr>
                   {
@@ -189,7 +189,7 @@ export default function Matrix(props) {
                               //console.log(`${c}`);
                               //console.log(r[c]);
                               return (
-                                <td key={c} className="text-center">
+                                <td key={c} >
                                   <input 
                                     name={c}
                                     placeholder="0"
