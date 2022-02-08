@@ -73,14 +73,16 @@ export default function Matrix(props) {
   // handle clear button
   // TODO: fix 
   const handleClear = () => {
+    let matrix = [];
     let r = {};
     
     //console.log(columnNames);
-    for(let col=0; col<columnNames.length; col++) {
-      console.log(columnNames[col].stateVariableName);
+    for(let col=0; col<props.config.columns.length; col++) {
+      r[`${columnNames[col].stateVariableName}`] = "";
     }
+    matrix.push(r);
     //console.dir(r);
-    setInputList(r);
+    setInputList(matrix);
     return;
   }
   
@@ -145,9 +147,7 @@ export default function Matrix(props) {
   
   // handle input change
   const handleInputChange = (e, row, name) => {
-    console.log(e.target);
-    console.log(row);
-    console.log(name);
+    
     const list = [...inputList];
     //console.log(list[row]);
     list[row][`${name}`] = e.target.value;
