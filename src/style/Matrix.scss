@@ -11,9 +11,11 @@
 
 .table {
     margin-top: 2vh;
-    border-collapse: separate;
+    border-collapse: collapse;
     border-spacing: 0 15px;
     background-color: #fefefe;
+    width: 100vw;
+    table-layout: fixed;
     td,
     th {
         text-align: center;
@@ -33,6 +35,9 @@
         border-left: 2px solid #000000;
         color: #ffffff;
         background-color: #333333;
+    }
+    td input {
+        width: 5rem;
     }
 }
 
