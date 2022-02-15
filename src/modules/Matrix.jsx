@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { stringToNumeric } from '../utils/utils';
+import { trimEmptyRows } from '../utils/utils';
 import '../style/Matrix.scss';
 
 export default function Matrix(props) {
@@ -8,6 +8,9 @@ export default function Matrix(props) {
   const [inputList, setInputList] = useState(null);
   // NOTE: set saved state of this dashboard
   const [saved, setSaved] = useState(true);
+
+  // NOTE: Is the current matrix in an error state due to invalid entered data?
+  const [errorState, setErrorState] = useState(false);
 
   // NOTE: save column names for re-use
   const columnNames = props.config.columns;
@@ -76,6 +79,9 @@ export default function Matrix(props) {
     let matrix = [];
     let r = {};
     
+    // NOTE: modal to warn user of data loss
+
+
     //console.log(columnNames);
     for(let col=0; col<props.config.columns.length; col++) {
       r[`${columnNames[col].stateVariableName}`] = "";
@@ -85,6 +91,7 @@ export default function Matrix(props) {
     setInputList(matrix);
     return;
   }
+  
   
   
   // handle click event of the Remove button
@@ -116,18 +123,27 @@ export default function Matrix(props) {
       //console.log(cols);
       let convertedRow = [];
       for(let c=0; c<cols.length; c++) {
-        //console.log(rData[`${cols[c]}`]);
-        convertedRow.push(stringToNumeric(rData[`${cols[c]}`]));
+        console.log(rData[`${cols[c]}`]);
+        convertedRow.push(Number(rData[`${cols[c]}`]));
       }
       matrix.push(convertedRow);
+      console.log(matrix);
     }  
     return matrix;
   };
 
   const handleSubmit = (event) => {
+    let trimmedData = "";
+    //convertedData = trimEmptyRows(inputList);
+    
+    trimmedData = convertInputData(trimEmptyRows(inputList));
     event.preventDefault();
     
-    console.log((convertInputData(inputList)));
+    if(errorState) {
+      alert("Cannot save as there are errors in the input. Please check that all inputs contain values valid for those fields. Ex: check a field that's supposed to be floating point (GPA) isn't an integer and an integer field doesn't have a floating point number. Also, check there isn't errant non-numeric data entered. The erroneous fields should be highlighted.");
+      return;
+    }
+    //console.log((convertInputData(inputList)));
     fetch(postURL, {
       accepts: 'application/json, plain/text',
       mode: 'cors',
@@ -135,23 +151,63 @@ export default function Matrix(props) {
         'Content-Type': 'application/json'
       },
       method: 'POST',
-      body: JSON.stringify({data: convertInputData(inputList)})
+      body: JSON.stringify({data: trimmedData})
     })
     .then(() => {
       setSaved(true);
     })
     .catch(res => console.log(res));
     setSaved(true);
+    setInputList(trimmedData);
     return true;
   };
-  
+
+  // NOTE: Trigger input validation when user takes focus off an input
+  const handleBlur = (e, row, name) => {
+    // NOTE: is the input supposed to be a float or an integer?
+    const inputIsFloat = props.config.columns[0].float; // NOTE: every field in the column has the same type so it doesn't matter which row is chosen for this column.
+    const inputAsNumber = Number(e.target.value);
+
+    console.log(inputIsFloat);
+    // NOTE: make sure input is a number
+    if(isNaN(inputAsNumber)) {
+      e.target.style.backgroundColor = "#ee0303";
+      setErrorState(true);
+      return; // NOTE: return here, no further validation necessary
+    } else {
+      e.target.style.backgroundColor = "#ffffff";
+      setErrorState(false);
+      
+      if(inputIsFloat) {
+        if(isNaN(parseFloat(inputAsNumber))) {
+          e.target.style.backgroundColor = "#ee0303";
+          setErrorState(true);
+          return;
+        } else {
+          e.target.style.backgroundColor = "#ffffff";
+          setErrorState(false);
+        }
+      } else {
+        // NOTE: theres a method to determine if it's an integer, parseInt will truncate a decimal from a float and give the integer part. We want an error if the field is supposed to be integer and a float was put in instead.
+        if(!Number.isInteger(inputAsNumber)) {
+          e.target.style.backgroundColor = "#ee0303";
+          setErrorState(true);
+          return;
+        } else {
+          e.target.style.backgroundColor = "#ffffff";
+          setErrorState(false);
+        }
+      }
+    }
+  };
+
   // handle input change
   const handleInputChange = (e, row, name) => {
     
     const list = [...inputList];
     //console.log(list[row]);
     list[row][`${name}`] = e.target.value;
-    //console.log(list[row][`${name}`]);
+    //console.log(props.config.columns[row]);
     setInputList(list);
     return true;
   };
@@ -195,6 +251,7 @@ export default function Matrix(props) {
                                     placeholder="0"
                                     value={inputList[j][c]}
                                     onChange={e => handleInputChange(e,j,c)}
+                                    onBlur={e => handleBlur(e,j,c)}
                                   />
                                 </td>
                               )

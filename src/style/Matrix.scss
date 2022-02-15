@@ -38,6 +38,9 @@
     }
     td input {
         width: 5rem;
+        &::placeholder {
+            color: #9f9f9f;
+        }
     }
 }
 

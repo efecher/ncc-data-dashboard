@@ -2,22 +2,30 @@
 //                 migrated out of components to reduce clutter and code size
 /***************************************************************************/
 
-
-// NOTE: will inspect string data from inputs, determine if it is a floating-point number or integer, return the integer or float for storage. This is used for converting the string input from inputs to numeric data in storage.
-// TODO: need to add column data, specifically the "float" to determine which columns are floating point (GPA) or integer for conversion.
-export function stringToNumeric(data) {
-  let isFloat = parseFloat(data);
-  if (isNaN(isFloat)) {
-    // NOTE: assume not a float, try integer
-    let isInteger = parseInt(data);
-    if (isNaN(isInteger)) {
-      // NOTE: data is not an integer either
-      console.error("Input conversion error: not numeric");
-      return data;
-    } else {
-      return isInteger;
+export function trimEmptyRows(data) {
+  let trimmedData = [];
+  
+  for(let r=0; r<data.length; r++) {
+    //console.log(data[r]);
+    // NOTE: scan columns in this row for empty inputs
+    //console.log(data[r]);
+    let rowKeys = Object.keys(data[r]);
+    
+    let columnCount = 0;
+    // NOTE: scan row, count blank columns in row
+    for(let c=0; c<rowKeys.length; c++) {
+      //console.log(data[r][`${rowKeys[c]}`]);
+      if(data[r][`${rowKeys[c]}`] === "") {
+        columnCount++;
+      }
     }
-  } else {
-    return isFloat;
+    // NOTE: if entire row is left blank, assume it was added in error and truncate it
+    if(columnCount === rowKeys.length) {
+      continue; // NOTE: don't do anything with this row and go to the next iteration
+    } else {
+      // NOTE: the row has valid data, push it to the output of trimmed data
+      trimmedData.push(data[r]);
+    }
   }
+  return trimmedData;
 }
