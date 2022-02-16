@@ -3,9 +3,8 @@ import './style/Navigation.scss';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Navigation(props) {
-  
   const renderOptions = (config) => {
-    //console.log(config[0]);
+    
     let options = [];
 
     for (let i=0; i < config.length; i++) {

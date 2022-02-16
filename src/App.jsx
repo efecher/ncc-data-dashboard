@@ -4,7 +4,7 @@ import './style/App.scss';
 //import Home from './modules/Home';
 import Matrix from './modules/Matrix';
 
-import { config } from './config/matrices.json';
+import config from './config/matrices.json';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -12,14 +12,16 @@ export default class App extends React.Component {
   
     this.state = {
       currentModule: 0,
-      config: config
+      config: config.config
     }
   }
+
+
 
   loadModule = () => {
     //console.log(this.state.currentModule);
     // NOTE: find the corresponding Matrix config for the currentModule
-    for(let i=0; i<config.length; i++) {
+    for(let i=0; i<this.state.config.length; i++) {
       if(i === this.state.currentModule) {
         return <Matrix config={this.state.config[i]} />;
       }
@@ -34,22 +36,24 @@ export default class App extends React.Component {
 
 
   render() {
-    return (
-      <>
-        <div className="row g-0">
-          <nav className="col-12">
-            <div className="title-contain">
-              <h3>Net Cost Calculator Data Management Console</h3>
-            </div>
-            <Navigation handler={this.handleSelectModule} config={this.state.config} currentModule={this.state.currentModule} />
-          </nav>
-        </div>
-        <div className="row g-0">
-          <div className="col-12">
-            {this.loadModule()} 
-          </div>  
-        </div>
-      </>
-    );
+    if(typeof this.state.config !== 'undefined') {
+      return (
+        <>
+          <div className="row g-0">
+            <nav className="col-12">
+              <div className="title-contain">
+                <h3>Net Cost Calculator Data Management Console</h3>
+              </div>
+              <Navigation handler={this.handleSelectModule} config={this.state.config} currentModule={this.state.currentModule} />
+            </nav>
+          </div>
+          <div className="row g-0">
+            <div className="col-12">
+              {this.loadModule()} 
+            </div>  
+          </div>
+        </>
+      );
+    }
   }
 }
