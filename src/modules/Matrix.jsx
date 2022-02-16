@@ -220,7 +220,7 @@ export default function Matrix(props) {
       </div> 
       <form onSubmit={handleSubmit}>
         <div className="container-fluid">
-          <div className="row g-0">
+          <div className="row g-0" id="table-row">
             <div className="col md-12">
               <table className="table" summary={props.config.matrixName}>
                 <thead>
@@ -230,7 +230,7 @@ export default function Matrix(props) {
                       return <th key={uuidv4()}>{c.columnName}</th>
                     })
                   }
-                  <th className="remove-button-column">Remove Row</th>
+                  <th className="remove-button-column">Add/Remove Row</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -258,15 +258,26 @@ export default function Matrix(props) {
                             })
                           }
                           <td className="remove-button-column">
+                            <div className="row g-0">
+                            {
+                              <div className="col-6">
+                              <button type="button" aria-label="Add a row" title="Add a row" className="btn btn-success" onClick={()=>{handleAddClick()}}>+</button>
+                              </div>
+                            }
+                              <div className="col-6">
                             {
                               inputList.length > 1 &&  
                               <button 
+                                aria-label="Remove this row"
+                                title="Remove this row"
                                 className="btn btn-danger"
                                 onClick={()=>handleRemoveClick(j)}
                               >
                                 &times;
                               </button>
                             }
+                              </div>
+                            </div>
                           </td>
                         </tr>
                         
@@ -279,9 +290,9 @@ export default function Matrix(props) {
           </div>
         </div>
         <div className="row g-0 ">
-          <div className="action-buttons col-md-1">
+          {/*<div className="action-buttons col-md-1">
             <button type="button" className="btn btn-success" onClick={()=>{handleAddClick()}}>Add Row</button>
-          </div>
+                </div>*/}
           <div className="action-buttons col-md-1">
             <button type="button" className="btn btn-info" onClick={()=>{handleClear()}}>Clear Matrix</button>
           </div>

@@ -9,12 +9,16 @@
     background-color: #070707;
 }
 
+#table-row {
+    margin-left: .5vw;
+}
+
 .table {
     margin-top: 2vh;
     border-collapse: collapse;
     border-spacing: 0 15px;
     background-color: #fefefe;
-    width: 100vw;
+    width: 98vw;
     table-layout: fixed;
     td,
     th {
