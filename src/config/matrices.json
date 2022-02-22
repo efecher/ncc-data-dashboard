@@ -50,11 +50,11 @@
         }
       ]
     }, {
-      "name": "freshmanmerittestoptional",
-      "matrixName": "Freshman Merit Test Optional",
+      "name": "merittestoptional",
+      "matrixName": "Merit Test Optional (Freshman OR Transfer)",
       "urls": {
-        "get": "/rest/data/costcalculator/get/freshmanmerittestoptional",
-        "post": "/rest/data/costcalculator/post/freshmanmerittestoptional"
+        "get": "/rest/data/costcalculator/get/merittestoptional",
+        "post": "/rest/data/costcalculator/post/merittestoptional"
       },
       "columns": [{
         "columnName": "GPA Range Lower Bound",
