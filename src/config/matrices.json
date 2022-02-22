@@ -485,26 +485,51 @@
         }
       ]
     }, {
-      "name": "tuition",
-      "matrixName": "SHU Tuition",
+      "name": "totaltuition",
+      "matrixName": "Total Tuition",
       "urls": {
-        "get": "/rest/data/costcalculator/get/tuition",
-        "post": "/rest/data/costcalculator/post/tuition"
+        "get": "/rest/data/costcalculator/get/totaltuition",
+        "post": "/rest/data/costcalculator/post/totaltuition"
       },
       "columns": [{
-          "columnName": "GPA Lower Bound",
-          "stateVariableName": "gpaRangeLower",
+          "columnName": "On Campus",
+          "stateVariableName": "onCampus",
           "placeholder": "0",
-          "float": true
+          "float": false
         }, {
-          "columnName": "GPA Upper Bound",
-          "stateVariableName": "gpaRangeUpper",
+          "columnName": "On Own",
+          "stateVariableName": "onOwn",
           "placeholder": "0",
-          "float": true
+          "float": false
         },
         {
-          "columnName": "Award Amount",
-          "stateVariableName": "awardAmount",
+          "columnName": "Live At Home",
+          "stateVariableName": "liveAtHome",
+          "placeholder": "0",
+          "float": false
+        }
+      ]
+    }, {
+      "name": "tuitionandfees",
+      "matrixName": "Tuition and Fees",
+      "urls": {
+        "get": "/rest/data/costcalculator/get/tuitionandfees",
+        "post": "/rest/data/costcalculator/post/tuitionandfees"
+      },
+      "columns": [{
+          "columnName": "On Campus",
+          "stateVariableName": "onCampus",
+          "placeholder": "0",
+          "float": false
+        }, {
+          "columnName": "On Own",
+          "stateVariableName": "onOwn",
+          "placeholder": "0",
+          "float": false
+        },
+        {
+          "columnName": "Live At Home",
+          "stateVariableName": "liveAtHome",
           "placeholder": "0",
           "float": false
         }
