@@ -253,7 +253,7 @@
           "placeholder": "0",
           "float": false
         }, {
-          "columnName": "No. Family Memebers",
+          "columnName": "No. Family Members",
           "stateVariableName": "numInFamily",
           "placeholder": "0",
           "float": false
@@ -326,7 +326,7 @@
           "placeholder": "0",
           "float": false
         }, {
-          "columnName": "No. Family Memebers",
+          "columnName": "No. Family Members",
           "stateVariableName": "numInFamily",
           "placeholder": "0",
           "float": false
@@ -399,7 +399,7 @@
           "placeholder": "0",
           "float": false
         }, {
-          "columnName": "# Family Memebers",
+          "columnName": "# Family Members",
           "stateVariableName": "numInFamily",
           "placeholder": "0",
           "float": false
